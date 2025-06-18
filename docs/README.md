@@ -1,4 +1,4 @@
-# TanıAI – Yapay Zeka Destekli Dijital Sağlık Asistanı (Prototype)
+# TanıAI - Yapay Zeka Destekli Dijital Sağlık Platformu (Prototype)
 
 TanıAI, bireylerin semptomlarını analiz ederek doğru uzmanlık alanlarına yönlendiren, test önerileri sunan ve kritik vakaları önceliklendiren bir yapay zeka tabanlı sağlık destek platformudur.
 
