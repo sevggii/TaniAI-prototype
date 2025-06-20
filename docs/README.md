@@ -46,5 +46,5 @@ Bu prototip, yarışma kapsamında geliştirilen MVP (Minimum Viable Product) ve
 /frontend → Kullanıcı arayüzü
 /ml_model → NLP modeli, örnek veriler
 /docs → Proje dökümanları
-/test → Unit testler
+/test → Unit testler 
 
