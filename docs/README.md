@@ -1,5 +1,5 @@
 Hazırladığım detaylı proje aşamaları için Drive linki: 
-https://docs.google.com/document/d/1cadQ5AE0x6mB9naU3eaiiUHk9nh4kHJM1YPdK8P_96I/edit?usp=drivesdk
+https://docs.google.com/document/d/1cadQ5AE0x6mB9naU3eaiiUHk9nh4kHJM1YPdK8P_96I/edit?usp=drivesdk 
 
 # TanıAI - Yapay Zeka Destekli Dijital Sağlık Platformu (Prototype)
 
@@ -43,8 +43,11 @@ Bu prototip, yarışma kapsamında geliştirilen MVP (Minimum Viable Product) ve
 
 ## 📁 Klasör Yapısı
 /backend → API, analiz, veri yönetimi
+
 /frontend → Kullanıcı arayüzü
+
 /ml_model → NLP modeli, örnek veriler
+
 /docs → Proje dökümanları
 /test → Unit testler 
 
