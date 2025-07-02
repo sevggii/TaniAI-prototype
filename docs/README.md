@@ -1,6 +1,9 @@
 Hazırladığım detaylı proje aşamaları için Drive linki: 
 https://docs.google.com/document/d/1cadQ5AE0x6mB9naU3eaiiUHk9nh4kHJM1YPdK8P_96I/edit?usp=drivesdk 
 
+Notion üzerinde eklediğim proje adımları;
+https://www.notion.so/Tan-AI-Projesi-21fcb1d2e2b2809aa56ceb1a6d8fe1e4
+
 # TanıAI - Yapay Zeka Destekli Dijital Sağlık Platformu (Prototype)
 
 TanıAI, bireylerin semptomlarını analiz ederek doğru uzmanlık alanlarına yönlendiren, test önerileri sunan ve kritik vakaları önceliklendiren bir yapay zeka tabanlı sağlık destek platformudur.
