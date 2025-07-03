@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import numpy as np
 
 # Güncel yaygınlık puanlaması
 levels = {
@@ -13,6 +14,7 @@ levels = {
 # Tablodan alınan puanlar (güncel haliyle)
 data = {
     "COVID-19": [
+        
         levels["yaygin"], levels["az_yaygin"], levels["yaygin"], levels["az_yaygin"], levels["yaygin_olmayan"],
         levels["nadir"], levels["nadir"], levels["nadir"], levels["yaygin_olmayan"], levels["yaygin"],
         levels["yaygin"], levels["yaygin"], levels["az_yaygin"]
@@ -40,12 +42,21 @@ semptomlar = [
     "İshal", "Koku veya Tat Kaybı", "Nefes Darlığı", "Öksürük", "Vücut Ağrıları"
 ]
 
-# Sentetik örnek oluşturucu
-def generate_sample(base_vector, noise=0.1):
-    return [
-        max(0.0, min(1.0, round(x + random.uniform(-noise, noise), 2)))
-        for x in base_vector
-    ]
+def generate_sample(base_vector, noise=0.25, missing_prob=0.25):
+    sample = []
+    for val in base_vector:
+        # Bazı semptomları eksik bırak
+        if random.random() < missing_prob:
+            sample.append(0.0)
+        elif val == 0.0:
+            sample.append(0.0)
+        else:
+            # Gürültüyü artır
+            sample.append(
+                max(0.0, min(1.0, round(val + random.uniform(-noise, noise), 2)))
+            )
+    return sample
+
 
 # Veri üret
 samples = []
@@ -58,9 +69,23 @@ for disease, vec in data.items():
         samples.append(sample)
         labels.append(disease)
 
+# Yanlış etiketli örnekler ekle (verinin %5'i kadar)
+num_wrong = int(0.05 * len(samples))
+for _ in range(num_wrong):
+    idx = random.randint(0, len(samples)-1)
+    wrong_label = random.choice([d for d in data.keys() if d != labels[idx]])
+    labels[idx] = wrong_label
+
 # DataFrame ve CSV
 df = pd.DataFrame(samples, columns=semptomlar)
 df["Etiket"] = labels
+
+# 🔥 VERİ TEMİZLİĞİ — COVID dışı hastalıklarda tat/koku kaybı ve nefes darlığı olmamalı
+df.loc[(df["Etiket"] != "COVID-19"), "Koku veya Tat Kaybı"] = 0.0
+df.loc[(df["Etiket"] != "COVID-19"), "Nefes Darlığı"] = 0.0
+
 df.to_csv("ml_model/hastalik_veriseti.csv", index=False)
 
 print("✅ Veri seti oluşturuldu: ml_model/hastalik_veriseti.csv")
+
+

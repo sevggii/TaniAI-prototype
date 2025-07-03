@@ -12,7 +12,14 @@ semptom_sozluk = {
     "Hapşırma": ["hapşırıyorum", "durmadan hapşırıyorum"],
     "İshal": ["ishalim", "sürekli tuvalete gidiyorum"],
     "Koku veya Tat Kaybı": ["koku alamıyorum", "tat alamıyorum", "kokusuz"],
-    "Nefes Darlığı": ["nefes alamıyorum", "boğuluyorum", "hava yetmiyor"],
+    "Nefes Darlığı": [
+    "nefes alamıyorum", 
+    "nefes almakta zorlanıyorum",  # ✅ yeni eklendi
+    "zor nefes alıyorum",
+    "boğuluyorum", 
+    "hava yetmiyor"
+],
+
     "Öksürük": ["öksürüyorum", "çok fena öksürüyorum", "öksürük krizim var"],
     "Vücut Ağrıları": ["her yerim ağrıyor", "vücudum sızlıyor", "kemiklerim ağrıyor"]
 }
@@ -34,11 +41,13 @@ def semptom_vektor_olustur(metin: str):
         skor = 0.0
         for ifade in ifadeler:
             if ifade in metin:
-                # varsa metindeki yoğunluk kelimesine göre puan ver
-                skor = 1.0  # default
+                context_window = metin[metin.find(ifade)-10:metin.find(ifade)+len(ifade)+10]
+                skor = 1.0
                 for y_kelim, puan in yoğunluk_degeri.items():
-                    if y_kelim in metin:
+                    if y_kelim in context_window:
                         skor = puan
+                        break
                 break
         vektor[semptom] = skor
     return vektor
+
