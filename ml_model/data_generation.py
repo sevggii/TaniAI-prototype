@@ -42,20 +42,33 @@ semptomlar = [
     "İshal", "Koku veya Tat Kaybı", "Nefes Darlığı", "Öksürük", "Vücut Ağrıları"
 ]
 
-def generate_sample(base_vector, noise=0.25, missing_prob=0.25):
+
+def generate_sample(base_vector, noise=0.1, disease_name=""):
     sample = []
-    for val in base_vector:
-        # Bazı semptomları eksik bırak
-        if random.random() < missing_prob:
-            sample.append(0.0)
-        elif val == 0.0:
+    for i, val in enumerate(base_vector):
+        if val == 0.0:
             sample.append(0.0)
         else:
-            # Gürültüyü artır
-            sample.append(
-                max(0.0, min(1.0, round(val + random.uniform(-noise, noise), 2)))
-            )
+            sample.append(random.choice([0.25, 0.5, 0.75, 1.0]))
+
+    # 🔐 Tat/koku kaybı, öksürük ve nefes darlığı sadece COVID’e özgü olsun
+    if disease_name != "COVID-19":
+        sample[semptomlar.index("Koku veya Tat Kaybı")] = 0.0
+        sample[semptomlar.index("Nefes Darlığı")] = 0.0
+        sample[semptomlar.index("Öksürük")] = random.choice([0.0, 0.25])
+
+    if disease_name == "COVID-19":
+        sample[semptomlar.index("Koku veya Tat Kaybı")] = 1.0
+        sample[semptomlar.index("Nefes Darlığı")] = 1.0
+        sample[semptomlar.index("Öksürük")] = 1.0
+
+    if disease_name == "Grip":
+        sample[semptomlar.index("Koku veya Tat Kaybı")] = 0.0
+        sample[semptomlar.index("Nefes Darlığı")] = 0.0
+
     return sample
+
+
 
 
 # Veri üret
@@ -65,7 +78,7 @@ N = 100  # Her hastalık için üretilecek örnek sayısı
 
 for disease, vec in data.items():
     for _ in range(N):
-        sample = generate_sample(vec)
+        sample = generate_sample(vec, disease_name=disease)
         samples.append(sample)
         labels.append(disease)
 
