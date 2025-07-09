@@ -54,3 +54,7 @@ Bu prototip, yarışma kapsamında geliştirilen MVP (Minimum Viable Product) ve
 /docs → Proje dökümanları
 /test → Unit testler 
 
+
+# Lisans: Tüm hakları saklıdır – ticari kullanım yalnızca yazılı mutabakat ile mümkündür.
+# © [Sevgi Targay] & [Büşra Çevik], 2025
+
