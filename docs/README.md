@@ -52,9 +52,17 @@ Bu prototip, yarışma kapsamında geliştirilen MVP (Minimum Viable Product) ve
 /ml_model → NLP modeli, örnek veriler
 
 /docs → Proje dökümanları
-/test → Unit testler 
+/test → Unit testler
 
 
-# Lisans: Tüm hakları saklıdır – ticari kullanım yalnızca yazılı mutabakat ile mümkündür.
-# © [Sevgi Targay] & [Büşra Çevik], 2025
+---
 
+### ⚠️ Lisans ve Kullanım Şartları
+
+Bu proje, 2025 yılı Turkcell Geleceği Yazan Kadınlar Yapay Zeka Programı kapsamında,  
+[Sevgi Targay] ve [Büşra Çevik] tarafından iki kişilik proje ekibi olarak özgün şekilde geliştirilmiştir.
+
+Tüm hakları saklıdır. Kodlar hiçbir şekilde — ticarî ya da ticarî olmayan amaçla — geliştiricilerin açık ve yazılı izni olmadan kullanılamaz.
+
+Her türlü kullanım yalnızca yazılı mutabakat ile mümkündür.  
+İzinsiz kullanım durumunda tüm yasal haklar saklıdır.
