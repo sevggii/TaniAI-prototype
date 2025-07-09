@@ -60,7 +60,7 @@ Bu prototip, yarışma kapsamında geliştirilen MVP (Minimum Viable Product) ve
 ### ⚠️ Lisans ve Kullanım Şartları
 
 Bu proje, 2025 yılı Turkcell Geleceği Yazan Kadınlar Yapay Zeka Programı kapsamında,  
-[Sevgi Targay] ve [Büşra Çevik] tarafından iki kişilik proje ekibi olarak özgün şekilde geliştirilmiştir.
+Sevgi Targay ve Büşra Çevik tarafından iki kişilik proje ekibi olarak özgün şekilde geliştirilmiştir.
 
 Tüm hakları saklıdır. Kodlar hiçbir şekilde — ticarî ya da ticarî olmayan amaçla — geliştiricilerin açık ve yazılı izni olmadan kullanılamaz.
 
