@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import numpy as np
 
-# Güncel yaygınlık puanlaması
+# Yaygınlık seviyeleri
 levels = {
     "yaygin": 1.0,
     "az_yaygin": 0.75,
@@ -11,10 +11,14 @@ levels = {
     "gorulmez": 0.0
 }
 
-# Tablodan alınan puanlar (güncel haliyle)
+# Hastalık başına semptom yaygınlık puanları
+# Semptomlar sırası:
+# Ateş, Baş Ağrısı, Bitkinlik, Boğaz Ağrısı, Bulantı veya Kusma,
+# Burun Akıntısı veya Tıkanıklığı, Göz Kaşıntısı/Sulanma, Hapşırma,
+# İshal, Koku/Tat Kaybı, Nefes Darlığı, Öksürük, Vücut Ağrıları
+
 data = {
     "COVID-19": [
-        
         levels["yaygin"], levels["az_yaygin"], levels["yaygin"], levels["az_yaygin"], levels["yaygin_olmayan"],
         levels["nadir"], levels["nadir"], levels["nadir"], levels["yaygin_olmayan"], levels["yaygin"],
         levels["yaygin"], levels["yaygin"], levels["az_yaygin"]
@@ -25,9 +29,9 @@ data = {
         levels["nadir"], levels["yaygin"], levels["yaygin"]
     ],
     "Soğuk Algınlığı": [
-        levels["nadir"], levels["nadir"], levels["az_yaygin"], levels["yaygin"],
-        levels["nadir"], levels["yaygin"], levels["gorulmez"], levels["yaygin"], levels["nadir"],
-        levels["nadir"], levels["nadir"], levels["yaygin"], levels["az_yaygin"]
+        levels["nadir"], levels["nadir"], levels["az_yaygin"], levels["yaygin"], levels["nadir"],
+        levels["yaygin"], levels["gorulmez"], levels["yaygin"], levels["nadir"], levels["nadir"],
+        levels["nadir"], levels["yaygin"], levels["az_yaygin"]
     ],
     "Mevsimsel Alerji": [
         levels["nadir"], levels["az_yaygin"], levels["az_yaygin"], levels["az_yaygin"], levels["gorulmez"],
@@ -42,16 +46,14 @@ semptomlar = [
     "İshal", "Koku veya Tat Kaybı", "Nefes Darlığı", "Öksürük", "Vücut Ağrıları"
 ]
 
-
 def generate_sample(base_vector, noise=0.1, disease_name=""):
     sample = []
-    for i, val in enumerate(base_vector):
+    for val in base_vector:
         if val == 0.0:
             sample.append(0.0)
         else:
             sample.append(random.choice([0.25, 0.5, 0.75, 1.0]))
 
-    # 🔐 Tat/koku kaybı, öksürük ve nefes darlığı sadece COVID’e özgü olsun
     if disease_name != "COVID-19":
         sample[semptomlar.index("Koku veya Tat Kaybı")] = 0.0
         sample[semptomlar.index("Nefes Darlığı")] = 0.0
@@ -62,30 +64,23 @@ def generate_sample(base_vector, noise=0.1, disease_name=""):
         sample[semptomlar.index("Nefes Darlığı")] = 1.0
         sample[semptomlar.index("Öksürük")] = 1.0
 
-    if disease_name == "Grip":
-        sample[semptomlar.index("Koku veya Tat Kaybı")] = 0.0
-        sample[semptomlar.index("Nefes Darlığı")] = 0.0
-
     return sample
 
-
-
-
-# Veri üret
+# Veri üretimi
 samples = []
 labels = []
-N = 100  # Her hastalık için üretilecek örnek sayısı
 
 for disease, vec in data.items():
-    for _ in range(N):
+    n = 800 if disease == "COVID-19" else 500
+    for _ in range(n):
         sample = generate_sample(vec, disease_name=disease)
         samples.append(sample)
         labels.append(disease)
 
-# Yanlış etiketli örnekler ekle (verinin %5'i kadar)
+# %5 oranında etiket karışması ekle
 num_wrong = int(0.05 * len(samples))
 for _ in range(num_wrong):
-    idx = random.randint(0, len(samples)-1)
+    idx = random.randint(0, len(samples) - 1)
     wrong_label = random.choice([d for d in data.keys() if d != labels[idx]])
     labels[idx] = wrong_label
 
@@ -93,12 +88,10 @@ for _ in range(num_wrong):
 df = pd.DataFrame(samples, columns=semptomlar)
 df["Etiket"] = labels
 
-# 🔥 VERİ TEMİZLİĞİ — COVID dışı hastalıklarda tat/koku kaybı ve nefes darlığı olmamalı
 df.loc[(df["Etiket"] != "COVID-19"), "Koku veya Tat Kaybı"] = 0.0
 df.loc[(df["Etiket"] != "COVID-19"), "Nefes Darlığı"] = 0.0
 
-df.to_csv("ml_model/hastalik_veriseti.csv", index=False)
-
-print("✅ Veri seti oluşturuldu: ml_model/hastalik_veriseti.csv")
-
-
+# Kaydet
+output_path = "ml_model/hastalik_veriseti.csv"
+df.to_csv(output_path, index=False)
+print(f"✅ Veri seti oluşturuldu: {output_path}")

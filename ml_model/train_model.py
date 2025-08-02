@@ -31,8 +31,30 @@ print("\n📊 Sınıflandırma Raporu:\n", classification_report(y_test, y_pred)
 joblib.dump(model, "ml_model/hastalik_modeli.pkl")
 print("✅ Model kaydedildi: ml_model/hastalik_modeli.pkl")
 
+'''Güncel Model
+
+🔄 5-Fold CV Doğruluk Ortalaması: 0.76 (Skorlar: [0.71956522 0.8        0.78913043 0.78043478 0.72173913])  
+
+🎯 Doğruluk: 0.7630434782608696
+
+📊 Sınıflandırma Raporu:
+                   precision    recall  f1-score   support
+
+        COVID-19       1.00      0.97      0.98       156
+            Grip       0.46      0.76      0.57        95
+Mevsimsel Alerji       0.99      0.96      0.97        96
+ Soğuk Algınlığı       0.61      0.32      0.42       113
+
+        accuracy                           0.76       460
+       macro avg       0.76      0.75      0.74       460
+    weighted avg       0.79      0.76      0.76       460
+
+✅ Model kaydedildi: ml_model/hastalik_modeli.pkl
 
 '''
+
+
+'''ÖNCEKİ EĞİTİM SONUÇLARI
 
 🔄 5-Fold CV Doğruluk Ortalaması: 0.92 (Skorlar: [0.85   0.975  0.975  0.9875 0.8125])
 

@@ -104,7 +104,10 @@ Nefes Darlığı: 0.0
 Öksürük: 0.0
 Vücut Ağrıları: 0.0
 
-
-
-
 '''
+
+print("\n🧠 Vektör Detayı:")
+for semptom, skor in zip(semptomlar, input_vector[0]):
+    if skor > 0.0:
+        print(f"{semptom}: {skor}")
+

@@ -4,17 +4,31 @@
 semptom_sozluk = {
     "Ateş": ["ateşim", "yanıyorum", "sıcaktan kavruluyorum"],
     "Baş Ağrısı": ["başım ağrıyor", "kafam zonkluyor", "başım çatlıyor"],
-    "Bitkinlik": ["yorgunum", "halsizim", "enerjim yok"],
-    "Boğaz Ağrısı": ["boğazım ağrıyor", "boğazım yanıyor", "konuşamıyorum"],
+    "Bitkinlik": [
+    "yorgunum", "halsizim", "enerjim yok",
+    "bitkinim", "çok bitkinim", "kendimi çok yorgun hissediyorum"
+],
+
+    "Boğaz Ağrısı": [
+    "boğazım ağrıyor", 
+    "boğazımda batma var",  
+    "boğazım şişti",         
+    "boğazım gıcık yapıyor"
+],
     "Bulantı veya Kusma": ["midem bulanıyor", "kusacak gibiyim", "istifra ettim"],
-    "Burun Akıntısı veya Tıkanıklığı": ["burnum akıyor", "burnum tıkalı"],
+    "Burun Akıntısı veya Tıkanıklığı": [
+    "burnum akıyor",   
+    "burnum tıkanık",  
+    "nefesim burnumdan zor geliyor", 
+    "burun dolu"  
+],
     "Göz Kaşıntısı veya Sulanma": ["gözüm kaşınıyor", "gözüm sulanıyor", "gözlerim yanıyor"],
     "Hapşırma": ["hapşırıyorum", "durmadan hapşırıyorum"],
     "İshal": ["ishalim", "sürekli tuvalete gidiyorum"],
     "Koku veya Tat Kaybı": ["koku alamıyorum", "tat alamıyorum", "kokusuz"],
     "Nefes Darlığı": [
     "nefes alamıyorum", 
-    "nefes almakta zorlanıyorum",  # ✅ yeni eklendi
+    "nefes almakta zorlanıyorum",
     "zor nefes alıyorum",
     "boğuluyorum", 
     "hava yetmiyor"
