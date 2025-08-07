@@ -34,8 +34,16 @@ semptom_sozluk = {
     "hava yetmiyor"
 ],
 
-    "Öksürük": ["öksürüyorum", "çok fena öksürüyorum", "öksürük krizim var"],
-    "Vücut Ağrıları": ["her yerim ağrıyor", "vücudum sızlıyor", "kemiklerim ağrıyor"]
+   "Vücut Ağrıları": [
+    "her yerim ağrıyor", "vücudum sızlıyor", "kemiklerim ağrıyor",
+    "vücudum ağrıyor", "vücudum çok ağrıyor"  # 👈 ekle!
+],
+
+"Öksürük": [
+    "öksürüyorum", "çok fena öksürüyorum", "öksürük krizim var",
+    "hafif öksürüğüm var", "biraz öksürüyorum"  # 👈 ekle!
+]
+
 }
 
 # Yoğunluk (şiddet) belirteçleri

@@ -69,12 +69,7 @@ def generate_sample(base_vector, noise=0.2, missing_prob=0.2):
             )
     return sample
 
-scores = cross_val_score(model, X, y, cv=5)
-print("5-Fold CV Doğruluk Ortalaması:", scores.mean())
 
-print("Modelin tipi:", type(model))
-print("Model kaydediliyor:", model)
-joblib.dump(model, "ml_model/hastalik_modeli.pkl")
 
 ''' GRİP TESPİTİ
 

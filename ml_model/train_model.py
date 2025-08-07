@@ -33,7 +33,7 @@ print("✅ Model kaydedildi: ml_model/hastalik_modeli.pkl")
 
 '''Güncel Model
 
-🔄 5-Fold CV Doğruluk Ortalaması: 0.76 (Skorlar: [0.71956522 0.8        0.78913043 0.78043478 0.72173913])  
+🔄 5-Fold CV Doğruluk Ortalaması: 0.76 (Skorlar: [0.71956522 0.8        0.78913043 0.78043478 0.72173913])
 
 🎯 Doğruluk: 0.7630434782608696
 
@@ -50,7 +50,6 @@ Mevsimsel Alerji       0.99      0.96      0.97        96
     weighted avg       0.79      0.76      0.76       460
 
 ✅ Model kaydedildi: ml_model/hastalik_modeli.pkl
-
 '''
 
 
