@@ -1,4 +1,4 @@
-Proje Adı:TanıAI (Vitalis)
+Proje Adı:TanıAI (TanıAL)
 
 Proje Kategorisi: Doğal Dil İşleme (NPL)
 
