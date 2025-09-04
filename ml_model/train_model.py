@@ -31,6 +31,8 @@ print("\n📊 Sınıflandırma Raporu:\n", classification_report(y_test, y_pred)
 joblib.dump(model, "ml_model/hastalik_modeli.pkl")
 print("✅ Model kaydedildi: ml_model/hastalik_modeli.pkl")
 
+
+
 '''Güncel Model
 
 🔄 5-Fold CV Doğruluk Ortalaması: 0.76 (Skorlar: [0.71956522 0.8        0.78913043 0.78043478 0.72173913])
