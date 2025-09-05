@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'theme.dart';
-import 'home_page.dart';
+import 'core/theme/app_theme.dart';
+import 'features/auth/splash_auth_gate.dart';
 
 void main() {
   runApp(const TanialRandevuApp());
@@ -17,7 +17,7 @@ class TanialRandevuApp extends StatelessWidget {
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.system,
-      home: const HomePage(),
+      home: const SplashAuthGate(),
     );
   }
 }
