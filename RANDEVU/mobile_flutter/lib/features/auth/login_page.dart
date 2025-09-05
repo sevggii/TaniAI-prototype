@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../models/user.dart';
 import '../../services/auth_local_service.dart';
+import '../../services/hash.dart';
 import '../../home_page.dart';
 import 'register_page.dart';
+import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,8 +30,26 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
-    final user = User(name: 'Kullanıcı', email: _emailController.text.trim());
-    await _auth.saveSession(user);
+
+    final storedUser = await _auth.getUser();
+    if (storedUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Kayıt bulunamadı. Lütfen kaydolun.')),
+      );
+      return;
+    }
+
+    final email = _emailController.text.trim();
+    final passwordHash = hashText(_passwordController.text);
+
+    if (storedUser.email != email || storedUser.passwordHash != passwordHash) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('E-posta veya şifre hatalı')),
+      );
+      return;
+    }
+
+    await _auth.setLoggedIn(true);
     if (!mounted) return;
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('Giriş başarılı')));
@@ -120,7 +140,17 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text('Giriş yap'),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (_) => const ForgotPasswordPage()),
+                            );
+                          },
+                          child: const Text('Şifremi Unuttum'),
+                        ),
+                        const SizedBox(height: 8),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(

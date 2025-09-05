@@ -4,13 +4,26 @@ class User {
   final String name;
   final String email;
   final String? phone;
+  final String passwordHash;
+  final String recoveryQuestion;
+  final String recoveryAnswerHash;
 
-  const User({required this.name, required this.email, this.phone});
+  const User({
+    required this.name,
+    required this.email,
+    this.phone,
+    required this.passwordHash,
+    required this.recoveryQuestion,
+    required this.recoveryAnswerHash,
+  });
 
   Map<String, dynamic> toJson() => {
         'name': name,
         'email': email,
         'phone': phone,
+        'passwordHash': passwordHash,
+        'recoveryQuestion': recoveryQuestion,
+        'recoveryAnswerHash': recoveryAnswerHash,
       };
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -18,6 +31,9 @@ class User {
       name: json['name'] as String? ?? '',
       email: json['email'] as String? ?? '',
       phone: json['phone'] as String?,
+      passwordHash: json['passwordHash'] as String? ?? '',
+      recoveryQuestion: json['recoveryQuestion'] as String? ?? '',
+      recoveryAnswerHash: json['recoveryAnswerHash'] as String? ?? '',
     );
   }
 

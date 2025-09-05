@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/user.dart';
 import '../../services/auth_local_service.dart';
+import '../../services/hash.dart';
 import '../../home_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -17,10 +18,18 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordAgainController = TextEditingController();
+  final _recoveryAnswerController = TextEditingController();
   bool _obscure1 = true;
   bool _obscure2 = true;
   bool _kvkk = false;
+  String _selectedQuestion = 'İlk evcil hayvanınız?';
   final _auth = AuthLocalService();
+
+  final List<String> _recoveryQuestions = [
+    'İlk evcil hayvanınız?',
+    'İlkokul öğretmeninizin adı?',
+    'En sevdiğiniz şehir?',
+  ];
 
   @override
   void dispose() {
@@ -29,6 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _passwordAgainController.dispose();
+    _recoveryAnswerController.dispose();
     super.dispose();
   }
 
@@ -61,14 +71,26 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       return;
     }
+    if (_recoveryAnswerController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Güvenlik cevabı gerekli')),
+      );
+      return;
+    }
+
     final user = User(
       name: _nameController.text.trim(),
       email: _emailController.text.trim(),
       phone: _phoneController.text.trim().isEmpty
           ? null
           : _phoneController.text.trim(),
+      passwordHash: hashText(_passwordController.text),
+      recoveryQuestion: _selectedQuestion,
+      recoveryAnswerHash: hashText(_recoveryAnswerController.text),
     );
-    await _auth.saveSession(user);
+
+    await _auth.saveUser(user);
+    await _auth.setLoggedIn(true);
     if (!mounted) return;
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('Kayıt tamamlandı')));
@@ -160,6 +182,36 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           validator: _validatePassword,
+                        ),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField<String>(
+                          value: _selectedQuestion,
+                          decoration: const InputDecoration(
+                            labelText: 'Güvenlik Sorusu',
+                          ),
+                          items: _recoveryQuestions.map((String question) {
+                            return DropdownMenuItem<String>(
+                              value: question,
+                              child: Text(question),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              setState(() {
+                                _selectedQuestion = newValue;
+                              });
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _recoveryAnswerController,
+                          decoration: const InputDecoration(
+                            labelText: 'Güvenlik Cevabı',
+                          ),
+                          validator: (v) => (v == null || v.trim().isEmpty)
+                              ? 'Güvenlik cevabı gerekli'
+                              : null,
                         ),
                         const SizedBox(height: 12),
                         CheckboxListTile(
