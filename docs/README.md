@@ -1,0 +1,70 @@
+Hazırladığım detaylı proje aşamaları için Drive linki: 
+https://docs.google.com/document/d/1cadQ5AE0x6mB9naU3eaiiUHk9nh4kHJM1YPdK8P_96I/edit?usp=drivesdk 
+
+Notion üzerinde eklediğim proje adımları;
+https://www.notion.so/Tan-AI-Projesi-21fcb1d2e2b2809aa56ceb1a6d8fe1e4
+
+# TanıAI - Yapay Zeka Destekli Dijital Sağlık Platformu (Prototype)
+
+TanıAI, bireylerin semptomlarını analiz ederek doğru uzmanlık alanlarına yönlendiren, test önerileri sunan ve kritik vakaları önceliklendiren bir yapay zeka tabanlı sağlık destek platformudur.
+
+Bu prototip, yarışma kapsamında geliştirilen MVP (Minimum Viable Product) versiyonudur. Amaç, sistemin temel fonksiyonlarının teknik olarak çalıştığını göstermek ve gerçek kullanıcı senaryolarıyla test etmektir.
+
+---
+
+## 🎯 MVP Kapsamı
+
+- ✅ Semptom girişi (yazılı ve/veya sesli)
+- ✅ AI analiz + test önerisi (kan/röntgen vs.)
+- ✅ Kritik vaka önceliklendirmesi
+- ✅ Temel kullanıcı arayüzü (mobil ya da web)
+- ✅ Veri kayıt/loglama sistemi (PostgreSQL + bulut entegrasyonu)
+- ✅ Opsiyonel: Sesli erişim altyapısı (Twilio / Google STT)
+
+---
+
+## 🧠 Kullanım Akışı
+
+1. Kullanıcı semptomlarını yazar veya sesli olarak ifade eder.
+2. Sistem NLP ile analiz yapar.
+3. Olası tanılar ve test önerileri listelenir.
+4. Kritik vakalar işaretlenir.
+5. Sonuçlar kullanıcı arayüzünde gösterilir.
+
+---
+
+## 🧰 Kullanılan Teknolojiler
+
+| Katman      | Teknoloji                          |
+|-------------|------------------------------------|
+| Backend     | FastAPI, PostgreSQL                |
+| NLP         | HuggingFace Transformers, spaCy   |
+| Frontend    | Flutter veya React                 |
+| Sesli Sistem| Twilio / Google Speech-to-Text     |
+
+---
+
+## 📁 Klasör Yapısı
+/backend → API, analiz, veri yönetimi
+
+/frontend → Kullanıcı arayüzü
+
+/ml_model → NLP modeli, örnek veriler
+
+/docs → Proje dökümanları
+/test → Unit testler
+
+
+---
+
+### ⚠️ Lisans ve Kullanım Şartları
+
+Bu proje, 2025 yılı Turkcell Geleceği Yazan Kadınlar Yapay Zeka Programı kapsamında,  
+Sevgi Targay ve Büşra Çevik tarafından iki kişilik proje ekibi olarak özgün şekilde geliştirilmiştir.
+
+Tüm hakları saklıdır. Kodlar hiçbir şekilde — ticarî ya da ticarî olmayan amaçla — geliştiricilerin açık ve yazılı izni olmadan kullanılamaz.
+
+📌 Projenin herhangi bir bileşeni dahil (kod, model, içerik, dokümantasyon vb.) geliştiricilerin yazılı izni olmadan kullanılamaz.
+
+Her türlü kullanım yalnızca yazılı mutabakat ile mümkündür.  
+İzinsiz kullanım durumunda tüm yasal haklar saklıdır.

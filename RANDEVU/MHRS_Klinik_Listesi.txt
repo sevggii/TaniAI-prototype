@@ -1,0 +1,72 @@
+MHRS Merkezi Hekim Randevu Sistemi'nden alınan Klinik Listesi
+
+1. Aile Hekimliği
+2. Algoloji
+3. Amatem (Alkol ve Madde Bağımlılığı)
+4. Anesteziyoloji ve Reanimasyon
+5. Beyin ve Sinir Cerrahisi
+6. Cerrahi Onkolojisi
+7. Çocuk Cerrahisi
+8. Çocuk Diş Hekimliği
+9. Çocuk Endokrinolojisi
+10. Çocuk Enfeksiyon Hastalıkları
+11. Çocuk Gastroenterolojisi
+12. Çocuk Genetik Hastalıkları
+13. Çocuk Hematolojisi ve Onkolojisi
+14. Çocuk Kalp Damar Cerrahisi
+15. Çocuk Kardiyolojisi
+16. Çocuk Nefrolojisi
+17. Çocuk Nörolojisi
+18. Çocuk Sağlığı ve Hastalıkları
+19. Çocuk ve Ergen Ruh Sağlığı ve Hastalıkları
+20. Deri ve Zührevi Hastalıkları (Cildiye)
+21. Diş Hekimliği (Genel Diş)
+22. El Cerrahisi
+23. Endodonti
+24. Endokrinoloji ve Metabolizma Hastalıkları
+25. Enfeksiyon Hastalıkları ve Klinik Mikrobiyoloji
+26. Fiziksel Tıp ve Rehabilitasyon
+27. Gastroenteroloji
+28. Gastroenteroloji Cerrahisi
+29. Genel Cerrahi
+30. Geriatri
+31. Göğüs Cerrahisi
+32. Göğüs Hastalıkları
+33. Göz Hastalıkları
+	33.1 Şaşılık
+	33.2 Kornea
+	33.3 Oküloplasti
+34. Hematoloji
+35. İç Hastalıkları (Dahiliye)
+36. İmmünoloji ve Alerji Hastalıkları
+37. İş ve Meslek Hastalıkları
+38. Jinekolojik Onkoloji Cerrahisi
+39. Kadın Hastalıkları ve Doğum
+40. Kalp ve Damar Cerrahisi
+41. Kardiyoloji
+42. Klinik Nörofizyoloji
+43. Kulak Burun Boğaz Hastalıkları
+44. Nefroloji
+45. Neonatoloji
+46. Nöroloji
+47. Ortodonti
+48. Ortopedi ve Travmatoloji
+49. Perinatoloji
+50. Periodontoloji
+51. Plastik, Rekonstrüktif ve Estetik Cerrahi
+52. Protetik Diş Tedavisi
+53. Radyasyon Onkolojisi
+54. Restoratif Diş Tedavisi
+55. Romatoloji
+56. Ruh Sağlığı ve Hastalıkları (Psikiyatri)
+57. Sağlık Kurulu Erişkin
+58. Sağlık Kurulu ÇÖZGER (Çocuk Özel Gereksinim Raporu)
+59. Sigara Bırakma Danışmanlığı Birimi
+60. Sigarayı Bıraktırma Kliniği
+61. Spor Hekimliği
+62. Tıbbi Genetik
+63. Tıbbi Onkoloji
+64. Üroloji
+65. Ağız, Diş ve Çene Cerrahisi
+66. Radyoloji
+
