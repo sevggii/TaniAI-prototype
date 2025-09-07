@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../services/auth_local_service.dart';
 import '../../home_page.dart';
 import 'login_page.dart';
 
@@ -11,26 +10,37 @@ class SplashAuthGate extends StatefulWidget {
 }
 
 class _SplashAuthGateState extends State<SplashAuthGate> {
-  final AuthLocalService _auth = AuthLocalService();
-
   @override
   void initState() {
     super.initState();
-    _check();
+    _checkAuthState();
   }
 
-  Future<void> _check() async {
-    final loggedIn = await _auth.isLoggedIn();
-    if (!mounted) return;
-    if (loggedIn) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomePage()),
-      );
-    } else {
+  void _checkAuthState() {
+    // Navigate directly to login page
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const LoginPage()),
       );
-    }
+    });
+
+    // TODO: Uncomment when Firebase is properly configured
+    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //   if (!mounted) return;
+
+    //   if (user != null) {
+    //     // User is signed in
+    //     Navigator.of(context).pushReplacement(
+    //       MaterialPageRoute(builder: (_) => const HomePage()),
+    //     );
+    //   } else {
+    //     // User is signed out
+    //     Navigator.of(context).pushReplacement(
+    //       MaterialPageRoute(builder: (_) => const LoginPage()),
+    //     );
+    //   }
+    // });
   }
 
   @override

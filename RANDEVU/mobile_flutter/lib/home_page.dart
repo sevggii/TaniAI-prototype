@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthLocalService _auth = AuthLocalService();
-  User? _user;
+  UserModel? _user;
 
   @override
   void initState() {
@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _load() async {
-    final u = await _auth.getUser();
+    await _auth.initialize();
+    final u = _auth.current;
     if (mounted) setState(() => _user = u);
   }
 
