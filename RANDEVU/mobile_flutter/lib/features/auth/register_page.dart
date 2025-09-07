@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../models/user.dart';
 import '../../services/auth_local_service.dart';
-import '../../services/hash.dart';
+import '../../models/user_role.dart';
 import '../../home_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final UserRole? initialRole;
+
+  const RegisterPage({super.key, this.initialRole});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -18,18 +19,20 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordAgainController = TextEditingController();
-  final _recoveryAnswerController = TextEditingController();
   bool _obscure1 = true;
   bool _obscure2 = true;
   bool _kvkk = false;
-  String _selectedQuestion = 'İlk evcil hayvanınız?';
+  bool _isLoading = false;
+  UserRole _selectedRole = UserRole.patient;
   final _auth = AuthLocalService();
 
-  final List<String> _recoveryQuestions = [
-    'İlk evcil hayvanınız?',
-    'İlkokul öğretmeninizin adı?',
-    'En sevdiğiniz şehir?',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialRole != null) {
+      _selectedRole = widget.initialRole!;
+    }
+  }
 
   @override
   void dispose() {
@@ -38,7 +41,6 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _passwordAgainController.dispose();
-    _recoveryAnswerController.dispose();
     super.dispose();
   }
 
@@ -71,33 +73,34 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       return;
     }
-    if (_recoveryAnswerController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Güvenlik cevabı gerekli')),
+
+    setState(() => _isLoading = true);
+
+    try {
+      await _auth.register(
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        role: _selectedRole,
       );
-      return;
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Kayıt tamamlandı')));
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const HomePage()),
+        (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
-
-    final user = User(
-      name: _nameController.text.trim(),
-      email: _emailController.text.trim(),
-      phone: _phoneController.text.trim().isEmpty
-          ? null
-          : _phoneController.text.trim(),
-      passwordHash: hashText(_passwordController.text),
-      recoveryQuestion: _selectedQuestion,
-      recoveryAnswerHash: hashText(_recoveryAnswerController.text),
-    );
-
-    await _auth.saveUser(user);
-    await _auth.setLoggedIn(true);
-    if (!mounted) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Kayıt tamamlandı')));
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const HomePage()),
-      (route) => false,
-    );
   }
 
   @override
@@ -124,6 +127,39 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Icon(Icons.local_hospital_rounded,
                             size: 56, color: theme.colorScheme.primary),
+                        const SizedBox(height: 24),
+
+                        // Role selection
+                        Text(
+                          'Hesap Türü Seçin',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildRoleCard(
+                                UserRole.patient,
+                                Icons.person,
+                                'Hasta',
+                                'Randevu almak için',
+                                theme,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: _buildRoleCard(
+                                UserRole.doctor,
+                                Icons.medical_services,
+                                'Doktor',
+                                'Randevu vermek için',
+                                theme,
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 24),
                         TextFormField(
                           controller: _nameController,
@@ -183,36 +219,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           validator: _validatePassword,
                         ),
-                        const SizedBox(height: 16),
-                        DropdownButtonFormField<String>(
-                          value: _selectedQuestion,
-                          decoration: const InputDecoration(
-                            labelText: 'Güvenlik Sorusu',
-                          ),
-                          items: _recoveryQuestions.map((String question) {
-                            return DropdownMenuItem<String>(
-                              value: question,
-                              child: Text(question),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              setState(() {
-                                _selectedQuestion = newValue;
-                              });
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _recoveryAnswerController,
-                          decoration: const InputDecoration(
-                            labelText: 'Güvenlik Cevabı',
-                          ),
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? 'Güvenlik cevabı gerekli'
-                              : null,
-                        ),
                         const SizedBox(height: 12),
                         CheckboxListTile(
                           value: _kvkk,
@@ -226,8 +232,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: 48,
                           child: FilledButton(
-                            onPressed: _submit,
-                            child: const Text('Kaydol'),
+                            onPressed: _isLoading ? null : _submit,
+                            child: _isLoading
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                : const Text('Kaydol'),
                           ),
                         ),
                       ],
@@ -237,6 +254,65 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoleCard(
+    UserRole role,
+    IconData icon,
+    String title,
+    String subtitle,
+    ThemeData theme,
+  ) {
+    final isSelected = _selectedRole == role;
+
+    return GestureDetector(
+      onTap: () => setState(() => _selectedRole = role),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected
+                ? theme.colorScheme.primary
+                : theme.colorScheme.outline,
+            width: isSelected ? 2 : 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          color: isSelected
+              ? theme.colorScheme.primaryContainer.withOpacity(0.3)
+              : null,
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              size: 32,
+              color: isSelected
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: isSelected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.onSurface,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontSize: 12,
+                color: theme.colorScheme.onSurface.withOpacity(0.7),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

@@ -1,85 +1,152 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
+import '../models/user_role.dart';
 
-abstract class AuthRepository {
-  Future<bool> isLoggedIn();
-  Future<void> saveUser(User user);
-  Future<User?> getUser();
-  Future<void> setLoggedIn(bool value);
-  Future<void> logout();
-  Future<bool> hasUser();
-  Future<bool> updatePassword(
-      {required String email, required String newPasswordHash});
-  Future<bool> verifyRecovery(
-      {required String email, required String answerHash});
-}
+class AuthLocalService {
+  static final AuthLocalService _instance = AuthLocalService._internal();
+  factory AuthLocalService() => _instance;
+  AuthLocalService._internal();
 
-class AuthLocalService implements AuthRepository {
-  static const String _keyIsLoggedIn = 'isLoggedIn';
-  static const String _keyUserJson = 'userJson';
+  UserModel? _currentUser;
+  final String _userKey = 'current_user';
 
-  @override
-  Future<bool> isLoggedIn() async {
-    final sp = await SharedPreferences.getInstance();
-    return sp.getBool(_keyIsLoggedIn) ?? false;
+  /// Get current user
+  UserModel? get current => _currentUser;
+
+  /// Check if user is logged in
+  bool get isLoggedIn => _currentUser != null;
+
+  /// Initialize service and load user from storage
+  Future<void> initialize() async {
+    await _loadUserFromStorage();
   }
 
-  @override
-  Future<void> saveUser(User user) async {
-    final sp = await SharedPreferences.getInstance();
-    await sp.setString(_keyUserJson, user.toJsonString());
+  /// Load user from local storage
+  Future<void> _loadUserFromStorage() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userData = prefs.getString(_userKey);
+      if (userData != null) {
+        _currentUser = UserModel.fromJsonString(userData);
+      }
+    } catch (e) {
+      print('Error loading user from storage: $e');
+    }
   }
 
-  @override
-  Future<void> setLoggedIn(bool value) async {
-    final sp = await SharedPreferences.getInstance();
-    await sp.setBool(_keyIsLoggedIn, value);
+  /// Save user to local storage
+  Future<void> _saveUserToStorage(UserModel user) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_userKey, user.toJsonString());
+    } catch (e) {
+      print('Error saving user to storage: $e');
+    }
   }
 
-  @override
-  Future<User?> getUser() async {
-    final sp = await SharedPreferences.getInstance();
-    return User.fromJsonString(sp.getString(_keyUserJson));
+  /// Register with email and password (local only)
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required UserRole role,
+  }) async {
+    try {
+      // Check if user already exists
+      if (_currentUser != null) {
+        throw Exception('Kullanıcı zaten giriş yapmış');
+      }
+
+      // Create new user
+      final user = UserModel(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        name: name,
+        email: email.toLowerCase().trim(),
+        role: role,
+        createdAt: DateTime.now(),
+      );
+
+      // Save user locally
+      _currentUser = user;
+      await _saveUserToStorage(user);
+
+      // Simulate network delay
+      await Future.delayed(const Duration(seconds: 1));
+    } catch (e) {
+      throw Exception('Kayıt işlemi başarısız: ${e.toString()}');
+    }
   }
 
-  @override
+  /// Login with email and password (local only)
+  Future<void> login({
+    required String email,
+    required String password,
+    required UserRole role,
+  }) async {
+    try {
+      // For demo purposes, create a user if none exists
+      if (_currentUser == null) {
+        final user = UserModel(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          name: role == UserRole.doctor ? 'Demo Doktor' : 'Demo Kullanıcı',
+          email: email.toLowerCase().trim(),
+          role: role,
+          createdAt: DateTime.now(),
+        );
+        _currentUser = user;
+        await _saveUserToStorage(user);
+      }
+
+      // Simulate network delay
+      await Future.delayed(const Duration(seconds: 1));
+    } catch (e) {
+      throw Exception('Giriş işlemi başarısız: ${e.toString()}');
+    }
+  }
+
+  /// Logout
   Future<void> logout() async {
-    final sp = await SharedPreferences.getInstance();
-    await sp.setBool(_keyIsLoggedIn, false);
-    // Note: We do NOT remove _keyUserJson to preserve user data for future logins
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_userKey);
+      _currentUser = null;
+    } catch (e) {
+      print('Error during logout: $e');
+    }
   }
 
-  @override
-  Future<bool> hasUser() async {
-    final sp = await SharedPreferences.getInstance();
-    return sp.getString(_keyUserJson) != null;
+  /// Send password reset email (simulated)
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      // Simulate network delay
+      await Future.delayed(const Duration(seconds: 1));
+
+      // For demo, just print a message
+      print('Password reset email would be sent to: $email');
+    } catch (e) {
+      throw Exception(
+          'Şifre sıfırlama e-postası gönderilemedi: ${e.toString()}');
+    }
   }
 
-  @override
-  Future<bool> updatePassword(
-      {required String email, required String newPasswordHash}) async {
-    final user = await getUser();
-    if (user == null || user.email != email) return false;
+  /// Update user profile
+  Future<void> updateProfile({
+    String? name,
+    String? email,
+  }) async {
+    if (_currentUser == null) {
+      throw Exception('Kullanıcı giriş yapmamış');
+    }
 
-    final updatedUser = User(
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      passwordHash: newPasswordHash,
-      recoveryQuestion: user.recoveryQuestion,
-      recoveryAnswerHash: user.recoveryAnswerHash,
-    );
+    try {
+      _currentUser = _currentUser!.copyWith(
+        name: name ?? _currentUser!.name,
+        email: email ?? _currentUser!.email,
+      );
 
-    await saveUser(updatedUser);
-    return true;
-  }
-
-  @override
-  Future<bool> verifyRecovery(
-      {required String email, required String answerHash}) async {
-    final user = await getUser();
-    return user != null &&
-        user.email == email &&
-        user.recoveryAnswerHash == answerHash;
+      await _saveUserToStorage(_currentUser!);
+    } catch (e) {
+      throw Exception('Profil güncellenemedi: ${e.toString()}');
+    }
   }
 }
