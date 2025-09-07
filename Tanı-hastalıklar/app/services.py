@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from .models.nutrient_models import NutrientDeficiencyModel
 from .real_data_models import RealDataModelTrainer
-from .models import User, UserProfile, DiagnosisHistory, Notification
+# from .models import User, UserProfile, DiagnosisHistory, Notification
 from .schemas import (
     DiagnosisResult, RiskAssessment, NutritionRecommendations,
     UserProfileCreate, SymptomInput
