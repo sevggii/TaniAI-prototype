@@ -1,3 +1,7 @@
+#önceki android sürümleri için apk: 
+# flutter build apk --debug --target-platform android-arm
+
+
 from openai import OpenAI
 
 client = OpenAI(
