@@ -17,8 +17,8 @@ class _SplashAuthGateState extends State<SplashAuthGate> {
   }
 
   void _checkAuthState() {
-    // Navigate directly to login page
-    Future.delayed(const Duration(milliseconds: 500), () {
+    // Navigate directly to login page with minimal delay
+    Future.delayed(const Duration(milliseconds: 200), () {
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const LoginPage()),
