@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../services/auth_local_service.dart';
 import '../../models/user_role.dart';
+import '../../services/auth_local_service.dart';
 import '../../home_page.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  final UserRole? initialRole;
+  final UserRole initialRole;
 
-  const RegisterPage({super.key, this.initialRole});
+  const RegisterPage({
+    super.key,
+    required this.initialRole,
+  });
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -15,33 +19,68 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _passwordAgainController = TextEditingController();
-  bool _obscure1 = true;
-  bool _obscure2 = true;
-  bool _kvkk = false;
-  bool _isLoading = false;
+  final _confirmPasswordController = TextEditingController();
   UserRole _selectedRole = UserRole.patient;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+  bool _isLoading = false;
   final _auth = AuthLocalService();
 
   @override
   void initState() {
     super.initState();
-    if (widget.initialRole != null) {
-      _selectedRole = widget.initialRole!;
-    }
+    _selectedRole = widget.initialRole;
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _passwordAgainController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      await _auth.register(
+        name: _nameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        role: _selectedRole,
+      );
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${_selectedRole.displayName} kaydı başarılı')),
+      );
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const HomePage()),
+        (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  String? _validateName(String? value) {
+    final v = value?.trim() ?? '';
+    if (v.isEmpty) return 'Ad soyad gerekli';
+    if (v.length < 2) return 'En az 2 karakter';
+    return null;
   }
 
   String? _validateEmail(String? value) {
@@ -59,176 +98,165 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
-  Future<void> _submit() async {
-    if (!_kvkk) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Aydınlatma metnini onaylayın.')),
-      );
-      return;
-    }
-    if (!_formKey.currentState!.validate()) return;
-    if (_passwordController.text != _passwordAgainController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Şifreler eşleşmiyor')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      await _auth.register(
-        name: _nameController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-        role: _selectedRole,
-      );
-
-      if (!mounted) return;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Kayıt tamamlandı')));
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const HomePage()),
-        (route) => false,
-      );
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
+  String? _validateConfirmPassword(String? value) {
+    final v = value ?? '';
+    if (v.isEmpty) return 'Şifre tekrarı gerekli';
+    if (v != _passwordController.text) return 'Şifreler eşleşmiyor';
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Kaydol')),
+      appBar: AppBar(
+        title: const Text('Kayıt Ol'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 560),
-              child: Card(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Header
+              Icon(
+                Icons.local_hospital_rounded,
+                size: 64,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'TanıAI Randevu',
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Hesabınızı oluşturun',
+                style: theme.textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+
+              // Form
+              Card(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(20),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Icon(Icons.local_hospital_rounded,
-                            size: 56, color: theme.colorScheme.primary),
-                        const SizedBox(height: 24),
-
                         // Role selection
                         Text(
-                          'Hesap Türü Seçin',
+                          'Hesap Türü',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 12),
                         Row(
                           children: [
                             Expanded(
-                              child: _buildRoleCard(
-                                UserRole.patient,
-                                Icons.person,
-                                'Hasta',
-                                'Randevu almak için',
-                                theme,
+                              child: RadioListTile<UserRole>(
+                                title: const Text('Hasta'),
+                                subtitle: const Text('Randevu almak için'),
+                                value: UserRole.patient,
+                                groupValue: _selectedRole,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedRole = value!;
+                                  });
+                                },
+                                contentPadding: EdgeInsets.zero,
                               ),
                             ),
-                            const SizedBox(width: 12),
                             Expanded(
-                              child: _buildRoleCard(
-                                UserRole.doctor,
-                                Icons.medical_services,
-                                'Doktor',
-                                'Randevu vermek için',
-                                theme,
+                              child: RadioListTile<UserRole>(
+                                title: const Text('Doktor'),
+                                subtitle: const Text('Hasta kabul etmek için'),
+                                value: UserRole.doctor,
+                                groupValue: _selectedRole,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedRole = value!;
+                                  });
+                                },
+                                contentPadding: EdgeInsets.zero,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 20),
+
+                        // Name field
                         TextFormField(
                           controller: _nameController,
-                          textCapitalization: TextCapitalization.words,
-                          decoration:
-                              const InputDecoration(labelText: 'Ad Soyad'),
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? 'Ad Soyad gerekli'
-                              : null,
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _phoneController,
-                          keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
-                              labelText: 'Telefon (opsiyonel)'),
+                            labelText: 'Ad Soyad',
+                            prefixIcon: Icon(Icons.person_outline),
+                          ),
+                          validator: _validateName,
                         ),
                         const SizedBox(height: 16),
+
+                        // Email field
                         TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
-                          decoration:
-                              const InputDecoration(labelText: 'E-posta'),
+                          decoration: const InputDecoration(
+                            labelText: 'E-posta',
+                            prefixIcon: Icon(Icons.email_outlined),
+                          ),
                           validator: _validateEmail,
                         ),
                         const SizedBox(height: 16),
+
+                        // Password field
                         TextFormField(
                           controller: _passwordController,
-                          obscureText: _obscure1,
+                          obscureText: _obscurePassword,
                           decoration: InputDecoration(
                             labelText: 'Şifre',
+                            prefixIcon: const Icon(Icons.lock_outlined),
                             suffixIcon: IconButton(
-                              onPressed: () =>
-                                  setState(() => _obscure1 = !_obscure1),
-                              icon: Icon(_obscure1
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                              tooltip: 'Şifreyi göster/gizle',
+                              onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                              icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
                             ),
                           ),
                           validator: _validatePassword,
                         ),
                         const SizedBox(height: 16),
+
+                        // Confirm password field
                         TextFormField(
-                          controller: _passwordAgainController,
-                          obscureText: _obscure2,
+                          controller: _confirmPasswordController,
+                          obscureText: _obscureConfirmPassword,
                           decoration: InputDecoration(
-                            labelText: 'Şifre Tekrar',
+                            labelText: 'Şifre Tekrarı',
+                            prefixIcon: const Icon(Icons.lock_outlined),
                             suffixIcon: IconButton(
-                              onPressed: () =>
-                                  setState(() => _obscure2 = !_obscure2),
-                              icon: Icon(_obscure2
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                              tooltip: 'Şifreyi göster/gizle',
+                              onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                              icon: Icon(_obscureConfirmPassword ? Icons.visibility : Icons.visibility_off),
                             ),
                           ),
-                          validator: _validatePassword,
+                          validator: _validateConfirmPassword,
                         ),
-                        const SizedBox(height: 12),
-                        CheckboxListTile(
-                          value: _kvkk,
-                          onChanged: (v) => setState(() => _kvkk = v ?? false),
-                          title: const Text(
-                              'Aydınlatma metnini okudum, onaylıyorum.'),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 24),
+
+                        // Register button
                         SizedBox(
                           height: 48,
                           child: FilledButton(
@@ -239,80 +267,32 @@ class _RegisterPageState extends State<RegisterPage> {
                                     height: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
-                                      ),
+                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                                     ),
                                   )
-                                : const Text('Kaydol'),
+                                : Text('${_selectedRole.displayName} Hesabı Oluştur'),
                           ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // Login link
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) => LoginPage(),
+                              ),
+                            );
+                          },
+                          child: const Text('Zaten hesabınız var mı? Giriş yapın'),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRoleCard(
-    UserRole role,
-    IconData icon,
-    String title,
-    String subtitle,
-    ThemeData theme,
-  ) {
-    final isSelected = _selectedRole == role;
-
-    return GestureDetector(
-      onTap: () => setState(() => _selectedRole = role),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: isSelected
-                ? theme.colorScheme.primary
-                : theme.colorScheme.outline,
-            width: isSelected ? 2 : 1,
-          ),
-          borderRadius: BorderRadius.circular(12),
-          color: isSelected
-              ? theme.colorScheme.primaryContainer.withOpacity(0.3)
-              : null,
-        ),
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              size: 32,
-              color: isSelected
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onSurface,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: isSelected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 12,
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
         ),
       ),
     );

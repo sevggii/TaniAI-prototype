@@ -1,6 +1,6 @@
 Proje Adı:TanıAI (TanıAL)
 
-Proje Kategorisi: Doğal Dil İşleme (NPL)
+Proje Kategorisi: Doğal Dil İşleme (NLP)
 
 SORULAR VE CEVAPLAR:
 
