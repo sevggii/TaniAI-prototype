@@ -1,0 +1,261 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/user.dart';
+import '../models/user_role.dart';
+
+class FirebaseAuthService {
+  static final FirebaseAuthService _instance = FirebaseAuthService._internal();
+  factory FirebaseAuthService() => _instance;
+  FirebaseAuthService._internal();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  /// Get current user
+  User? get currentUser => _auth.currentUser;
+
+  /// Check if user is logged in
+  bool get isLoggedIn => _auth.currentUser != null;
+
+  /// Get auth state changes stream
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
+
+  /// Register with email and password
+  Future<UserModel> register({
+    required String name,
+    required String email,
+    required String password,
+    required UserRole role,
+  }) async {
+    try {
+      // Validate password strength
+      if (password.length < 6) {
+        throw Exception('Şifre en az 6 karakter olmalı');
+      }
+
+      // Create Firebase user
+      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email.toLowerCase().trim(),
+        password: password,
+      );
+
+      final User? user = userCredential.user;
+      if (user == null) {
+        throw Exception('Kullanıcı oluşturulamadı');
+      }
+
+      // Update display name
+      await user.updateDisplayName(name.trim());
+
+      // Create user document in Firestore
+      final userModel = UserModel(
+        id: user.uid,
+        name: name.trim(),
+        email: email.toLowerCase().trim(),
+        role: role,
+        createdAt: DateTime.now(),
+      );
+
+      await _firestore.collection('users').doc(user.uid).set({
+        'id': userModel.id,
+        'name': userModel.name,
+        'email': userModel.email,
+        'role': userModel.role.name,
+        'createdAt': userModel.createdAt.toIso8601String(),
+        'lastLoginAt': DateTime.now().toIso8601String(),
+      });
+
+      return userModel;
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'weak-password':
+          errorMessage = 'Şifre çok zayıf';
+          break;
+        case 'email-already-in-use':
+          errorMessage = 'Bu e-posta adresi zaten kayıtlı';
+          break;
+        case 'invalid-email':
+          errorMessage = 'Geçersiz e-posta adresi';
+          break;
+        default:
+          errorMessage = 'Kayıt işlemi başarısız: ${e.message}';
+      }
+      throw Exception(errorMessage);
+    } catch (e) {
+      throw Exception('Kayıt işlemi başarısız: ${e.toString()}');
+    }
+  }
+
+  /// Login with email and password
+  Future<UserModel> login({
+    required String email,
+    required String password,
+    required UserRole role,
+  }) async {
+    try {
+      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email.toLowerCase().trim(),
+        password: password,
+      );
+
+      final User? user = userCredential.user;
+      if (user == null) {
+        throw Exception('Giriş işlemi başarısız');
+      }
+
+      // Get user data from Firestore
+      final DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+      
+      if (!userDoc.exists) {
+        throw Exception('Kullanıcı bilgileri bulunamadı');
+      }
+
+      final userData = userDoc.data() as Map<String, dynamic>;
+      
+      // Update last login time
+      await _firestore.collection('users').doc(user.uid).update({
+        'lastLoginAt': DateTime.now().toIso8601String(),
+      });
+
+      final userModel = UserModel(
+        id: userData['id'],
+        name: userData['name'],
+        email: userData['email'],
+        role: UserRole.values.firstWhere((r) => r.name == userData['role']),
+        createdAt: DateTime.parse(userData['createdAt']),
+      );
+
+      return userModel;
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'Kullanıcı bulunamadı. Lütfen önce kayıt olun.';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Şifre hatalı';
+          break;
+        case 'invalid-email':
+          errorMessage = 'Geçersiz e-posta adresi';
+          break;
+        case 'user-disabled':
+          errorMessage = 'Bu hesap devre dışı bırakılmış';
+          break;
+        case 'too-many-requests':
+          errorMessage = 'Çok fazla başarısız deneme. Lütfen daha sonra tekrar deneyin.';
+          break;
+        default:
+          errorMessage = 'Giriş işlemi başarısız: ${e.message}';
+      }
+      throw Exception(errorMessage);
+    } catch (e) {
+      throw Exception('Giriş işlemi başarısız: ${e.toString()}');
+    }
+  }
+
+  /// Logout
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      throw Exception('Çıkış işlemi başarısız: ${e.toString()}');
+    }
+  }
+
+  /// Send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email.toLowerCase().trim());
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'Bu e-posta adresi kayıtlı değil';
+          break;
+        case 'invalid-email':
+          errorMessage = 'Geçersiz e-posta adresi';
+          break;
+        default:
+          errorMessage = 'Şifre sıfırlama e-postası gönderilemedi: ${e.message}';
+      }
+      throw Exception(errorMessage);
+    } catch (e) {
+      throw Exception('Şifre sıfırlama e-postası gönderilemedi: ${e.toString()}');
+    }
+  }
+
+  /// Update user profile
+  Future<void> updateProfile({
+    String? name,
+    String? email,
+  }) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('Kullanıcı giriş yapmamış');
+    }
+
+    try {
+      // Update Firebase Auth profile
+      if (name != null) {
+        await user.updateDisplayName(name);
+      }
+      if (email != null) {
+        await user.updateEmail(email);
+      }
+
+      // Update Firestore document
+      final updateData = <String, dynamic>{};
+      if (name != null) updateData['name'] = name;
+      if (email != null) updateData['email'] = email.toLowerCase().trim();
+
+      if (updateData.isNotEmpty) {
+        await _firestore.collection('users').doc(user.uid).update(updateData);
+      }
+    } catch (e) {
+      throw Exception('Profil güncellenemedi: ${e.toString()}');
+    }
+  }
+
+  /// Get user data from Firestore
+  Future<UserModel?> getUserData(String uid) async {
+    try {
+      final DocumentSnapshot userDoc = await _firestore.collection('users').doc(uid).get();
+      
+      if (!userDoc.exists) {
+        return null;
+      }
+
+      final userData = userDoc.data() as Map<String, dynamic>;
+      
+      return UserModel(
+        id: userData['id'],
+        name: userData['name'],
+        email: userData['email'],
+        role: UserRole.values.firstWhere((r) => r.name == userData['role']),
+        createdAt: DateTime.parse(userData['createdAt']),
+      );
+    } catch (e) {
+      print('Error getting user data: $e');
+      return null;
+    }
+  }
+
+  /// Delete user account
+  Future<void> deleteAccount() async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('Kullanıcı giriş yapmamış');
+    }
+
+    try {
+      // Delete user document from Firestore
+      await _firestore.collection('users').doc(user.uid).delete();
+      
+      // Delete Firebase Auth account
+      await user.delete();
+    } catch (e) {
+      throw Exception('Hesap silinemedi: ${e.toString()}');
+    }
+  }
+}

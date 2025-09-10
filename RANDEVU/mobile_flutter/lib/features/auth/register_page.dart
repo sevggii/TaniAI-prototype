@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/user_role.dart';
-import '../../services/auth_local_service.dart';
+import '../../services/firebase_auth_service.dart';
 import '../../home_page.dart';
 import 'login_page.dart';
 
@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
-  final _auth = AuthLocalService();
+  final _auth = FirebaseAuthService();
 
   @override
   void initState() {

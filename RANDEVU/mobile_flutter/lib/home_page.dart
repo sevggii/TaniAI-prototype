@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'type_booking_page.dart';
-import 'services/auth_local_service.dart';
+import 'services/firebase_auth_service.dart';
 import 'models/user.dart';
 import 'features/profile/profile_page.dart';
 import 'features/radiology/radiology_page.dart';
@@ -17,8 +18,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final AuthLocalService _auth = AuthLocalService();
+  final FirebaseAuthService _auth = FirebaseAuthService();
   UserModel? _user;
+  User? _firebaseUser;
 
   @override
   void initState() {
@@ -27,9 +29,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _load() async {
-    await _auth.initialize();
-    final u = _auth.current;
-    if (mounted) setState(() => _user = u);
+    _firebaseUser = FirebaseAuth.instance.currentUser;
+    if (_firebaseUser != null) {
+      final userData = await _auth.getUserData(_firebaseUser!.uid);
+      if (mounted) setState(() => _user = userData);
+    }
   }
 
   Future<void> _startCall(BuildContext context) async {
@@ -55,8 +59,8 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(_user?.name ?? 'Kullanıcı'),
-              accountEmail: Text(_user?.email ?? ''),
+              accountName: Text(_user?.name ?? _firebaseUser?.displayName ?? 'Kullanıcı'),
+              accountEmail: Text(_user?.email ?? _firebaseUser?.email ?? ''),
               currentAccountPicture:
                   const CircleAvatar(child: Icon(Icons.person)),
             ),

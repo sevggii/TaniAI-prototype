@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/user_role.dart';
-import '../services/auth_local_service.dart';
+import '../services/firebase_auth_service.dart';
 import '../home_page.dart';
 import '../features/auth/register_page.dart';
 import '../features/auth/forgot_password_page.dart';
@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
   bool _rememberMe = true;
   bool _obscure = true;
   bool _isLoading = false;
-  final _auth = AuthLocalService();
+  final _auth = FirebaseAuthService();
 
   @override
   void dispose() {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/auth_local_service.dart';
+import '../../services/firebase_auth_service.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -13,7 +13,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _emailController = TextEditingController();
   bool _isLoading = false;
   bool _emailSent = false;
-  final _auth = AuthLocalService();
+  final _auth = FirebaseAuthService();
 
   @override
   void dispose() {

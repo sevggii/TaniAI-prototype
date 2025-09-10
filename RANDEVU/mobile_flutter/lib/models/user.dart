@@ -70,7 +70,7 @@ class UserModel {
   String toJsonString() => jsonEncode(toJson());
 }
 
-class User {
+class LocalUser {
   final String name;
   final String email;
   final String? phone;
@@ -78,7 +78,7 @@ class User {
   final String recoveryQuestion;
   final String recoveryAnswerHash;
 
-  const User({
+  const LocalUser({
     required this.name,
     required this.email,
     this.phone,
@@ -96,8 +96,8 @@ class User {
         'recoveryAnswerHash': recoveryAnswerHash,
       };
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory LocalUser.fromJson(Map<String, dynamic> json) {
+    return LocalUser(
       name: json['name'] as String? ?? '',
       email: json['email'] as String? ?? '',
       phone: json['phone'] as String?,
@@ -107,11 +107,11 @@ class User {
     );
   }
 
-  static User? fromJsonString(String? jsonString) {
+  static LocalUser? fromJsonString(String? jsonString) {
     if (jsonString == null || jsonString.isEmpty) return null;
     try {
       final map = jsonDecode(jsonString) as Map<String, dynamic>;
-      return User.fromJson(map);
+      return LocalUser.fromJson(map);
     } catch (_) {
       return null;
     }
