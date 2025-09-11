@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/firebase_auth_service.dart';
+import '../../services/notification_service.dart';
 import '../auth/login_page.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -11,7 +12,75 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final FirebaseAuthService _auth = FirebaseAuthService();
+  final NotificationService _notificationService = NotificationService();
   bool _isLoading = false;
+  bool _notificationsEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNotificationStatus();
+  }
+
+  Future<void> _checkNotificationStatus() async {
+    final enabled = await _notificationService.areNotificationsEnabled();
+    setState(() {
+      _notificationsEnabled = enabled;
+    });
+  }
+
+  Future<void> _toggleNotifications(bool enabled) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      if (enabled) {
+        final hasPermission = await _notificationService.requestPermissions();
+        if (hasPermission) {
+          await _notificationService.scheduleAllNotifications();
+          setState(() {
+            _notificationsEnabled = true;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Bildirimler etkinleştirildi! 🌟'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Bildirim izni verilmedi'),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        }
+      } else {
+        await _notificationService.cancelAllNotifications();
+        setState(() {
+          _notificationsEnabled = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Bildirimler devre dışı bırakıldı'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hata: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   Future<void> _showDeleteAccountDialog() async {
     return showDialog<void>(
@@ -154,6 +223,43 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : Icon(Icons.arrow_forward_ios, size: 16),
+              ),
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Notifications Section
+            Text(
+              'Bildirimler',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                border: Border.all(color: theme.colorScheme.outline.withOpacity(0.3)),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SwitchListTile(
+                title: Text(
+                  'Sağlık Hatırlatmaları',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                subtitle: Text(
+                  'Günlük sağlık aktiviteleri için dostane hatırlatmalar',
+                  style: TextStyle(fontSize: 12),
+                ),
+                value: _notificationsEnabled,
+                onChanged: _isLoading ? null : _toggleNotifications,
+                secondary: Icon(
+                  _notificationsEnabled ? Icons.notifications_active : Icons.notifications_off,
+                  color: _notificationsEnabled ? Colors.green : Colors.grey,
+                ),
               ),
             ),
             

@@ -49,5 +49,12 @@
 	<string>Kamera ile radyolojik görüntü çekmek için gereklidir.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Galeriden radyolojik görüntü seçmek için gereklidir.</string>
+	
+	<!-- Notification permissions -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

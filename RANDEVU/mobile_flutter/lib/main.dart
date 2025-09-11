@@ -4,6 +4,7 @@ import 'firebase_options.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/splash_auth_gate.dart';
 import 'services/firebase_auth_service.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,16 @@ void main() async {
   // Clean up expired soft deleted accounts
   final authService = FirebaseAuthService();
   await authService.cleanupExpiredAccounts();
+  
+  // Initialize notification service
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+  
+  // Request notification permissions and schedule notifications
+  final hasPermission = await notificationService.requestPermissions();
+  if (hasPermission) {
+    await notificationService.scheduleAllNotifications();
+  }
   
   runApp(const TanialRandevuApp());
 }
