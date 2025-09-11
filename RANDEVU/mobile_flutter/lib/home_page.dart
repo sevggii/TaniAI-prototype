@@ -9,6 +9,7 @@ import 'features/radiology/radiology_page.dart';
 import 'features/meds/meds_page.dart';
 import 'features/settings/settings_page.dart';
 import 'features/auth/login_page.dart';
+import 'features/auth/firebase_test_page.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/platform_utils.dart';
 
@@ -869,6 +870,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SettingsPage()),
+                    );
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  theme,
+                  'Firebase Test',
+                  Icons.bug_report_rounded,
+                  () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const FirebaseTestPage()),
                     );
                   },
                 ),

@@ -27,15 +27,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     setState(() => _isLoading = true);
 
     try {
+      print('📧 Attempting to send password reset email...');
       await _auth.sendPasswordResetEmail(_emailController.text);
       
       if (!mounted) return;
       setState(() => _emailSent = true);
       
+      print('✅ Password reset email sent successfully to: ${_emailController.text}');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Şifre sıfırlama e-postası gönderildi')),
       );
     } catch (e) {
+      print('❌ Error sending password reset email: $e');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),

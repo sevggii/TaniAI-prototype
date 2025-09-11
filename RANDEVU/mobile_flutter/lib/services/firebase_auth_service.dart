@@ -183,8 +183,11 @@ class FirebaseAuthService {
   /// Send password reset email
   Future<void> sendPasswordResetEmail(String email) async {
     try {
+      print('🔐 Sending password reset email to: ${email.toLowerCase().trim()}');
       await _auth.sendPasswordResetEmail(email: email.toLowerCase().trim());
+      print('✅ Password reset email sent successfully');
     } on FirebaseAuthException catch (e) {
+      print('❌ Firebase Auth Error: ${e.code} - ${e.message}');
       String errorMessage;
       switch (e.code) {
         case 'user-not-found':
@@ -192,6 +195,9 @@ class FirebaseAuthService {
           break;
         case 'invalid-email':
           errorMessage = 'Geçersiz e-posta adresi';
+          break;
+        case 'too-many-requests':
+          errorMessage = 'Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin.';
           break;
         default:
           errorMessage = 'Şifre sıfırlama e-postası gönderilemedi: ${e.message}';
