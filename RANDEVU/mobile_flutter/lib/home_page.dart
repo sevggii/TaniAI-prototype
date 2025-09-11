@@ -10,6 +10,8 @@ import 'features/meds/meds_page.dart';
 import 'features/settings/settings_page.dart';
 import 'features/auth/login_page.dart';
 import 'features/auth/firebase_test_page.dart';
+import 'features/auth/notification_test_page.dart';
+import 'features/pharmacy/pharmacy_finder_page.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/platform_utils.dart';
 
@@ -493,6 +495,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ),
         const SizedBox(height: 16),
+        Column(
+          children: [
         Row(
           children: [
             Expanded(
@@ -522,9 +526,89 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 },
               ),
             ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            // Eczane bulma kartı - tam genişlik
+            _buildPharmacyCard(context, theme),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildPharmacyCard(BuildContext context, ThemeData theme) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const PharmacyFinderPage(),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF4CAF50), Color(0xFF66BB6A)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF4CAF50).withOpacity(0.3),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.local_pharmacy_rounded,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Yakınlardaki Eczaneler',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'En yakın eczane ve nöbetçi eczaneleri bulun',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.white.withOpacity(0.9),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -882,6 +966,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const FirebaseTestPage()),
+                    );
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  theme,
+                  'Bildirim Test',
+                  Icons.notifications_active_rounded,
+                  () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const NotificationTestPage()),
                     );
                   },
                 ),

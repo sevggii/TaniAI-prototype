@@ -50,6 +50,10 @@ dependencies:
   # Notification dependencies
   flutter_local_notifications: ^17.2.3
   timezone: ^0.9.4
+  
+  # Location and permissions
+  geolocator: ^10.1.0
+  permission_handler: ^11.0.1
 
 dev_dependencies:
   flutter_test:

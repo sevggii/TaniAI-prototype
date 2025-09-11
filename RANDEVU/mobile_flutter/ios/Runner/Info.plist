@@ -50,6 +50,12 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Galeriden radyolojik görüntü seçmek için gereklidir.</string>
 	
+	<!-- Location permissions -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Yakınlardaki eczaneleri bulmak için konum bilgisine ihtiyaç vardır.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Yakınlardaki eczaneleri bulmak için konum bilgisine ihtiyaç vardır.</string>
+	
 	<!-- Notification permissions -->
 	<key>UIBackgroundModes</key>
 	<array>

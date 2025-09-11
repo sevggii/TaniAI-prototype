@@ -19,11 +19,14 @@ class NotificationService {
 
   /// Initialize the notification service
   Future<void> initialize() async {
+    print('🔔 Initializing notification service...');
+    
     // Initialize timezone data
     tz.initializeTimeZones();
     
     // Set default timezone to Istanbul
     tz.setLocalLocation(tz.getLocation('Europe/Istanbul'));
+    print('🌍 Timezone set to: Europe/Istanbul');
 
     // Android initialization settings
     const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -46,12 +49,14 @@ class NotificationService {
       initSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
+    print('✅ Notification plugin initialized');
 
     // Create Android notification channel
     await _createAndroidChannel();
 
     // Load notification configuration
     await _loadConfig();
+    print('📋 Notification config loaded');
   }
 
   /// Create Android notification channel
@@ -106,18 +111,28 @@ class NotificationService {
 
   /// Schedule all notifications based on configuration
   Future<void> scheduleAllNotifications() async {
+    print('📅 Starting to schedule all notifications...');
+    
     if (_config == null) {
+      print('❌ Notification config not loaded');
       debugPrint('Notification config not loaded');
       return;
     }
 
+    print('📋 Config loaded: ${_config!.notifications.length} notifications found');
+
     // Cancel existing notifications first
     await cancelAllNotifications();
+    print('🗑️ Existing notifications cancelled');
 
+    int scheduledCount = 0;
     for (final notification in _config!.notifications) {
+      print('⏰ Scheduling notification: ${notification.category} at ${notification.time}');
       await _scheduleNotification(notification);
+      scheduledCount++;
     }
 
+    print('✅ All wellbeing notifications scheduled! 🌟 Total: $scheduledCount');
     debugPrint('All wellbeing notifications scheduled! 🌟');
   }
 
@@ -375,11 +390,14 @@ class NotificationService {
 
   /// Request notification permissions
   Future<bool> requestPermissions() async {
+    print('🔐 Requesting notification permissions...');
+    
     if (Platform.isAndroid) {
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
           _notifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       
       final bool? granted = await androidImplementation?.requestNotificationsPermission();
+      print('📱 Android permission result: $granted');
       return granted ?? false;
     } else if (Platform.isIOS) {
       final bool? granted = await _notifications
@@ -389,8 +407,10 @@ class NotificationService {
             badge: true,
             sound: true,
           );
+      print('🍎 iOS permission result: $granted');
       return granted ?? false;
     }
+    print('❌ Platform not supported for permissions');
     return false;
   }
 
