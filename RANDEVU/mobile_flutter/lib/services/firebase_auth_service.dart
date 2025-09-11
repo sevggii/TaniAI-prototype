@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 import '../models/user_role.dart';
 
@@ -92,6 +93,7 @@ class FirebaseAuthService {
     required String email,
     required String password,
     required UserRole role,
+    bool rememberMe = false,
   }) async {
     try {
       final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -126,6 +128,13 @@ class FirebaseAuthService {
         createdAt: DateTime.parse(userData['createdAt']),
       );
 
+      // Save remember me preference
+      if (rememberMe) {
+        await _saveRememberMeData(email.toLowerCase().trim(), password);
+      } else {
+        await _clearRememberMeData();
+      }
+
       return userModel;
     } on FirebaseAuthException catch (e) {
       String errorMessage;
@@ -158,6 +167,7 @@ class FirebaseAuthService {
   Future<void> logout() async {
     try {
       await _auth.signOut();
+      await _clearRememberMeData();
     } catch (e) {
       throw Exception('Çıkış işlemi başarısız: ${e.toString()}');
     }
@@ -254,8 +264,67 @@ class FirebaseAuthService {
       
       // Delete Firebase Auth account
       await user.delete();
+      
+      // Clear remember me data
+      await _clearRememberMeData();
     } catch (e) {
       throw Exception('Hesap silinemedi: ${e.toString()}');
+    }
+  }
+
+  /// Save remember me data to SharedPreferences
+  Future<void> _saveRememberMeData(String email, String password) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('remember_me', true);
+      await prefs.setString('remembered_email', email);
+      await prefs.setString('remembered_password', password);
+    } catch (e) {
+      print('Error saving remember me data: $e');
+    }
+  }
+
+  /// Clear remember me data from SharedPreferences
+  Future<void> _clearRememberMeData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('remember_me');
+      await prefs.remove('remembered_email');
+      await prefs.remove('remembered_password');
+    } catch (e) {
+      print('Error clearing remember me data: $e');
+    }
+  }
+
+  /// Get remembered login data
+  Future<Map<String, String>?> getRememberedLoginData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final rememberMe = prefs.getBool('remember_me') ?? false;
+      
+      if (rememberMe) {
+        final email = prefs.getString('remembered_email');
+        final password = prefs.getString('remembered_password');
+        
+        if (email != null && password != null) {
+          return {'email': email, 'password': password};
+        }
+      }
+      return null;
+    } catch (e) {
+      print('Error getting remembered login data: $e');
+      return null;
+    }
+  }
+
+  /// Check if user should be remembered
+  Future<bool> shouldRememberUser() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getBool('remember_me') ?? false;
+    } catch (e) {
+      print('Error checking remember me status: $e');
+      return false;
     }
   }
 }

@@ -27,10 +27,31 @@ class _LoginFormState extends State<LoginForm> {
   final _auth = FirebaseAuthService();
 
   @override
+  void initState() {
+    super.initState();
+    _loadRememberedData();
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadRememberedData() async {
+    try {
+      final rememberedData = await _auth.getRememberedLoginData();
+      if (rememberedData != null) {
+        setState(() {
+          _emailController.text = rememberedData['email'] ?? '';
+          _passwordController.text = rememberedData['password'] ?? '';
+          _rememberMe = true;
+        });
+      }
+    } catch (e) {
+      print('Error loading remembered data: $e');
+    }
   }
 
   Future<void> _submit() async {
@@ -43,6 +64,7 @@ class _LoginFormState extends State<LoginForm> {
         email: _emailController.text,
         password: _passwordController.text,
         role: widget.role,
+        rememberMe: _rememberMe,
       );
 
       if (!mounted) return;
