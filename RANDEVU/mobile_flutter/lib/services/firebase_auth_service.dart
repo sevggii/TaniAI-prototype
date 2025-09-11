@@ -106,6 +106,13 @@ class FirebaseAuthService {
         throw Exception('Giriş işlemi başarısız');
       }
 
+      // Check if account is soft deleted
+      final isSoftDeleted = await isAccountSoftDeleted(user.uid);
+      if (isSoftDeleted) {
+        // Restore the account
+        await restoreAccount();
+      }
+
       // Get user data from Firestore
       final DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
       
@@ -325,6 +332,130 @@ class FirebaseAuthService {
     } catch (e) {
       print('Error checking remember me status: $e');
       return false;
+    }
+  }
+
+  /// Soft delete user account (with recovery period)
+  Future<void> softDeleteAccount() async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('Kullanıcı giriş yapmamış');
+    }
+
+    try {
+      final deleteTime = DateTime.now();
+      final recoveryDeadline = deleteTime.add(const Duration(minutes: 5)); // 5 dakika geri dönüş süresi
+      
+      // Update user document with soft delete info
+      await _firestore.collection('users').doc(user.uid).update({
+        'isSoftDeleted': true,
+        'softDeletedAt': deleteTime.toIso8601String(),
+        'recoveryDeadline': recoveryDeadline.toIso8601String(),
+      });
+
+      // Sign out user
+      await _auth.signOut();
+      await _clearRememberMeData();
+    } catch (e) {
+      throw Exception('Hesap silme işlemi başarısız: ${e.toString()}');
+    }
+  }
+
+  /// Restore soft deleted account
+  Future<void> restoreAccount() async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('Kullanıcı giriş yapmamış');
+    }
+
+    try {
+      // Remove soft delete info
+      await _firestore.collection('users').doc(user.uid).update({
+        'isSoftDeleted': false,
+        'softDeletedAt': null,
+        'recoveryDeadline': null,
+      });
+    } catch (e) {
+      throw Exception('Hesap geri yükleme işlemi başarısız: ${e.toString()}');
+    }
+  }
+
+  /// Check if account is soft deleted and within recovery period
+  Future<bool> isAccountSoftDeleted(String uid) async {
+    try {
+      final userDoc = await _firestore.collection('users').doc(uid).get();
+      
+      if (!userDoc.exists) {
+        return false;
+      }
+
+      final userData = userDoc.data() as Map<String, dynamic>;
+      final isSoftDeleted = userData['isSoftDeleted'] ?? false;
+      
+      if (!isSoftDeleted) {
+        return false;
+      }
+
+      final recoveryDeadlineStr = userData['recoveryDeadline'];
+      if (recoveryDeadlineStr == null) {
+        return false;
+      }
+
+      final recoveryDeadline = DateTime.parse(recoveryDeadlineStr);
+      final now = DateTime.now();
+
+      // If recovery period has passed, permanently delete
+      if (now.isAfter(recoveryDeadline)) {
+        await _permanentlyDeleteAccount(uid);
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      print('Error checking soft delete status: $e');
+      return false;
+    }
+  }
+
+  /// Permanently delete account (internal use)
+  Future<void> _permanentlyDeleteAccount(String uid) async {
+    try {
+      // Delete user document from Firestore
+      await _firestore.collection('users').doc(uid).delete();
+      
+      // Delete Firebase Auth account
+      final user = _auth.currentUser;
+      if (user != null && user.uid == uid) {
+        await user.delete();
+      }
+    } catch (e) {
+      print('Error permanently deleting account: $e');
+    }
+  }
+
+  /// Check and clean up expired soft deleted accounts
+  Future<void> cleanupExpiredAccounts() async {
+    try {
+      final now = DateTime.now();
+      final querySnapshot = await _firestore
+          .collection('users')
+          .where('isSoftDeleted', isEqualTo: true)
+          .get();
+
+      for (final doc in querySnapshot.docs) {
+        final userData = doc.data();
+        final recoveryDeadlineStr = userData['recoveryDeadline'];
+        
+        if (recoveryDeadlineStr != null) {
+          final recoveryDeadline = DateTime.parse(recoveryDeadlineStr);
+          
+          if (now.isAfter(recoveryDeadline)) {
+            await _permanentlyDeleteAccount(doc.id);
+          }
+        }
+      }
+    } catch (e) {
+      print('Error cleaning up expired accounts: $e');
     }
   }
 }
