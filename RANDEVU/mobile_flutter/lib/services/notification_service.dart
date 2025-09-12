@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:permission_handler/permission_handler.dart';
 
 /// Friendly, warm and humorous notification service for wellbeing reminders
 class NotificationService {
@@ -66,14 +67,19 @@ class NotificationService {
         'wellbeing_reminders',
         'Wellbeing Reminders',
         description: 'Friendly reminders for your daily wellbeing activities',
-        importance: Importance.high,
+        importance: Importance.max,
         playSound: true,
         enableVibration: true,
+        enableLights: true,
+        showBadge: true,
+        sound: RawResourceAndroidNotificationSound('notification'),
       );
 
       await _notifications
           .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(channel);
+      
+      print('📱 Android notification channel created with max importance');
     }
   }
 
@@ -185,12 +191,15 @@ class NotificationService {
       'wellbeing_reminders',
       'Wellbeing Reminders',
       channelDescription: 'Friendly reminders for your daily wellbeing activities',
-      importance: Importance.high,
-      priority: Priority.high,
+      importance: Importance.max,
+      priority: Priority.max,
       showWhen: true,
       enableLights: true,
       enableVibration: true,
       playSound: true,
+      sound: RawResourceAndroidNotificationSound('notification'),
+      fullScreenIntent: true,
+      category: AndroidNotificationCategory.alarm,
       actions: [
         AndroidNotificationAction('snooze', 'Snooze 30m', showsUserInterface: false),
         AndroidNotificationAction('done', 'Mark Done', showsUserInterface: false),
@@ -393,12 +402,22 @@ class NotificationService {
     print('🔐 Requesting notification permissions...');
     
     if (Platform.isAndroid) {
+      // Use permission_handler for more reliable permission requests
+      final notificationStatus = await Permission.notification.request();
+      print('📱 Notification permission status: $notificationStatus');
+      
+      // Also request exact alarm permissions for Android 12+
+      final exactAlarmStatus = await Permission.scheduleExactAlarm.request();
+      print('📱 Exact alarm permission status: $exactAlarmStatus');
+      
+      // Fallback to flutter_local_notifications method
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
           _notifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       
       final bool? granted = await androidImplementation?.requestNotificationsPermission();
-      print('📱 Android permission result: $granted');
-      return granted ?? false;
+      print('📱 Android POST_NOTIFICATIONS permission result: $granted');
+      
+      return notificationStatus.isGranted || (granted ?? false);
     } else if (Platform.isIOS) {
       final bool? granted = await _notifications
           .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
@@ -422,6 +441,46 @@ class NotificationService {
       return await androidImplementation?.areNotificationsEnabled() ?? false;
     }
     return true; // iOS doesn't have this method
+  }
+
+  /// Send a test notification immediately
+  Future<void> sendTestNotification() async {
+    print('🧪 Sending test notification...');
+    
+    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+      'wellbeing_reminders',
+      'Wellbeing Reminders',
+      channelDescription: 'Friendly reminders for your daily wellbeing activities',
+      importance: Importance.max,
+      priority: Priority.max,
+      showWhen: true,
+      enableLights: true,
+      enableVibration: true,
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('notification'),
+      fullScreenIntent: true,
+      category: AndroidNotificationCategory.alarm,
+    );
+
+    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
+
+    await _notifications.show(
+      99999, // Test notification ID
+      '🧪 Test Bildirimi',
+      'Bildirimler çalışıyor! 🎉',
+      notificationDetails,
+    );
+    
+    print('✅ Test notification sent');
   }
 }
 

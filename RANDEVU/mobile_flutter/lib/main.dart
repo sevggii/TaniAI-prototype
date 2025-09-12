@@ -9,23 +9,40 @@ import 'services/notification_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  
-  // Clean up expired soft deleted accounts
-  final authService = FirebaseAuthService();
-  await authService.cleanupExpiredAccounts();
-  
-  // Initialize notification service
-  final notificationService = NotificationService();
-  await notificationService.initialize();
-  
-  // Request notification permissions and schedule notifications
-  final hasPermission = await notificationService.requestPermissions();
-  if (hasPermission) {
-    await notificationService.scheduleAllNotifications();
+  try {
+    // Initialize Firebase
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print('🔥 Firebase initialized successfully');
+    
+    // Clean up expired soft deleted accounts
+    final authService = FirebaseAuthService();
+    await authService.cleanupExpiredAccounts();
+    print('🧹 Account cleanup completed');
+    
+    // Initialize notification service
+    final notificationService = NotificationService();
+    await notificationService.initialize();
+    print('🔔 Notification service initialized');
+    
+    // Request notification permissions and schedule notifications
+    final hasPermission = await notificationService.requestPermissions();
+    print('📱 Notification permission granted: $hasPermission');
+    
+    if (hasPermission) {
+      await notificationService.scheduleAllNotifications();
+      print('✅ All notifications scheduled successfully');
+      
+      // Send a test notification to verify everything works
+      await Future.delayed(const Duration(seconds: 2));
+      await notificationService.sendTestNotification();
+    } else {
+      print('⚠️ Notification permissions not granted - notifications will not work');
+    }
+    
+  } catch (e) {
+    print('❌ Error during initialization: $e');
   }
   
   runApp(const TanialRandevuApp());
