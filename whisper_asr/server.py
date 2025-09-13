@@ -13,6 +13,10 @@ import logging
 import os
 
 # Whisper ASR modüllerini import et
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from whisper_asr import get_asr_processor
 from whisper_asr.symptom_analyzer import get_symptom_analyzer
 
@@ -60,7 +64,7 @@ async def upload_audio_file(audio_file: UploadFile = File(...)):
             raise HTTPException(status_code=400, detail="Dosya boyutu çok büyük (Max: 10MB)")
         
         # Desteklenen formatlar
-        allowed_extensions = ['.wav', '.mp3', '.m4a', '.flac', '.ogg']
+        allowed_extensions = ['.wav', '.mp3', '.m4a', '.flac', '.ogg', '.webm']
         file_extension = os.path.splitext(audio_file.filename.lower())[1]
         
         if file_extension not in allowed_extensions:

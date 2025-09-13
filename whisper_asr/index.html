@@ -248,16 +248,33 @@
             </div>
 
             <div class="upload-section">
-                <h2>🎵 Ses Dosyası Yükle</h2>
+                <h2>🎤 Ses Girişi</h2>
                 <p style="margin-bottom: 20px; color: #666;">
-                    Desteklenen formatlar: WAV, MP3, M4A, FLAC, OGG (Max: 10MB)
+                    Mikrofon ile kayıt yapın veya ses dosyası yükleyin
                 </p>
                 
-                <div class="file-input-wrapper">
-                    <input type="file" id="audioFile" class="file-input" accept="audio/*">
-                    <label for="audioFile" class="file-input-label">
-                        📁 Ses Dosyası Seç
-                    </label>
+                <!-- Mikrofon Kayıt Bölümü -->
+                <div style="margin-bottom: 30px; padding: 20px; background: #e8f5e8; border-radius: 10px; border: 2px solid #27ae60;">
+                    <h3 style="color: #27ae60; margin-bottom: 15px;">🎙️ Mikrofon Kayıt</h3>
+                    <button class="process-btn" id="recordBtn" onclick="toggleRecording()" style="background: #27ae60;">
+                        🎤 Kayıt Başlat
+                    </button>
+                    <div id="recordingStatus" style="margin-top: 10px; font-size: 14px;"></div>
+                    <div id="recordingTimer" style="margin-top: 10px; font-weight: bold; color: #e74c3c;"></div>
+                </div>
+                
+                <!-- Dosya Yükleme Bölümü -->
+                <div style="margin-bottom: 20px; padding: 20px; background: #e7f3ff; border-radius: 10px; border: 2px solid #4facfe;">
+                    <h3 style="color: #4facfe; margin-bottom: 15px;">📁 Ses Dosyası Yükle</h3>
+                    <p style="margin-bottom: 15px; color: #666; font-size: 14px;">
+                        Desteklenen formatlar: WAV, MP3, M4A, FLAC, OGG (Max: 10MB)
+                    </p>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="audioFile" class="file-input" accept="audio/*">
+                        <label for="audioFile" class="file-input-label">
+                            📁 Dosya Seç
+                        </label>
+                    </div>
                 </div>
                 
                 <button class="process-btn" id="processBtn" onclick="processAudio()">
@@ -280,7 +297,14 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:8000/whisper';
+        const API_BASE = 'http://localhost:8001/whisper';
+        
+        // Mikrofon kayıt değişkenleri
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let recordingTimer = null;
+        let recordingStartTime = null;
 
         function showStatus(message, type = 'info') {
             const statusDiv = document.getElementById('status');
@@ -383,6 +407,142 @@
             `;
 
             resultsDiv.style.display = 'block';
+        }
+
+        // Mikrofon kayıt fonksiyonları
+        async function toggleRecording() {
+            if (!isRecording) {
+                await startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        async function startRecording() {
+            try {
+                // Mobil cihaz kontrolü
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                const audioConstraints = {
+                    sampleRate: isMobile ? 16000 : 44100, // Mobilde daha düşük sample rate
+                    channelCount: 1,
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                };
+                
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: audioConstraints
+                });
+                
+                // Mobil uyumlu format seçimi
+                let mimeType = 'audio/webm;codecs=opus';
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = 'audio/webm';
+                }
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = 'audio/mp4';
+                }
+                
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: mimeType
+                });
+                
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = function(event) {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = function() {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    processRecordedAudio(audioBlob);
+                    
+                    // Stream'i kapat
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                
+                // UI güncelle
+                document.getElementById('recordBtn').textContent = '⏹️ Kayıt Durdur';
+                document.getElementById('recordBtn').style.background = '#e74c3c';
+                document.getElementById('recordingStatus').innerHTML = '<span style="color: #e74c3c;">🔴 Kayıt yapılıyor...</span>';
+                
+                // Timer başlat
+                recordingStartTime = Date.now();
+                recordingTimer = setInterval(updateTimer, 1000);
+                
+                showStatus('🎤 Mikrofon kaydı başladı. Konuşmaya başlayabilirsiniz!', 'info');
+                
+            } catch (error) {
+                console.error('Mikrofon erişim hatası:', error);
+                showStatus('❌ Mikrofon erişimi reddedildi. Lütfen tarayıcı izinlerini kontrol edin.', 'error');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                
+                // UI güncelle
+                document.getElementById('recordBtn').textContent = '🎤 Kayıt Başlat';
+                document.getElementById('recordBtn').style.background = '#27ae60';
+                document.getElementById('recordingStatus').innerHTML = '<span style="color: #27ae60;">✅ Kayıt tamamlandı!</span>';
+                
+                // Timer'ı durdur
+                if (recordingTimer) {
+                    clearInterval(recordingTimer);
+                    recordingTimer = null;
+                }
+                document.getElementById('recordingTimer').textContent = '';
+                
+                showStatus('🎵 Kayıt işleniyor...', 'info');
+            }
+        }
+
+        function updateTimer() {
+            if (recordingStartTime) {
+                const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('recordingTimer').textContent = 
+                    `⏱️ Süre: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        async function processRecordedAudio(audioBlob) {
+            try {
+                showLoading(true);
+                
+                const formData = new FormData();
+                formData.append('audio_file', audioBlob, 'recording.webm');
+
+                const response = await fetch(`${API_BASE}/upload-audio`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus('✅ Mikrofon kaydı başarıyla işlendi!', 'success');
+                    displayResults(result);
+                } else {
+                    showStatus(`❌ Hata: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                showStatus(`❌ İşleme hatası: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
         }
 
         // Dosya seçildiğinde bilgi göster
