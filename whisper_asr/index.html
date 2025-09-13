@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TanıAI Whisper ASR - Sesli Semptom Girişi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .upload-section {
+            margin-bottom: 30px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #4facfe;
+            text-align: center;
+        }
+
+        .upload-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #4facfe;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: #3d8bfe;
+        }
+
+        .process-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 15px;
+        }
+
+        .process-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .process-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e1e5e9;
+            display: none;
+        }
+
+        .results h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .transcript {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-style: italic;
+            border-left: 4px solid #4facfe;
+        }
+
+        .symptoms-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .symptoms-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #e8f5e8;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .severity-1 { background: #d4edda; color: #155724; }
+        .severity-2 { background: #fff3cd; color: #856404; }
+        .severity-3 { background: #f8d7da; color: #721c24; }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h4 {
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎤 TanıAI Whisper ASR</h1>
+            <p>Sesli Semptom Girişi ve Analizi</p>
+        </div>
+
+        <div class="content">
+            <div class="info-box">
+                <h4>📋 Nasıl Kullanılır?</h4>
+                <ul>
+                    <li>Semptomlarınızı sesli olarak kaydedin</li>
+                    <li>Ses dosyasını yükleyin (WAV, MP3, M4A)</li>
+                    <li>Sistem otomatik olarak metne çevirir</li>
+                    <li>Semptomları analiz eder ve şiddetini belirler</li>
+                </ul>
+            </div>
+
+            <div class="upload-section">
+                <h2>🎵 Ses Dosyası Yükle</h2>
+                <p style="margin-bottom: 20px; color: #666;">
+                    Desteklenen formatlar: WAV, MP3, M4A, FLAC, OGG (Max: 10MB)
+                </p>
+                
+                <div class="file-input-wrapper">
+                    <input type="file" id="audioFile" class="file-input" accept="audio/*">
+                    <label for="audioFile" class="file-input-label">
+                        📁 Ses Dosyası Seç
+                    </label>
+                </div>
+                
+                <button class="process-btn" id="processBtn" onclick="processAudio()">
+                    🎯 Ses Dosyasını İşle
+                </button>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Ses dosyası işleniyor...</p>
+                </div>
+                
+                <div id="status"></div>
+            </div>
+
+            <div class="results" id="results">
+                <h3>📊 Analiz Sonuçları</h3>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/whisper';
+
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('processBtn').disabled = show;
+        }
+
+        async function processAudio() {
+            const audioFile = document.getElementById('audioFile').files[0];
+            
+            if (!audioFile) {
+                showStatus('⚠️ Lütfen bir ses dosyası seçin!', 'error');
+                return;
+            }
+
+            // Dosya boyutu kontrolü
+            if (audioFile.size > 10 * 1024 * 1024) {
+                showStatus('⚠️ Dosya boyutu çok büyük! (Max: 10MB)', 'error');
+                return;
+            }
+
+            showLoading(true);
+            showStatus('📤 Ses dosyası yükleniyor...', 'info');
+
+            try {
+                const formData = new FormData();
+                formData.append('audio_file', audioFile);
+
+                const response = await fetch(`${API_BASE}/upload-audio`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus('✅ Ses dosyası başarıyla işlendi!', 'success');
+                    displayResults(result);
+                } else {
+                    showStatus(`❌ Hata: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                showStatus(`❌ İşleme hatası: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function displayResults(result) {
+            const resultsDiv = document.getElementById('results');
+            const contentDiv = document.getElementById('resultsContent');
+
+            const severityNames = {1: 'Hafif', 2: 'Orta', 3: 'Şiddetli'};
+
+            let symptomsHtml = '';
+            if (result.detected_symptoms && Object.keys(result.detected_symptoms).length > 0) {
+                symptomsHtml = '<h4>🩺 Tespit Edilen Semptomlar:</h4><ul class="symptoms-list">';
+                
+                Object.entries(result.detected_symptoms).forEach(([symptom, severity]) => {
+                    const symptomName = symptom.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    symptomsHtml += `
+                        <li>
+                            ${symptomName}
+                            <span class="severity-badge severity-${severity}">
+                                ${severityNames[severity]}
+                            </span>
+                        </li>
+                    `;
+                });
+                
+                symptomsHtml += '</ul>';
+            } else {
+                symptomsHtml = '<p>🔍 Herhangi bir semptom tespit edilmedi.</p>';
+            }
+
+            contentDiv.innerHTML = `
+                <div class="transcript">
+                    <strong>📝 Transkripsiyon:</strong><br>
+                    "${result.transcript}"
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong>📊 İstatistikler:</strong><br>
+                    • Dosya boyutu: ${(result.file_size / 1024).toFixed(1)} KB<br>
+                    • Tespit edilen semptom: ${result.symptom_count} adet<br>
+                    • Dil: ${result.language || 'Türkçe'}<br>
+                    • Güven: %${((result.confidence || 0) * 100).toFixed(1)}
+                </div>
+                
+                ${symptomsHtml}
+            `;
+
+            resultsDiv.style.display = 'block';
+        }
+
+        // Dosya seçildiğinde bilgi göster
+        document.getElementById('audioFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            
+            if (file) {
+                const fileSizeKB = (file.size / 1024).toFixed(1);
+                showStatus(`
+                    📁 Seçilen dosya: ${file.name}<br>
+                    📊 Boyut: ${fileSizeKB} KB<br>
+                    🎵 Format: ${file.type || 'Bilinmiyor'}
+                `, 'info');
+            } else {
+                document.getElementById('status').innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>
