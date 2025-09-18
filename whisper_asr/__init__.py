@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class WhisperASR:
     """Whisper tabanlı Speech-to-Text sınıfı"""
     
-    def __init__(self, model_name: str = "base"):
+    def __init__(self, model_name: str = "large"):
         """
         Args:
             model_name: Whisper model boyutu (tiny, base, small, medium, large)
