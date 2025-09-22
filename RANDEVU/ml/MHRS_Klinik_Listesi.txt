@@ -79,3 +79,50 @@ MHRS Merkezi Hekim Randevu Sistemi'nden alınan Klinik Listesi
 76. Tıbbi Onkoloji → ❌ Önce İç Hastalıkları (Dahiliye) / Göğüs Hastalıkları / Kadın Hastalıkları ve Doğum / Genel Cerrahi
 77. Üroloji
 78. Ağız, Diş ve Çene Cerrahisi → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
+
+///////////////////////////////////
+
+Doğrudan Randevu Alınabilen Klinikler:
+
+1. Aile Hekimliği
+2. Amatem (Alkol ve Madde Bağımlılığı)
+3. Anesteziyoloji ve Reanimasyon
+4. Bağımlılık
+5. Beyin ve Sinir Cerrahisi
+6. Cerrahi Onkolojisi
+7. Çocuk Cerrahisi
+8. Çocuk Diş Hekimliği
+9. Çocuk Sağlığı ve Hastalıkları
+10. Çocuk ve Ergen Ruh Sağlığı ve Hastalıkları
+11. Deri ve Zührevi Hastalıkları (Cildiye)
+12. Diş Hekimliği (Genel Diş)
+13. Enfeksiyon Hastalıkları ve Klinik Mikrobiyoloji
+14. Fiziksel Tıp ve Rehabilitasyon
+15. Gastroenteroloji Cerrahisi
+16. Geleneksel Tamamlayıcı Tıp Ünitesi
+17. Genel Cerrahi
+18. Göz Hastalıkları
+19. Göğüs Cerrahisi
+20. Göğüs Hastalıkları
+21. İç Hastalıkları (Dahiliye)
+22. Kadın Hastalıkları ve Doğum
+23. Kalp ve Damar Cerrahisi
+24. Kardiyoloji
+25. Kulak Burun Boğaz Hastalıkları
+26. Nöroloji
+27. Ortopedi ve Travmatoloji
+28. Plastik, Rekonstrüktif ve Estetik Cerrahi
+29. Radyasyon Onkolojisi
+30. Radyoloji
+31. Ruh Sağlığı ve Hastalıkları (Psikiyatri)
+32. Sağlık Kurulu Erişkin
+33. Sağlık Kurulu ÇÖZGER (Çocuk Özel Gereksinim Raporu)
+34. Sigara Bırakma Danışmanlığı Birimi
+35. Sigarayı Bıraktırma Kliniği
+36. Spor Hekimliği
+37. Sualtı Hekimliği ve Hiperbarik Tıp
+38. Tıbbi Ekoloji ve Hidroklimatoloji
+39. Tıbbi Genetik
+40. Üroloji
+
+Toplam: 40 klinik doğrudan randevu alınabilir durumda.
