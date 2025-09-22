@@ -1,72 +1,81 @@
 MHRS Merkezi Hekim Randevu Sistemi'nden alınan Klinik Listesi
 
+
 1. Aile Hekimliği
-2. Algoloji
+2. Algoloji → ❌ Önce Anesteziyoloji ve Reanimasyon / Nöroloji / Fiziksel Tıp ve Rehabilitasyon
 3. Amatem (Alkol ve Madde Bağımlılığı)
 4. Anesteziyoloji ve Reanimasyon
-5. Beyin ve Sinir Cerrahisi
-6. Cerrahi Onkolojisi
-7. Çocuk Cerrahisi
-8. Çocuk Diş Hekimliği
-9. Çocuk Endokrinolojisi
-10. Çocuk Enfeksiyon Hastalıkları
-11. Çocuk Gastroenterolojisi
-12. Çocuk Genetik Hastalıkları
-13. Çocuk Hematolojisi ve Onkolojisi
-14. Çocuk Kalp Damar Cerrahisi
-15. Çocuk Kardiyolojisi
-16. Çocuk Nefrolojisi
-17. Çocuk Nörolojisi
-18. Çocuk Sağlığı ve Hastalıkları
-19. Çocuk ve Ergen Ruh Sağlığı ve Hastalıkları
-20. Deri ve Zührevi Hastalıkları (Cildiye)
-21. Diş Hekimliği (Genel Diş)
-22. El Cerrahisi
-23. Endodonti
-24. Endokrinoloji ve Metabolizma Hastalıkları
-25. Enfeksiyon Hastalıkları ve Klinik Mikrobiyoloji
-26. Fiziksel Tıp ve Rehabilitasyon
-27. Gastroenteroloji
-28. Gastroenteroloji Cerrahisi
-29. Genel Cerrahi
-30. Geriatri
-31. Göğüs Cerrahisi
-32. Göğüs Hastalıkları
-33. Göz Hastalıkları
-	33.1 Şaşılık
-	33.2 Kornea
-	33.3 Oküloplasti
-34. Hematoloji
-35. İç Hastalıkları (Dahiliye)
-36. İmmünoloji ve Alerji Hastalıkları
-37. İş ve Meslek Hastalıkları
-38. Jinekolojik Onkoloji Cerrahisi
-39. Kadın Hastalıkları ve Doğum
-40. Kalp ve Damar Cerrahisi
-41. Kardiyoloji
-42. Klinik Nörofizyoloji
-43. Kulak Burun Boğaz Hastalıkları
-44. Nefroloji
-45. Neonatoloji
-46. Nöroloji
-47. Ortodonti
-48. Ortopedi ve Travmatoloji
-49. Perinatoloji
-50. Periodontoloji
-51. Plastik, Rekonstrüktif ve Estetik Cerrahi
-52. Protetik Diş Tedavisi
-53. Radyasyon Onkolojisi
-54. Restoratif Diş Tedavisi
-55. Romatoloji
-56. Ruh Sağlığı ve Hastalıkları (Psikiyatri)
-57. Sağlık Kurulu Erişkin
-58. Sağlık Kurulu ÇÖZGER (Çocuk Özel Gereksinim Raporu)
-59. Sigara Bırakma Danışmanlığı Birimi
-60. Sigarayı Bıraktırma Kliniği
-61. Spor Hekimliği
-62. Tıbbi Genetik
-63. Tıbbi Onkoloji
-64. Üroloji
-65. Ağız, Diş ve Çene Cerrahisi
-66. Radyoloji
-
+5. Bağımlılık
+6. Beyin ve Sinir Cerrahisi
+7. Cerrahi Onkolojisi
+8. Çocuk Cerrahisi
+9. Çocuk Diş Hekimliği
+10. Çocuk Endokrinolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+11. Çocuk Enfeksiyon Hastalıkları → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+12. Çocuk Gastroenterolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+13. Çocuk Genetik Hastalıkları → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+14. Çocuk Göğüs Hastalıkları → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+15. Çocuk Hematolojisi ve Onkolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+16. Çocuk Kalp Damar Cerrahisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+17. Çocuk Kardiyolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+18. Çocuk Metabolizma Hastalıkları → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+19. Çocuk Nefrolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+20. Çocuk Nörolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+21. Çocuk Romatolojisi → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+22. Çocuk Sağlığı ve Hastalıkları
+23. Çocuk ve Ergen Ruh Sağlığı ve Hastalıkları
+24. Çocuk Ürolojisi → ❌ Önce Çocuk Cerrahisi (Üroloji)
+25. Çocuk İmmünolojisi ve Alerji Hastalıkları → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+26. Deri ve Zührevi Hastalıkları (Cildiye)
+27. Diş Hekimliği (Genel Diş)
+28. El Cerrahisi → ❌ Önce Ortopedi ve Travmatoloji / Genel Cerrahi / Plastik, Rekonstrüktif ve Estetik Cerrahi
+29. Endodonti → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
+30. Endokrinoloji ve Metabolizma Hastalıkları → ❌ Önce İç Hastalıkları (Dahiliye)
+31. Enfeksiyon Hastalıkları ve Klinik Mikrobiyoloji
+32. Fiziksel Tıp ve Rehabilitasyon
+33. Gastroenteroloji → ❌ Önce İç Hastalıkları (Dahiliye)
+34. Gastroenteroloji Cerrahisi
+35. Geleneksel Tamamlayıcı Tıp Ünitesi
+36. Genel Cerrahi
+37. Geriatri → ❌ Önce İç Hastalıkları (Dahiliye)
+38. Göz Hastalıkları
+39. Göz Hastalıkları – Kornea → ❌ Önce Göz Hastalıkları
+40. Göz Hastalıkları – Oküloplasti → ❌ Önce Göz Hastalıkları
+41. Göz Hastalıkları – Şaşılık → ❌ Önce Göz Hastalıkları
+42. Göğüs Cerrahisi
+43. Göğüs Hastalıkları
+44. Hematoloji → ❌ Önce İç Hastalıkları (Dahiliye)
+45. İmmünoloji ve Alerji Hastalıkları → ❌ Önce İç Hastalıkları (Dahiliye) / Deri ve Zührevi Hastalıkları (Cildiye) / Göğüs Hastalıkları
+46. İç Hastalıkları (Dahiliye)
+47. İş ve Meslek Hastalıkları → ❌ Önce İç Hastalıkları (Dahiliye) / Göğüs Hastalıkları
+48. Jinekolojik Onkoloji Cerrahisi → ❌ Önce Kadın Hastalıkları ve Doğum
+49. Kadın Hastalıkları ve Doğum
+50. Kalp ve Damar Cerrahisi
+51. Kardiyoloji
+52. Klinik Nörofizyoloji → ❌ Önce Nöroloji
+53. Kulak Burun Boğaz Hastalıkları
+54. Nefroloji → ❌ Önce İç Hastalıkları (Dahiliye)
+55. Neonatoloji → ❌ Önce Çocuk Sağlığı ve Hastalıkları
+56. Nöroloji
+57. Ortodonti → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
+58. Ortopedi ve Travmatoloji
+59. Perinatoloji → ❌ Önce Kadın Hastalıkları ve Doğum
+60. Periodontoloji → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
+61. Plastik, Rekonstrüktif ve Estetik Cerrahi
+62. Protetik Diş Tedavisi → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
+63. Radyasyon Onkolojisi
+64. Radyoloji
+65. Restoratif Diş Tedavisi → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
+66. Romatoloji → ❌ Önce İç Hastalıkları (Dahiliye) / Fiziksel Tıp ve Rehabilitasyon
+67. Ruh Sağlığı ve Hastalıkları (Psikiyatri)
+68. Sağlık Kurulu Erişkin
+69. Sağlık Kurulu ÇÖZGER (Çocuk Özel Gereksinim Raporu)
+70. Sigara Bırakma Danışmanlığı Birimi
+71. Sigarayı Bıraktırma Kliniği
+72. Spor Hekimliği
+73. Sualtı Hekimliği ve Hiperbarik Tıp
+74. Tıbbi Ekoloji ve Hidroklimatoloji
+75. Tıbbi Genetik
+76. Tıbbi Onkoloji → ❌ Önce İç Hastalıkları (Dahiliye) / Göğüs Hastalıkları / Kadın Hastalıkları ve Doğum / Genel Cerrahi
+77. Üroloji
+78. Ağız, Diş ve Çene Cerrahisi → ❌ Önce Diş Hekimliği (Genel Diş) / Çocuk Diş Hekimliği
