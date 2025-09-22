@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "408970707313",
+    "project_id": "taniai-randevu-global-73429",
+    "storage_bucket": "taniai-randevu-global-73429.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408970707313:android:9a0e79e45802e002e376d0",
+        "android_client_info": {
+          "package_name": "com.tanial.tanial_randevu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFCNHjMsyb6TSX1-FFJiVjRIshVwsWTII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
