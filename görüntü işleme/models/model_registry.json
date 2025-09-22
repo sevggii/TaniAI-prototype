@@ -1,0 +1,113 @@
+{
+  "models": {
+    "normal": {
+      "file": "normal_trained_model.pkl",
+      "status": "trained",
+      "type": "RandomForestClassifier",
+      "accuracy": 1.0
+    },
+    "pneumonia": {
+      "file": "pneumonia_trained_model.pkl",
+      "status": "trained",
+      "type": "RandomForestClassifier",
+      "accuracy": 1.0
+    },
+    "fracture": {
+      "file": "fracture_trained_model.pkl",
+      "status": "trained",
+      "type": "RandomForestClassifier",
+      "accuracy": 0.99
+    },
+    "tumor": {
+      "file": "tumor_trained_model.pkl",
+      "status": "trained",
+      "type": "RandomForestClassifier",
+      "accuracy": 1.0
+    },
+    "stroke": {
+      "file": "stroke_trained_model.pkl",
+      "status": "trained",
+      "type": "RandomForestClassifier",
+      "accuracy": 0.93
+    }
+  },
+  "last_training": "2025-09-11T23:45:39.228933",
+  "status": "trained_with_synthetic_data",
+  "performance": {
+    "normal": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "test_samples": 400,
+      "training_samples": 1600,
+      "top_features": [
+        47,
+        46,
+        49,
+        48,
+        45
+      ]
+    },
+    "pneumonia": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "test_samples": 400,
+      "training_samples": 1600,
+      "top_features": [
+        47,
+        49,
+        46,
+        45,
+        48
+      ]
+    },
+    "fracture": {
+      "accuracy": 0.99,
+      "precision": 0.99,
+      "recall": 0.99,
+      "f1_score": 0.99,
+      "test_samples": 400,
+      "training_samples": 1600,
+      "top_features": [
+        49,
+        23,
+        21,
+        48,
+        45
+      ]
+    },
+    "tumor": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "test_samples": 400,
+      "training_samples": 1600,
+      "top_features": [
+        24,
+        20,
+        28,
+        22,
+        26
+      ]
+    },
+    "stroke": {
+      "accuracy": 0.93,
+      "precision": 0.93,
+      "recall": 0.93,
+      "f1_score": 0.93,
+      "test_samples": 400,
+      "training_samples": 1600,
+      "top_features": [
+        23,
+        20,
+        46,
+        48,
+        25
+      ]
+    }
+  }
+}

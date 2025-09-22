@@ -1,0 +1,41 @@
+{
+  "model_name": "xray_fracture",
+  "model_config": {
+    "model_class_name": "RadiologyCNN",
+    "num_classes": 2,
+    "input_channels": 1,
+    "image_size": [
+      512,
+      512
+    ],
+    "model_file": "xray_fracture_model.pth",
+    "config_file": "xray_fracture_config.json",
+    "performance": {
+      "accuracy": 0.918,
+      "precision": 0.915,
+      "recall": 0.92,
+      "f1_score": 0.917
+    }
+  },
+  "created_at": "2025-09-11T21:58:36.637686",
+  "version": "1.0.0",
+  "description": "xray_fracture için model konfigürasyonu",
+  "input_preprocessing": {
+    "normalize": true,
+    "resize": [
+      512,
+      512
+    ],
+    "augmentation": true
+  },
+  "output_classes": {
+    "class_names": [
+      "Normal",
+      "Fracture"
+    ],
+    "class_mapping": {
+      "0": "Normal",
+      "1": "Fracture"
+    }
+  }
+}
