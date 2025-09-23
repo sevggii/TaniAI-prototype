@@ -398,3 +398,1204 @@
 {"complaint": "son bir yıldır alkol işe geç kalıyorum.", "clinic": "Amatem (Alkol ve Madde Bağımlılığı)"}
 {"complaint": "iki yıldır alkol işe geç kalıyorum.", "clinic": "Amatem (Alkol ve Madde Bağımlılığı)"}
 {"complaint": "on gündür alkol işe geç kalıyorum.", "clinic": "Amatem (Alkol ve Madde Bağımlılığı)"}
+{"complaint": "Ameliyat öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Narkoz alırken sorun yaşayıp uyanmakta zorlandım, kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Daha önce anesteziye alerjik reaksiyon gösterdim, değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yakın zamanda ameliyat olacağım, anestezi için onay almam gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi rutin anestezi muayenesi için doktorum buraya gönderdi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Doğum için sezaryen planlandı, anestezi görüşmesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçmişte narkoz sonrası bulantı ve kusma yaşadım, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Belden iğne ile anestezi yapılacak, ön değerlendirme için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Kardiyoloji ameliyatı öncesi anestezi görüşmesi için yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Genel anesteziye alınmadan önce kontrole ihtiyacım var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakım sonrası takip için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Daha önce ameliyat sırasında tansiyonum düştü, anestezi değerlendirmesi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Planlı ortopedi ameliyatı öncesi anestezi muayenesi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sonrası ağrılarım için anestezi doktoruna yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Narkoz sonrası solunum sıkıntısı yaşadım, ön muayene istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Kalp ameliyatı öncesi anestezi görüşmesi için randevu aldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anesteziye karşı allerjim var mı diye test yaptırmak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Narkozdan uyanmam uzun sürüyor, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim cerrahi sonrası ağrı kontrolü için anestezi polikliniğine yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan kalp ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kalp ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kalp ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kalp ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kalp ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan beyin cerrahisi öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "beyin cerrahisi sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "beyin cerrahisi sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "beyin cerrahisi planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "beyin cerrahisi sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan ortopedi ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "ortopedi ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "ortopedi ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "ortopedi ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "ortopedi ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan genel cerrahi operasyonu öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "genel cerrahi operasyonu sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "genel cerrahi operasyonu sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "genel cerrahi operasyonu planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "genel cerrahi operasyonu sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan sezaryen öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "sezaryen sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "sezaryen sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "sezaryen planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "sezaryen sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan endoskopi öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "endoskopi sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "endoskopi sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "endoskopi planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "endoskopi sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan laparoskopi öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "laparoskopi sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "laparoskopi sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "laparoskopi planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "laparoskopi sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan fıtık ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "fıtık ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "fıtık ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "fıtık ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "fıtık ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan apandisit ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "apandisit ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "apandisit ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "apandisit ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "apandisit ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan bypass ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "bypass ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "bypass ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "bypass ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "bypass ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan diz protezi öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "diz protezi sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "diz protezi sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "diz protezi planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "diz protezi sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan göz ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "göz ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "göz ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "göz ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "göz ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan kanser cerrahisi öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kanser cerrahisi sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kanser cerrahisi sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kanser cerrahisi planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kanser cerrahisi sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan idrar yolları ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "idrar yolları ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "idrar yolları ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "idrar yolları ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "idrar yolları ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan kulak ameliyatı öncesi anestezi muayenesi için geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kulak ameliyatı sonrası yoğun bakımda kaldım, kontrol için çağrıldım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kulak ameliyatı sırasında narkoz sonrası problem yaşadım, ön değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kulak ameliyatı planlandı, anesteziye hazırlık için muayeneye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kulak ameliyatı sonrası ağrı kontrolü için anestezi doktoruna geldim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim kalça protezi sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "kalça protezi sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim bel fıtığı ameliyatı sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "bel fıtığı ameliyatı sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim katarakt operasyonu sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "katarakt operasyonu sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim omurga cerrahisi sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "omurga cerrahisi sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim karaciğer biyopsisi sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "karaciğer biyopsisi sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim safra kesesi ameliyatı sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "safra kesesi ameliyatı sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim diz artroskopisi sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "diz artroskopisi sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim akciğer ameliyatı sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "akciğer ameliyatı sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim tiroit ameliyatı sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "tiroit ameliyatı sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim lenf bezi biyopsisi sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "lenf bezi biyopsisi sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önceki narkoz deneyimimde ciddi bulantı oldu, risk analizi istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yoğun bakımda kaldım, anestezi sonrası kontrol randevum var.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat sırasında tansiyonum düştü, şimdi ön muayene istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Cerrahi sonrası solunum problemi yaşadım, anesteziye yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Anestezi uzmanından doğum planı öncesi görüş almak istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Ameliyat öncesi risk değerlendirmesi için anestezi muayenesi istendi.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Önümüzdeki ameliyat için narkoz uyumu açısından kontrole yönlendirildim.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Geçirdiğim böbrek taşı ameliyatı sonrası ağrı yönetimi için buradayım.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "böbrek taşı ameliyatı sırasında yaşadığım narkoz komplikasyonu için değerlendirme istiyorum.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Yaklaşan cerrahi öncesinde anestezi uzmanına görünmem gerekti.", "clinic": "Anesteziyoloji ve Reanimasyon"}
+{"complaint": "Günde iki paket sigara içiyorum, defalarca denedim ama bırakamadım.", "clinic": "Bağımlılık"}
+{"complaint": "Elektronik sigarayı sürekli kullanıyorum, nikotin oranını azaltamıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "Kumar oynama isteğimi kontrol edemiyorum, borçlandım ve yardım istiyorum.", "clinic": "Bağımlılık"}
+{"complaint": "Online oyun oynama sürem günde 8 saati geçiyor, derslerimi aksatıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "Enerji içeceklerini bırakınca baş ağrısı ve yorgunluk oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "Uyku ilacını uzun süre kullandım, azaltınca huzursuzluk ve titreme oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "Sosyal medyada saatler geçiriyorum, işimi aksatıyorum ama bırakamıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "Kodienli öksürük şurubunu kötüye kullandım, kontrol edemiyorum.", "clinic": "Bağımlılık"}
+{"complaint": "Burun spreyini aylardır her gün kullanıyorum, artık bırakamıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "Alışveriş uygulamalarında impulsif harcama yapıyorum, borç birikti.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sigara denedim ama tekrar başladım, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma kahve bırakamıyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sigara günde iki paket içiyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca nargile başım dönüyor ama içmeye devam ediyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma kumar öfkeleniyorum, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken nargile öksürük ve balgam arttı, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken enerji içeceği sınav döneminde çok artırdım, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken sosyal medya bırakmayı denedim ama yapamadım, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde ağrı kesici yan etkilerine rağmen devam ediyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında sosyal medya dikkatim dağılıyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken benzodiazepin bırakınca huzursuz oluyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca kafeinli kola bırakamıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken spor bahisleri öfkeleniyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında zayıflama hapı bırakınca huzursuz oluyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca e-sigara başım dönüyor ama içmeye devam ediyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde stream platformları ailemle tartışıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra ağrı kesici bırakınca huzursuz oluyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca spor bahisleri geceleri uyumadan önce saatlerce kullanıyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda antihistaminik şurup yan etkilerine rağmen devam ediyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca kafeinli kola içmezsem baş ağrım oluyor, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma pod cihazı içmezsem gergin oluyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca salt nikotin nikotin oranını düşüremedim, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra salt nikotin günde birkaç saat içiyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma enerji içeceği çarpıntı yapıyor, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları stream platformları sosyal hayatımı etkiliyor, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken gabapentin reçetesiz sık kullanıyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında zayıflama hapı durduramıyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında mate çayı günde beş bardak tüketiyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında soğuk kahve bırakamıyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken e-sigara bırakamıyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken nargile başım dönüyor ama içmeye devam ediyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında sigara içmezsem konsantre olamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken nargile dişlerim sarardı ve koku var, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı sosyal medya dikkatim dağılıyor, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında yemek siparişi uygulamaları işe/okula geç kalıyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde salt nikotin bırakamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları dekongestan burun spreyi bağımlı olduğumu düşünüyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sosyal medya borca girdim, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma ağrı kesici bırakınca huzursuz oluyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sigara bırakamıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde elektronik sigara günde iki paket içiyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde pregabalin bırakınca huzursuz oluyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları salt nikotin bırakamıyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kahve bırakamıyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra stream platformları öfkeleniyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken ısınan tütün içmezsem konsantre olamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı enerji içeceği günde birkaç kutu içiyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca kafeinli kola günde birkaç kutu içiyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra yemek siparişi uygulamaları geceleri uyumadan önce saatlerce kullanıyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı sigara yoksunlukta sinirleniyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kripto işlemleri borca girdim, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda mate çayı günde beş bardak tüketiyorum, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde spor bahisleri kaygım artıyor, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca enerji içeceği uykusuzluk yapıyor ama içiyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken nargile içmezsem gergin oluyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde puro nefesim daralıyor ama yine de içiyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı kahve bırakamıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca nargile içmezsem gergin oluyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma puro yoksunlukta sinirleniyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda puro günde iki paket içiyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca pod cihazı nikotin oranını düşüremedim, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı kafeinli kola çarpıntı yapıyor, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra bilgisayar oyunu geceleri uyumadan önce saatlerce kullanıyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde nargile günde birkaç saat içiyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken pod cihazı bırakamıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı kafeinli kola uykusuzluk yapıyor ama içiyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde pod cihazı başım dönüyor ama içmeye devam ediyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken pod cihazı içmezsem gergin oluyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde uyku ilacı durduramıyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken kodeinli öksürük şurubu bırakınca huzursuz oluyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında gabapentin yan etkilerine rağmen devam ediyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra ısınan tütün denedim ama tekrar başladım, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı sakinleştirici kafam sersemliyor ama yine de alıyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra salt nikotin başım dönüyor ama içmeye devam ediyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra nargile kandaki nikotin testi yaptırmak istiyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı e-sigara boğazım yanıyor, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken zayıflama hapı reçetesiz sık kullanıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde kahve sınav döneminde çok artırdım, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı e-sigara bırakamıyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken telefon işe/okula geç kalıyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken kafeinli kola içmezsem baş ağrım oluyor, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca ısınan tütün yoksunlukta sinirleniyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca kodeinli öksürük şurubu bırakınca huzursuz oluyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında mate çayı sınav döneminde çok artırdım, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde zayıflama hapı ailem fark etti, yardım istiyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı sigara denedim ama tekrar başladım, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma ağrı kesici durduramıyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma zayıflama hapı ailem fark etti, yardım istiyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca ısınan tütün dişlerim sarardı ve koku var, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde ısınan tütün bırakamıyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken kafeinli kola çarpıntı yapıyor, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken pod cihazı içmezsem gergin oluyorum, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda pod cihazı içmezsem gergin oluyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı spor bahisleri dikkatim dağılıyor, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma stream platformları işe/okula geç kalıyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında dekongestan burun spreyi reçetesiz sık kullanıyorum, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları mate çayı sınav döneminde çok artırdım, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları kumar dikkatim dağılıyor, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma elektronik sigara kandaki nikotin testi yaptırmak istiyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca nargile denedim ama tekrar başladım, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca kahve günde beş bardak tüketiyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda nargile boğazım yanıyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda mate çayı günde birkaç kutu içiyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kahve bırakamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra soğuk kahve günde birkaç kutu içiyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı kahve günde birkaç kutu içiyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma pod cihazı boğazım yanıyor, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı yemek siparişi uygulamaları öfkeleniyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında spor bahisleri borca girdim, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları kumar ailemle tartışıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken antihistaminik şurup kafam sersemliyor ama yine de alıyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı nargile bırakamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken online alışveriş borca girdim, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları bilgisayar oyunu dikkatim dağılıyor, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda nargile öksürük ve balgam arttı, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları puro öksürük ve balgam arttı, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kodeinli öksürük şurubu ailem fark etti, yardım istiyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca e-sigara boğazım yanıyor, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kripto işlemleri kontrol edemiyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı online alışveriş öfkeleniyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma nargile boğazım yanıyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı sigara öksürük ve balgam arttı, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kahve uykusuzluk yapıyor ama içiyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken mate çayı sınav döneminde çok artırdım, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken dekongestan burun spreyi kafam sersemliyor ama yine de alıyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken puro bırakamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sigara bırakamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca puro geceleri kalkıp içiyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sosyal medya sosyal hayatımı etkiliyor, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma zayıflama hapı miktarı giderek arttı, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken nargile denedim ama tekrar başladım, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda elektronik sigara dişlerim sarardı ve koku var, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken kahve ellerim titriyor, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra nargile başım dönüyor ama içmeye devam ediyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken salt nikotin içmezsem gergin oluyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda pod cihazı günde birkaç saat içiyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları ısınan tütün içmezsem konsantre olamıyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında online alışveriş dikkatim dağılıyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda salt nikotin boğazım yanıyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken zayıflama hapı bırakınca huzursuz oluyorum, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma kumar öfkeleniyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları bilgisayar oyunu kontrol edemiyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken mate çayı ellerim titriyor, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde kodeinli öksürük şurubu kafam sersemliyor ama yine de alıyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca e-sigara günde birkaç saat içiyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları yemek siparişi uygulamaları borca girdim, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında telefon geceleri uyumadan önce saatlerce kullanıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma kumar ailemle tartışıyorum, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken yemek siparişi uygulamaları dikkatim dağılıyor, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları pod cihazı nikotin oranını düşüremedim, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken kodeinli öksürük şurubu bırakınca huzursuz oluyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca uyku ilacı miktarı giderek arttı, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde spor bahisleri sosyal hayatımı etkiliyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında uyku ilacı bırakınca huzursuz oluyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra sakinleştirici kafam sersemliyor ama yine de alıyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra kafeinli kola günde beş bardak tüketiyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken sakinleştirici yan etkilerine rağmen devam ediyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları pod cihazı boğazım yanıyor, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında sakinleştirici reçetesiz sık kullanıyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları sigara öksürük ve balgam arttı, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı nargile bırakamıyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken uyku ilacı bırakınca huzursuz oluyorum, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda kumar dikkatim dağılıyor, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda spor bahisleri sosyal hayatımı etkiliyor, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken nargile başım dönüyor ama içmeye devam ediyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı kafeinli kola bırakamıyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "gece yarısı soğuk kahve bırakamıyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları kripto işlemleri sosyal hayatımı etkiliyor, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında nargile denedim ama tekrar başladım, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma nargile denedim ama tekrar başladım, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sabahları uyanınca sosyal medya dikkatim dağılıyor, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra sakinleştirici durduramıyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları benzodiazepin kafam sersemliyor ama yine de alıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında spor bahisleri kaygım artıyor, baş ağrısı ve çarpıntı oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken salt nikotin boğazım yanıyor, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma ısınan tütün içmezsem konsantre olamıyorum, sağlığım bozuldu.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma sigara yoksunlukta sinirleniyorum, unutkanlık yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "işten çıktıktan sonra elektronik sigara dişlerim sarardı ve koku var, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında yemek siparişi uygulamaları öfkeleniyorum, ailemle sorunlarım arttı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları salt nikotin içmezsem gergin oluyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "stresliyken bilgisayar oyunu kaygım artıyor, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "yalnız kaldığımda nargile içmezsem konsantre olamıyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları dekongestan burun spreyi reçetesiz sık kullanıyorum, okul başarım etkilendi.", "clinic": "Bağımlılık"}
+{"complaint": "ders çalışırken kodeinli öksürük şurubu bağımlı olduğumu düşünüyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde nargile içmezsem gergin oluyorum, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde telefon borca girdim, uykusuzluk yaşıyorum.", "clinic": "Bağımlılık"}
+{"complaint": "hafta sonları salt nikotin içmezsem gergin oluyorum, iş performansım düştü.", "clinic": "Bağımlılık"}
+{"complaint": "arkadaş ortamında kafeinli kola içmezsem baş ağrım oluyor, sosyal hayatım kısıtlandı.", "clinic": "Bağımlılık"}
+{"complaint": "evde tek başıma sosyal medya kontrol edemiyorum, maddi kaybım oldu.", "clinic": "Bağımlılık"}
+{"complaint": "sınav döneminde kafeinli kola günde beş bardak tüketiyorum, kaygı ve öfke nöbetlerim oluyor.", "clinic": "Bağımlılık"}
+{"complaint": "Bel fıtığım var, bacağıma doğru yayılan ağrı ve uyuşma oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun fıtığı teşhisim var, sağ koluma vuran ağrı ve güçsüzlük hissediyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel kayması nedeniyle uzun süredir bel ağrım ve yürümede zorlanmam var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omurga dar kanalım var, yürürken bacaklarımda yanma ve uyuşma oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Trigeminal nevralji tanım var, yüzümde ani elektrik çarpması gibi ağrılar oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Karpal tünel sendromu şüphesiyle el uyuşması ve gece artan ağrılarım var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ulnar sinir sıkışması olabileceği söylendi, serçe ve yüzük parmağım uyuşuyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Beyin tümörü ameliyatı sonrası kontrole geldim.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Hidrosefali nedeniyle şant takıldı, şant kontrolü için randevu istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kafa travması sonrası baş ağrısı ve bulantım sürüyor, cerrahi kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Skolyoz için ameliyat önerildi, ikinci görüş almak istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Servikal dar kanal nedeniyle ellerimde uyuşma ve beceriksizlik başladı.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Lomber disk hernisi nedeniyle oturup kalkarken zorlanıyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belimde kanal darlığı var, uzun yürüyüşlerde bacaklarımda güçsüzlük oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Siyatik ağrısı kalçamdan bacağıma iniyor, yürümede zorlanıyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyunda kireçlenme ve disk kayması nedeniyle ensede ağrı ve baş dönmesi yaşıyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belimde kayma var, merdiven inerken ağrım artıyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omurilik tümörü ameliyatı sonrası dikiş kontrolü için geldim.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Beyin damar anevrizması klipleme sonrası rutin kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belde kist (Tarlov kisti) söylendi, uyuşma ve ağrı yapıyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun fıtığı nedeniyle kolumda güç kaybı başladı, düşürme yaşıyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "El bileğimde sinir baskısı var, cerrahi değerlendirme isteniyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Lomber mikrodiskektomi sonrası tekrar ağrılarım başladı, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel ağrım öne eğilince artıyor, bacağıma yayılan yanma oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırtımda kürek kemikleri arasında uyuşma ve yanma hissediyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu çevresinde ağrı ve uyuşma var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Başımda kitle tespit edildi, beyin cerrahisi değerlendirmesi istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Meningiom ameliyatı sonrası MR sonuçlarımı göstermek istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Spinal dar kanal için yürümekle artan bacak ağrım var, dinlenince geçiyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belimde aniden başlayan kilitlenme ve hareket kısıtlılığı oldu.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boynumu arkaya eğince koluma elektriklenme yayılıyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Elimde kavrama gücüm azaldı, objeleri sık düşürüyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belimde kayma ve istirahatle azalan, yürümekle artan ağrım var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuzdan ele yayılan uyuşma ve karıncalanma şikayetim var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel fıtığı için ameliyat önerildi, ameliyatsız seçeneği konuşmak istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun fıtığı nedeniyle uzun araç kullanınca kolumda uyuşma oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belimde yanma, karıncalanma ve kas spazmları oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ayak bileğimde kuvvet kaybı başladı, düşme yaşıyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça arkasından dize doğru vuran ağrı ve yanma var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Belimi zorlayınca topuğuma kadar inen ağrı oluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Daha önce beyin kanaması geçirdim, cerrahi sonrası takip için geldim.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Baş ağrılarım enseden alına doğru yayılıyor, nöroşirürji değerlendirmesi istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Yüzümde tek taraflı ani şiddetli ağrı atakları yaşıyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "El parmaklarımda uyuşma ve iğnelenme, gece artıyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel ve boyun MR sonuçlarımı göstermek için randevu istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Lomber dar kanal nedeniyle kısa mesafe yürüyebiliyorum, sonra bacaklarım tutuluyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun düzleşmesi ve servikal spondiloz saptandı, cerrahi görüş istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omurilik basısı nedeniyle yürüyüşüm bozuldu, dengesizim.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel fıtığı ameliyatı oldum, tekrarlayan ağrılarım için kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun fıtığı ameliyatı sonrası elde uyuşmalarım devam ediyor.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde karıncalanma var, merdiven inip çıkarken artıyor. son haftalarda arttı. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde uyuşma var, eğilince şiddetleniyor. ağrı uzun süredir var. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde ağrı var, dinlenince azalıyor. ilaçlarla kısmen azaldı. dar kanal şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde hareket kısıtlılığı ve merdiven inip çıkarken artıyor. MR sonucumu göstermek istiyorum. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde ağrı ve merdiven inip çıkarken artıyor. MR sonucumu göstermek istiyorum. Daha önce mikrodiskektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde karıncalanma var, uzun oturunca başlıyor. ilaçlarla kısmen azaldı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde hareket kısıtlılığı ve geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde uyuşma var, dinlenince azalıyor. ağrı uzun süredir var. dar kanal şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde hareket kısıtlılığı var, merdiven inip çıkarken artıyor. ani başladı. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde elektriklenme ve uzun oturunca başlıyor. cerrahi ikinci görüş almak istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde güç kaybı ve uzun yolculukta belirginleşiyor. fizik tedaviye rağmen düzelmedi. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde uyuşma ve merdiven inip çıkarken artıyor. cerrahi ikinci görüş almak istiyorum. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde spazm var, yürürken artıyor. son haftalarda arttı. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde elektriklenme var, eğilince şiddetleniyor. ağrı uzun süredir var. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde uyuşma var, dinlenince azalıyor. fizik tedaviye rağmen düzelmedi. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde ağrı ve uzun oturunca başlıyor. son haftalarda arttı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde spazm ve eğilince şiddetleniyor. MR sonucumu göstermek istiyorum. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde uyuşma var, uzun yolculukta belirginleşiyor. MR sonucumu göstermek istiyorum. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde yanma ve merdiven inip çıkarken artıyor. ilaçlarla kısmen azaldı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde karıncalanma ve uzun yolculukta belirginleşiyor. ilaçlarla kısmen azaldı. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde hareket kısıtlılığı var, uzun oturunca başlıyor. son haftalarda arttı. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde yanma var, geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. dar kanal şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde ağrı ve uzun yolculukta belirginleşiyor. ani başladı. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde ağrı ve geceleri kötüleşiyor. ilaçlarla kısmen azaldı. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde hareket kısıtlılığı ve yürürken artıyor. ilaçlarla kısmen azaldı. Daha önce klipleme oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde spazm var, merdiven inip çıkarken artıyor. MR sonucumu göstermek istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde yanma var, dinlenince azalıyor. cerrahi ikinci görüş almak istiyorum. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde ağrı ve dinlenince azalıyor. MR sonucumu göstermek istiyorum. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde ağrı var, dinlenince azalıyor. ani başladı. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde güç kaybı var, eğilince şiddetleniyor. ağrı uzun süredir var. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde sertlik var, uzun yolculukta belirginleşiyor. ilaçlarla kısmen azaldı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde uyuşma var, eğilince şiddetleniyor. son haftalarda arttı. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde hareket kısıtlılığı ve yürürken artıyor. cerrahi ikinci görüş almak istiyorum. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde hareket kısıtlılığı ve yürürken artıyor. ani başladı. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde hareket kısıtlılığı var, eğilince şiddetleniyor. cerrahi ikinci görüş almak istiyorum. dar kanal şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde hareket kısıtlılığı var, eğilince şiddetleniyor. son haftalarda arttı. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde yanma ve merdiven inip çıkarken artıyor. son haftalarda arttı. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde sertlik var, eğilince şiddetleniyor. son haftalarda arttı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde sertlik ve uzun oturunca başlıyor. cerrahi ikinci görüş almak istiyorum. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde elektriklenme var, eğilince şiddetleniyor. MR sonucumu göstermek istiyorum. dar kanal şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde yanma var, eğilince şiddetleniyor. cerrahi ikinci görüş almak istiyorum. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde sertlik ve eğilince şiddetleniyor. ani başladı. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde yanma var, uzun yolculukta belirginleşiyor. cerrahi ikinci görüş almak istiyorum. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde uyuşma var, merdiven inip çıkarken artıyor. ilaçlarla kısmen azaldı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde karıncalanma var, geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde sertlik ve eğilince şiddetleniyor. cerrahi ikinci görüş almak istiyorum. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde ağrı ve dinlenince azalıyor. ağrı uzun süredir var. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde yanma var, öksürünce artıyor. MR sonucumu göstermek istiyorum. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde yanma ve eğilince şiddetleniyor. fizik tedaviye rağmen düzelmedi. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde elektriklenme ve uzun yolculukta belirginleşiyor. son haftalarda arttı. Daha önce klipleme oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde karıncalanma ve geceleri kötüleşiyor. ağrı uzun süredir var. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde ağrı var, geceleri kötüleşiyor. cerrahi ikinci görüş almak istiyorum. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde hareket kısıtlılığı ve yürürken artıyor. fizik tedaviye rağmen düzelmedi. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde hareket kısıtlılığı var, yürürken artıyor. cerrahi ikinci görüş almak istiyorum. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde hareket kısıtlılığı var, uzun yolculukta belirginleşiyor. ağrı uzun süredir var. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde elektriklenme var, öksürünce artıyor. son haftalarda arttı. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde sertlik ve öksürünce artıyor. son haftalarda arttı. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde yanma var, uzun yolculukta belirginleşiyor. cerrahi ikinci görüş almak istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde elektriklenme var, dinlenince azalıyor. son haftalarda arttı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde güç kaybı var, dinlenince azalıyor. ani başladı. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde karıncalanma ve uzun oturunca başlıyor. cerrahi ikinci görüş almak istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde spazm ve uzun yolculukta belirginleşiyor. cerrahi ikinci görüş almak istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde spazm var, merdiven inip çıkarken artıyor. fizik tedaviye rağmen düzelmedi. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde uyuşma var, eğilince şiddetleniyor. MR sonucumu göstermek istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde ağrı ve merdiven inip çıkarken artıyor. fizik tedaviye rağmen düzelmedi. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde uyuşma var, dinlenince azalıyor. ani başladı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde güç kaybı ve uzun oturunca başlıyor. MR sonucumu göstermek istiyorum. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde karıncalanma ve merdiven inip çıkarken artıyor. ani başladı. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde karıncalanma var, uzun yolculukta belirginleşiyor. son haftalarda arttı. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde karıncalanma var, merdiven inip çıkarken artıyor. MR sonucumu göstermek istiyorum. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde güç kaybı ve dinlenince azalıyor. ağrı uzun süredir var. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde uyuşma var, uzun yolculukta belirginleşiyor. MR sonucumu göstermek istiyorum. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde güç kaybı ve geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde karıncalanma var, uzun oturunca başlıyor. MR sonucumu göstermek istiyorum. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde hareket kısıtlılığı var, öksürünce artıyor. fizik tedaviye rağmen düzelmedi. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde güç kaybı var, eğilince şiddetleniyor. ani başladı. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde ağrı ve yürürken artıyor. son haftalarda arttı. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde sertlik var, öksürünce artıyor. ilaçlarla kısmen azaldı. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde sertlik var, merdiven inip çıkarken artıyor. ağrı uzun süredir var. dar kanal şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde elektriklenme ve öksürünce artıyor. ani başladı. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde elektriklenme var, yürürken artıyor. ani başladı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde spazm var, geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde hareket kısıtlılığı var, uzun oturunca başlıyor. ağrı uzun süredir var. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde sertlik var, geceleri kötüleşiyor. cerrahi ikinci görüş almak istiyorum. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde elektriklenme var, eğilince şiddetleniyor. ağrı uzun süredir var. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde yanma var, eğilince şiddetleniyor. cerrahi ikinci görüş almak istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde sertlik ve uzun oturunca başlıyor. ağrı uzun süredir var. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde ağrı ve dinlenince azalıyor. fizik tedaviye rağmen düzelmedi. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde ağrı var, merdiven inip çıkarken artıyor. MR sonucumu göstermek istiyorum. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde uyuşma ve geceleri kötüleşiyor. son haftalarda arttı. Daha önce klipleme oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde sertlik ve geceleri kötüleşiyor. fizik tedaviye rağmen düzelmedi. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde hareket kısıtlılığı ve merdiven inip çıkarken artıyor. son haftalarda arttı. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde hareket kısıtlılığı ve yürürken artıyor. ani başladı. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde ağrı ve yürürken artıyor. cerrahi ikinci görüş almak istiyorum. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde sertlik var, yürürken artıyor. son haftalarda arttı. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde sertlik var, uzun oturunca başlıyor. MR sonucumu göstermek istiyorum. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde hareket kısıtlılığı ve dinlenince azalıyor. son haftalarda arttı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde uyuşma ve uzun oturunca başlıyor. cerrahi ikinci görüş almak istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde sertlik var, uzun yolculukta belirginleşiyor. ani başladı. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde ağrı ve öksürünce artıyor. MR sonucumu göstermek istiyorum. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde güç kaybı var, geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde uyuşma var, öksürünce artıyor. son haftalarda arttı. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde güç kaybı var, uzun yolculukta belirginleşiyor. ilaçlarla kısmen azaldı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde yanma ve uzun oturunca başlıyor. MR sonucumu göstermek istiyorum. Daha önce mikrodiskektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde sertlik ve dinlenince azalıyor. ani başladı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde spazm var, öksürünce artıyor. cerrahi ikinci görüş almak istiyorum. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde hareket kısıtlılığı var, uzun oturunca başlıyor. fizik tedaviye rağmen düzelmedi. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde güç kaybı var, dinlenince azalıyor. son haftalarda arttı. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde spazm var, yürürken artıyor. cerrahi ikinci görüş almak istiyorum. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde spazm var, uzun oturunca başlıyor. son haftalarda arttı. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde elektriklenme var, dinlenince azalıyor. ani başladı. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde spazm ve dinlenince azalıyor. cerrahi ikinci görüş almak istiyorum. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde elektriklenme var, dinlenince azalıyor. ilaçlarla kısmen azaldı. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde elektriklenme var, merdiven inip çıkarken artıyor. ani başladı. disk hernisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde uyuşma ve yürürken artıyor. ani başladı. Daha önce foraminotomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde güç kaybı var, merdiven inip çıkarken artıyor. ağrı uzun süredir var. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde spazm ve yürürken artıyor. ani başladı. Daha önce klipleme oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde hareket kısıtlılığı var, öksürünce artıyor. son haftalarda arttı. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde sertlik ve geceleri kötüleşiyor. son haftalarda arttı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde hareket kısıtlılığı var, geceleri kötüleşiyor. cerrahi ikinci görüş almak istiyorum. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde güç kaybı ve uzun oturunca başlıyor. son haftalarda arttı. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde yanma ve uzun oturunca başlıyor. ilaçlarla kısmen azaldı. Daha önce klipleme oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde karıncalanma var, geceleri kötüleşiyor. MR sonucumu göstermek istiyorum. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde hareket kısıtlılığı ve öksürünce artıyor. ilaçlarla kısmen azaldı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde karıncalanma var, öksürünce artıyor. cerrahi ikinci görüş almak istiyorum. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde uyuşma var, eğilince şiddetleniyor. cerrahi ikinci görüş almak istiyorum. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde ağrı var, merdiven inip çıkarken artıyor. ilaçlarla kısmen azaldı. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde spazm ve uzun oturunca başlıyor. fizik tedaviye rağmen düzelmedi. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde elektriklenme ve geceleri kötüleşiyor. son haftalarda arttı. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde güç kaybı var, öksürünce artıyor. ilaçlarla kısmen azaldı. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde güç kaybı var, yürürken artıyor. cerrahi ikinci görüş almak istiyorum. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde sertlik var, yürürken artıyor. MR sonucumu göstermek istiyorum. faset artropatisi şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bacak bölgemde sertlik ve uzun yolculukta belirginleşiyor. cerrahi ikinci görüş almak istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde karıncalanma ve dinlenince azalıyor. ani başladı. Daha önce tümör rezeksiyonu oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde hareket kısıtlılığı ve yürürken artıyor. MR sonucumu göstermek istiyorum. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde güç kaybı var, geceleri kötüleşiyor. son haftalarda arttı. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde uyuşma var, dinlenince azalıyor. MR sonucumu göstermek istiyorum. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde spazm ve uzun oturunca başlıyor. cerrahi ikinci görüş almak istiyorum. Daha önce mikrodiskektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde hareket kısıtlılığı var, uzun oturunca başlıyor. ilaçlarla kısmen azaldı. spondilolistezis şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde sertlik var, öksürünce artıyor. ağrı uzun süredir var. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Ense bölgemde ağrı var, yürürken artıyor. cerrahi ikinci görüş almak istiyorum. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Omuz bölgemde uyuşma ve uzun oturunca başlıyor. cerrahi ikinci görüş almak istiyorum. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde sertlik var, yürürken artıyor. son haftalarda arttı. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kalça bölgemde spazm ve öksürünce artıyor. MR sonucumu göstermek istiyorum. Daha önce laminektomi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde sertlik ve öksürünce artıyor. fizik tedaviye rağmen düzelmedi. Daha önce füzyon oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kuyruk sokumu bölgemde sertlik ve öksürünce artıyor. fizik tedaviye rağmen düzelmedi. Daha önce disk protezi oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Boyun bölgemde sertlik var, geceleri kötüleşiyor. cerrahi ikinci görüş almak istiyorum. nöral foramen darlığı şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Bel bölgemde karıncalanma var, merdiven inip çıkarken artıyor. MR sonucumu göstermek istiyorum. spinal stenoz şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Sırt bölgemde spazm var, yürürken artıyor. son haftalarda arttı. radikülopati şüphesi var.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Kol bölgemde elektriklenme ve dinlenince azalıyor. MR sonucumu göstermek istiyorum. Daha önce şant takılması oldum, kontrol istiyorum.", "clinic": "Beyin ve Sinir Cerrahisi"}
+{"complaint": "Meme kanseri ameliyatı sonrası dikiş ve yara yeri kontrolü için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Tiroid nodülü için ince iğne biyopsisi yapıldı, cerrahi değerlendirme istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Kolon kanseri tanısı kondu, ameliyat planlaması için yönlendirildim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Mide tümörü nedeniyle cerrahi onkoloji görüşü isteniyor.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Pankreas başında kitle saptandı, ameliyat uygunluğu için değerlendirme istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Karaciğerde metastaz olduğu söylendi, cerrahi seçenekleri duymak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Rektum kanseri için neoadjuvan tedavi sonrası cerrahi planı görüşeceğim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Meme kitlesi biyopsi sonucu invaziv karsinom, ameliyat için bilgi almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Tiroid kanseri ameliyatı sonrası patoloji raporumu göstermek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Safra kesesi polipi büyüdü, cerrahi gereklilik için muayeneye geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Böbrekte kitle saptandı, parsiyel nefrektomi uygun mu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Yumuşak doku sarkomu şüphesi var, geniş eksizyon planlaması için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Melanom eksizyonu sonrası sınır pozitif denmiş, yeniden cerrahi gerekebilir mi?", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Mide çıkışında darlık yapan kitle için ameliyat görüşmesi istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Karın duvarında nüks tümör saptandı, cerrahi onkoloji kontrolüne geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Kolon poliplerinde ileri displazi raporu var, cerrahi ihtimali için randevu aldım.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Metastatik meme kanserinde cerrahi seçenekleri konuşmak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Tiroit kanserinde lenf nodu diseksiyonu gerekip gerekmediğini konuşmak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Pankreas kanseri şüphesinde Whipple ameliyatı uygun mu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Karaciğer hemangiomu büyüyor, cerrahi gereklilik için görüş istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Rektum kanseri ameliyatı sonrası stoma bakımı ve kapatma planı için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST tanısı kondu, cerrahi sınırlar ve takip planını öğrenmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Safra yollarında kitle saptandı, cerrahi girişim gerekliliğini soracağım.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Meme koruyucu cerrahi mi mastektomi mi uygun kararı için ikinci görüş istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Tiroidektomi sonrası ses kısıklığı oldu, kontrol muayenesi için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Kolon kanseri operasyonu sonrası patoloji raporuyla adjuvan tedavi planı için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Mide kanseri nedeniyle lenf nodu diseksiyonu gerekliliğini konuşmak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Karaciğer rezeksiyonu sonrası kontrol ve yara yeri değerlendirmesi istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Rektum cerrahisi öncesi MR sonucumu göstermek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Pankreas kisti IPMN şüphesi var, cerrahi endikasyonu değerlendireceğiz.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; takipte boyut artışı saptandı, hepatik rezeksiyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri tanısı var; ağrı ve kilo kaybım arttı, biopsi sonrası yeniden eksizyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri tanısı var; PET-CT'de tutulum görüldü, hepatik rezeksiyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "obstrüksiyon belirtileri başladı; tiroid kanseri için geniş eksizyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü nedeniyle Whipple prosedürü için cerrahi onkoloji görüşü istiyorum, obstrüksiyon belirtileri başladı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, patoloji sonucum çıktı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri nedeniyle robotik cerrahi için cerrahi onkoloji görüşü istiyorum, obstrüksiyon belirtileri başladı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tümör boyutu arttı; yumuşak doku sarkomu için hepatik rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü tanısı var; kan değerlerimde anormallik var, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST nedeniyle onkoplastik cerrahi için cerrahi onkoloji görüşü istiyorum, takipte boyut artışı saptandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST için lenf nodu diseksiyonu planlandı, takipte boyut artışı saptandı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü için lenf nodu diseksiyonu planlandı, yutma güçlüğüm var ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri için robotik cerrahi planlandı, kan değerlerimde anormallik var ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, obstrüksiyon belirtileri başladı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü için parsiyel rezeksiyon planlandı, kanlı dışkı şikayetim oldu ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, patoloji sonucum çıktı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri nedeniyle laparoskopik cerrahi için cerrahi onkoloji görüşü istiyorum, erken evre olabileceği söylendi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yutma güçlüğüm var; böbrek tümörü için subtotal gastrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü tanısı var; obstrüksiyon belirtileri başladı, lenf nodu diseksiyonu uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yumuşak doku sarkomu nedeniyle kolostomi/stoma planlaması için cerrahi onkoloji görüşü istiyorum, tümör boyutu arttı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "patoloji sonucum çıktı; mide kanseri için mastektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yumuşak doku sarkomu tanısı var; tümör konseyinde cerrahi önerildi, parsiyel rezeksiyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom nedeniyle parsiyel rezeksiyon için cerrahi onkoloji görüşü istiyorum, patoloji sonucum çıktı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; tümör konseyinde cerrahi önerildi, biopsi sonrası yeniden eksizyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; yutma güçlüğüm var, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "neoadjuvan tedavi tamamlandı; karaciğer tümörü için subtotal gastrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü için laparoskopik cerrahi planlandı, patoloji sonucum çıktı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör nedeniyle onkoplastik cerrahi için cerrahi onkoloji görüşü istiyorum, erken evre olabileceği söylendi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri nedeniyle Whipple prosedürü için cerrahi onkoloji görüşü istiyorum, biyopside yüksek risk not edildi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "MR ve BT sonuçlarım hazır; meme kanseri için radikal rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri için ameliyat planlaması planlandı, sarılık gelişti ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör nedeniyle onkoplastik cerrahi için cerrahi onkoloji görüşü istiyorum, biyopside yüksek risk not edildi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri tanısı var; MR ve BT sonuçlarım hazır, lenf nodu diseksiyonu uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tümör boyutu arttı; meme kanseri için hemikolektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri tanısı var; kanlı dışkı şikayetim oldu, biopsi sonrası yeniden eksizyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör tanısı var; tümör konseyinde cerrahi önerildi, subtotal gastrektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri tanısı var; kanlı dışkı şikayetim oldu, robotik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom tanısı var; tümör konseyinde cerrahi önerildi, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "erken evre olabileceği söylendi; GIST için subtotal gastrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, biyopside yüksek risk not edildi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri için parsiyel rezeksiyon planlandı, patoloji sonucum çıktı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "PET-CT'de tutulum görüldü; rektum kanseri için subtotal gastrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör tanısı var; PET-CT'de tutulum görüldü, biopsi sonrası yeniden eksizyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom tanısı var; tümör konseyinde cerrahi önerildi, lenf nodu diseksiyonu uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; PET-CT'de tutulum görüldü, lenf nodu diseksiyonu uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri için ameliyat planlaması planlandı, neoadjuvan tedavi tamamlandı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü nedeniyle hepatik rezeksiyon için cerrahi onkoloji görüşü istiyorum, MR ve BT sonuçlarım hazır.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri için Whipple prosedürü planlandı, PET-CT'de tutulum görüldü ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi için radikal rezeksiyon planlandı, neoadjuvan tedavi tamamlandı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri tanısı var; tümör boyutu arttı, hepatik rezeksiyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü nedeniyle geniş eksizyon için cerrahi onkoloji görüşü istiyorum, erken evre olabileceği söylendi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü için hemikolektomi planlandı, yutma güçlüğüm var ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri nedeniyle ameliyat planlaması için cerrahi onkoloji görüşü istiyorum, obstrüksiyon belirtileri başladı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü için lenf nodu diseksiyonu planlandı, yutma güçlüğüm var ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri nedeniyle radikal rezeksiyon için cerrahi onkoloji görüşü istiyorum, neoadjuvan tedavi tamamlandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü nedeniyle hemikolektomi için cerrahi onkoloji görüşü istiyorum, yutma güçlüğüm var.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom için radikal rezeksiyon planlandı, sarılık gelişti ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "ağrı ve kilo kaybım arttı; pankreas kanseri için lenf nodu diseksiyonu gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri nedeniyle parsiyel nefrektomi için cerrahi onkoloji görüşü istiyorum, sarılık gelişti.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör nedeniyle biopsi sonrası yeniden eksizyon için cerrahi onkoloji görüşü istiyorum, obstrüksiyon belirtileri başladı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü nedeniyle subtotal gastrektomi için cerrahi onkoloji görüşü istiyorum, biyopside yüksek risk not edildi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, neoadjuvan tedavi tamamlandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "PET-CT'de tutulum görüldü; GIST için parsiyel rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "biyopside yüksek risk not edildi; melanom için mastektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü nedeniyle hepatik rezeksiyon için cerrahi onkoloji görüşü istiyorum, kanlı dışkı şikayetim oldu.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi nedeniyle ameliyat planlaması için cerrahi onkoloji görüşü istiyorum, PET-CT'de tutulum görüldü.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü nedeniyle ameliyat planlaması için cerrahi onkoloji görüşü istiyorum, MR ve BT sonuçlarım hazır.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü nedeniyle biopsi sonrası yeniden eksizyon için cerrahi onkoloji görüşü istiyorum, PET-CT'de tutulum görüldü.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri tanısı var; tümör konseyinde cerrahi önerildi, onkoplastik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi için Whipple prosedürü planlandı, sarılık gelişti ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST tanısı var; takipte boyut artışı saptandı, hepatik rezeksiyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri için subtotal gastrektomi planlandı, ağrı ve kilo kaybım arttı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri tanısı var; sarılık gelişti, parsiyel nefrektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri için subtotal gastrektomi planlandı, MR ve BT sonuçlarım hazır ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tümör konseyinde cerrahi önerildi; rektum kanseri için radikal rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri nedeniyle geniş eksizyon için cerrahi onkoloji görüşü istiyorum, yutma güçlüğüm var.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "neoadjuvan tedavi tamamlandı; mide kanseri için Whipple prosedürü gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; erken evre olabileceği söylendi, kolostomi/stoma planlaması uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "biyopside yüksek risk not edildi; nöroendokrin tümör için parsiyel nefrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yutma güçlüğüm var; GIST için mastektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, kanlı dışkı şikayetim oldu.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri için geniş eksizyon planlandı, ağrı ve kilo kaybım arttı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü nedeniyle hemikolektomi için cerrahi onkoloji görüşü istiyorum, PET-CT'de tutulum görüldü.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "biyopside yüksek risk not edildi; GIST için radikal rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri için ameliyat planlaması planlandı, sarılık gelişti ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri nedeniyle radikal rezeksiyon için cerrahi onkoloji görüşü istiyorum, sarılık gelişti.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST nedeniyle parsiyel rezeksiyon için cerrahi onkoloji görüşü istiyorum, takipte boyut artışı saptandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST tanısı var; neoadjuvan tedavi tamamlandı, hemikolektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri tanısı var; PET-CT'de tutulum görüldü, biopsi sonrası yeniden eksizyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "sarılık gelişti; melanom için ameliyat planlaması gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi tanısı var; tümör konseyinde cerrahi önerildi, geniş eksizyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri tanısı var; kan değerlerimde anormallik var, hemikolektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "neoadjuvan tedavi tamamlandı; karaciğer tümörü için robotik cerrahi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tümör konseyinde cerrahi önerildi; melanom için subtotal gastrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü nedeniyle laparoskopik cerrahi için cerrahi onkoloji görüşü istiyorum, ağrı ve kilo kaybım arttı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü için mastektomi planlandı, takipte boyut artışı saptandı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST nedeniyle laparoskopik cerrahi için cerrahi onkoloji görüşü istiyorum, neoadjuvan tedavi tamamlandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "erken evre olabileceği söylendi; rektum kanseri için robotik cerrahi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri için onkoplastik cerrahi planlandı, kan değerlerimde anormallik var ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri nedeniyle ameliyat planlaması için cerrahi onkoloji görüşü istiyorum, tümör boyutu arttı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tümör boyutu arttı; meme kanseri için hepatik rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yumuşak doku sarkomu nedeniyle kolostomi/stoma planlaması için cerrahi onkoloji görüşü istiyorum, takipte boyut artışı saptandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, biyopside yüksek risk not edildi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri tanısı var; ağrı ve kilo kaybım arttı, mastektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kan değerlerimde anormallik var; böbrek tümörü için radikal rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; sarılık gelişti, lenf nodu diseksiyonu uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü tanısı var; kanlı dışkı şikayetim oldu, onkoplastik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "PET-CT'de tutulum görüldü; safra kesesi polipi için kolostomi/stoma planlaması gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör tanısı var; PET-CT'de tutulum görüldü, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "obstrüksiyon belirtileri başladı; safra kesesi polipi için kolostomi/stoma planlaması gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri nedeniyle parsiyel nefrektomi için cerrahi onkoloji görüşü istiyorum, kan değerlerimde anormallik var.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "obstrüksiyon belirtileri başladı; safra kesesi polipi için ameliyat planlaması gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kan değerlerimde anormallik var; meme kanseri için geniş eksizyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi nedeniyle parsiyel rezeksiyon için cerrahi onkoloji görüşü istiyorum, takipte boyut artışı saptandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "neoadjuvan tedavi tamamlandı; melanom için Whipple prosedürü gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü tanısı var; PET-CT'de tutulum görüldü, subtotal gastrektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü için biopsi sonrası yeniden eksizyon planlandı, tümör konseyinde cerrahi önerildi ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü için biopsi sonrası yeniden eksizyon planlandı, kan değerlerimde anormallik var ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri nedeniyle laparoskopik cerrahi için cerrahi onkoloji görüşü istiyorum, biyopside yüksek risk not edildi.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri nedeniyle radikal rezeksiyon için cerrahi onkoloji görüşü istiyorum, yutma güçlüğüm var.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri tanısı var; tümör konseyinde cerrahi önerildi, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri için onkoplastik cerrahi planlandı, tümör boyutu arttı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "neoadjuvan tedavi tamamlandı; rektum kanseri için biopsi sonrası yeniden eksizyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom için parsiyel rezeksiyon planlandı, kanlı dışkı şikayetim oldu ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yutma güçlüğüm var; melanom için laparoskopik cerrahi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "ağrı ve kilo kaybım arttı; meme kanseri için subtotal gastrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör tanısı var; kan değerlerimde anormallik var, Whipple prosedürü uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör tanısı var; kan değerlerimde anormallik var, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör için radikal rezeksiyon planlandı, MR ve BT sonuçlarım hazır ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri için mastektomi planlandı, obstrüksiyon belirtileri başladı ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri tanısı var; sarılık gelişti, laparoskopik cerrahi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri tanısı var; erken evre olabileceği söylendi, radikal rezeksiyon uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "PET-CT'de tutulum görüldü; kolon kanseri için lenf nodu diseksiyonu gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kanlı dışkı şikayetim oldu; tiroid kanseri için parsiyel nefrektomi gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "MR ve BT sonuçlarım hazır; safra kesesi polipi için radikal rezeksiyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST tanısı var; neoadjuvan tedavi tamamlandı, ameliyat planlaması uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü için hemikolektomi planlandı, erken evre olabileceği söylendi ve ikinci görüş almak istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri tanısı var; kan değerlerimde anormallik var, mastektomi uygunluğunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yumuşak doku sarkomu nedeniyle lenf nodu diseksiyonu için cerrahi onkoloji görüşü istiyorum, takipte boyut artışı saptandı.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "sarılık gelişti; meme kanseri için geniş eksizyon gerekliliğini konuşmak üzere geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri operasyonu sonrası ameliyat sonrası yara yeri kontrolü için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "rektum kanseri operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "mide kanseri operasyonu sonrası cerrahi sınırlar pozitif denmiş, yeniden değerlendirme istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri operasyonu sonrası stoma bakımı ve kapatma planı için başvurdum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "GIST operasyonu sonrası nüks şüphesi için görüntüleme sonuçlarımı göstereceğim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri operasyonu sonrası ameliyat sonrası yara yeri kontrolü için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri operasyonu sonrası nüks şüphesi için görüntüleme sonuçlarımı göstereceğim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü operasyonu sonrası nüks şüphesi için görüntüleme sonuçlarımı göstereceğim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi operasyonu sonrası dren çekimi ve kontrol için randevu aldım.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü operasyonu sonrası dren çekimi ve kontrol için randevu aldım.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "meme kanseri operasyonu sonrası cerrahi sınırlar pozitif denmiş, yeniden değerlendirme istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom operasyonu sonrası ameliyat sonrası yara yeri kontrolü için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "kolon kanseri operasyonu sonrası nüks şüphesi için görüntüleme sonuçlarımı göstereceğim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "böbrek tümörü operasyonu sonrası dren çekimi ve kontrol için randevu aldım.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "melanom operasyonu sonrası dren çekimi ve kontrol için randevu aldım.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "tiroid kanseri operasyonu sonrası stoma bakımı ve kapatma planı için başvurdum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yumuşak doku sarkomu operasyonu sonrası ameliyat sonrası yara yeri kontrolü için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "pankreas kanseri operasyonu sonrası ameliyat sonrası yara yeri kontrolü için geldim.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "yumuşak doku sarkomu operasyonu sonrası cerrahi sınırlar pozitif denmiş, yeniden değerlendirme istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "nöroendokrin tümör operasyonu sonrası cerrahi sınırlar pozitif denmiş, yeniden değerlendirme istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "karaciğer tümörü operasyonu sonrası stoma bakımı ve kapatma planı için başvurdum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra yolu tümörü operasyonu sonrası patoloji raporunu değerlendirmek istiyorum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "safra kesesi polipi operasyonu sonrası stoma bakımı ve kapatma planı için başvurdum.", "clinic": "Cerrahi Onkolojisi"}
+{"complaint": "Kasık fıtığı şüphesi var, çocuk ağladığında şişlik belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Göbek fıtığı mevcut, zaman zaman şişlik artıyor kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnmemiş testis nedeniyle muayene ve cerrahi değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Sünnet için cerrahi değerlendirme ve uygunluk istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hidrosel tanısı aldık, takip mi cerrahi mi gerekli öğrenmek istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hipospadias şüphesi var, idrar deliği uçta değil gibi görünüyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocuğun karın ağrısı sağ alt kadranda, apandisit olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Kasıkta ağrı ve şişlik var, akşamları belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Doğumdan beri göbek deliğinde akıntı var, kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocuğun kasıkta ele gelen yumuşak şişlik var, itince kayboluyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocuğun sık tekrarlayan karın ağrıları var, cerrahi açıdan değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Bebekte kabızlık ve karında şişlik oluyor, cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Doğuştan anüs deliği darlığı şüphesi var, muayene istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Sünnet sonrası kanama oldu, kontrol için randevu aldık.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta göğüs duvarında çöküklük (pektus ekskavatum) var, cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pektus karinatum (güvercin göğsü) için değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kasıkta iki taraflı şişlik fark ediyoruz, fıtık olabilir.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Umbilikal granulom için gümüş nitrat tedavisi önerildi, kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta karında kitle hissediliyor, ultrason sonrası cerrahiye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Doğumsal kistik kitle saptandı, operasyon planlaması için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Yutma güçlüğü ve kilo alamama var, özofagus darlığı açısından yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocuğun safra kesesinde taş saptandı, cerrahi değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Böbrek reflüsü (VUR) şüphesi var, cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Fimozis nedeniyle pipi ucunda darlık var, sünnet dışı çözüm var mı öğrenmek istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Sünnet öncesi anestezi gerekliliği ve yaş uygunluğu için değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnguinal lenf bezlerinde büyüme ve kasık ağrısı var, cerrahi dışı mı öğrenmek istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta hidrosel tek taraflı, inip çıkıyor gibi; muayene istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Doğumdan beri göbek bağında iyileşmeyen doku var, tedavi planı için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnmemiş testis muayenesinde testis kasıkta ele geliyor, tedavi istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta sürekli kusma ve kilo kaybı var, pilor stenozu şüphesi için yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hidrosel düşünüldü; torbada su toplaması mevcut ve antibiyotik sonrası da geçmedi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta erkek çocukta testis şişliği var, koşunca artıyor; Pankreas kisti şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta idrar yolu enfeksiyonu sonrası ağrı var, ayakta iken artıyor; İnguinal herni şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "gaz ve karında şişlik şikayeti nedeniyle Kordon kisti açısından muayene istiyoruz, MR/USG çekildi değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "aile hekimi cerrahiye sevk etti; safra taşına bağlı ağrı devam ediyor, Pektus ekskavatum olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "umbilikal akıntı şikayeti nedeniyle Karaciğer kisti açısından muayene istiyoruz, acil servisten kontrol önerildi.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pankreas kisti düşünüldü; karın ağrısı mevcut ve iki haftadır sürüyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kusma var, antibiyotik sonrası da geçmedi; İnmemiş testis şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yarada açılma şikayeti nedeniyle Hidrosel açısından muayene istiyoruz, iki haftadır sürüyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta göbekte şişlik var, iki haftadır sürüyor; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Appendisit düşünüldü; sünnet planlama mevcut ve 3 gündür var. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kabızlık var, akşamları belirginleşiyor; Meckel divertikülü şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta göbekte şişlik var, aile hekimi cerrahiye sevk etti; Pektus karinatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karın duvarında kitle şikayeti nedeniyle Karaciğer kisti açısından muayene istiyoruz, acil servisten kontrol önerildi.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Anal stenoz düşünüldü; kasık ağrısı mevcut ve 3 gündür var. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "idrar yolu enfeksiyonu sonrası ağrı şikayeti nedeniyle Anal stenoz açısından muayene istiyoruz, 3 gündür var.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "sağ alt kadran ağrısı şikayeti nedeniyle Umbilikal herni açısından muayene istiyoruz, yeni gelişti.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta gaz ve karında şişlik var, özellikle ağladığında belirginleşiyor; Meckel divertikülü şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karında hassasiyet şikayeti nedeniyle Pankreas kisti açısından muayene istiyoruz, MR/USG çekildi değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta karında hassasiyet var, koşunca artıyor; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hidrosel düşünüldü; kız çocukta kasıkta şişlik mevcut ve iki haftadır sürüyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "acil servisten kontrol önerildi; sağ alt kadran ağrısı devam ediyor, Umbilikal herni olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta umbilikal akıntı var, özellikle ağladığında belirginleşiyor; Umbilikal granülom şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "kabızlık şikayeti nedeniyle İnguinal herni açısından muayene istiyoruz, yatınca kayboluyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "ateş ve karın ağrısı şikayeti nedeniyle İnmemiş testis açısından muayene istiyoruz, aile hekimi cerrahiye sevk etti.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karın ağrısı şikayeti nedeniyle Pektus karinatum açısından muayene istiyoruz, özellikle ağladığında belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Kordon kisti düşünüldü; gaz ve karında şişlik mevcut ve acil servisten kontrol önerildi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karında kramp şikayeti nedeniyle Umbilikal herni açısından muayene istiyoruz, yeni gelişti.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "sünnet planlama şikayeti nedeniyle İnmemiş testis açısından muayene istiyoruz, akşamları belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta doğumsal anomali şüphesi var, MR/USG çekildi değerlendirme istiyoruz; Umbilikal granülom şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "3 gündür var; ameliyat sonrası dikiş kontrolü devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta erkek çocukta testis şişliği var, akşamları belirginleşiyor; Anal stenoz şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hipospadias düşünüldü; yarada iltihap ve kızarıklık mevcut ve akşamları belirginleşiyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yatınca kayboluyor; yeni doğanda kusma devam ediyor, İnmemiş testis olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "aile hekimi cerrahiye sevk etti; erkek çocukta testis şişliği devam ediyor, Safra kesesi taşı olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karın ağrısı şikayeti nedeniyle Hipospadias açısından muayene istiyoruz, akşamları belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karın duvarında kitle şikayeti nedeniyle Kordon kisti açısından muayene istiyoruz, antibiyotik sonrası da geçmedi.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "özellikle ağladığında belirginleşiyor; idrar yolu enfeksiyonu sonrası ağrı devam ediyor, Meckel divertikülü olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "antibiyotik sonrası da geçmedi; karın ağrısı devam ediyor, Hirschsprung hastalığı olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "safra taşına bağlı ağrı şikayeti nedeniyle Anal stenoz açısından muayene istiyoruz, yatınca kayboluyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kabızlık var, koşunca artıyor; Safra kesesi taşı şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Umbilikal granülom düşünüldü; yarada iltihap ve kızarıklık mevcut ve iki haftadır sürüyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "özellikle ağladığında belirginleşiyor; ateş ve karın ağrısı devam ediyor, İnmemiş testis olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "aile hekimi cerrahiye sevk etti; yutma güçlüğü devam ediyor, Pektus ekskavatum olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "aile hekimi cerrahiye sevk etti; karında hassasiyet devam ediyor, Kordon kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pilor stenozu düşünüldü; idrar yolu enfeksiyonu sonrası ağrı mevcut ve koşunca artıyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "karın duvarında kitle şikayeti nedeniyle Karaciğer kisti açısından muayene istiyoruz, özellikle ağladığında belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Appendisit düşünüldü; kasıkta şişlik mevcut ve antibiyotik sonrası da geçmedi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta gaz ve karında şişlik var, koşunca artıyor; İnguinal herni şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kusma var, ayakta iken artıyor; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "doğumdan beri var; yutma güçlüğü devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kabızlık var, akşamları belirginleşiyor; Pilor stenozu şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yarada iltihap ve kızarıklık şikayeti nedeniyle Karaciğer kisti açısından muayene istiyoruz, antibiyotik sonrası da geçmedi.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kasıkta şişlik var, özellikle ağladığında belirginleşiyor; Appendisit şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta idrar yapmada zorlanma var, özellikle ağladığında belirginleşiyor; Pilor stenozu şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hidrosel düşünüldü; gaz ve karında şişlik mevcut ve antibiyotik sonrası da geçmedi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "dün akşam başladı; büyüme gelişme geriliği devam ediyor, Hirschsprung hastalığı olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "kasık ağrısı şikayeti nedeniyle Meckel divertikülü açısından muayene istiyoruz, iki haftadır sürüyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "akşamları belirginleşiyor; kabızlık devam ediyor, Hirschsprung hastalığı olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pilor stenozu düşünüldü; umbilikal akıntı mevcut ve MR/USG çekildi değerlendirme istiyoruz. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yatınca kayboluyor; sünnet planlama devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "doğumdan beri var; ateş ve karın ağrısı devam ediyor, Umbilikal granülom olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "MR/USG çekildi değerlendirme istiyoruz; ameliyat sonrası dikiş kontrolü devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "dün akşam başladı; sünnet planlama devam ediyor, Umbilikal granülom olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hirschsprung hastalığı düşünüldü; kusma mevcut ve MR/USG çekildi değerlendirme istiyoruz. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yeni gelişti; yarada açılma devam ediyor, Meckel divertikülü olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "büyüme gelişme geriliği şikayeti nedeniyle Pilor stenozu açısından muayene istiyoruz, aile hekimi cerrahiye sevk etti.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "iki haftadır sürüyor; göbekte şişlik devam ediyor, Meckel divertikülü olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "torbada su toplaması şikayeti nedeniyle Umbilikal herni açısından muayene istiyoruz, akşamları belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta doğumsal anomali şüphesi var, acil servisten kontrol önerildi; Pektus karinatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kasıkta şişlik var, koşunca artıyor; Pankreas kisti şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "gaz ve karında şişlik şikayeti nedeniyle Appendisit açısından muayene istiyoruz, MR/USG çekildi değerlendirme istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "acil servisten kontrol önerildi; yeni doğanda kusma devam ediyor, Karaciğer kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "sünnet planlama şikayeti nedeniyle Umbilikal herni açısından muayene istiyoruz, özellikle ağladığında belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "gaz ve karında şişlik şikayeti nedeniyle Meckel divertikülü açısından muayene istiyoruz, aile hekimi cerrahiye sevk etti.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "kasık ağrısı şikayeti nedeniyle İnguinal herni açısından muayene istiyoruz, aile hekimi cerrahiye sevk etti.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta gaz ve karında şişlik var, özellikle ağladığında belirginleşiyor; Umbilikal granülom şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "ayakta iken artıyor; safra taşına bağlı ağrı devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "kusma şikayeti nedeniyle Anal stenoz açısından muayene istiyoruz, yatınca kayboluyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta göbekte şişlik var, doğumdan beri var; Meckel divertikülü şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kız çocukta kasıkta şişlik var, ayakta iken artıyor; Umbilikal herni şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "antibiyotik sonrası da geçmedi; kasıkta şişlik devam ediyor, Karaciğer kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "antibiyotik sonrası da geçmedi; kusma devam ediyor, Karaciğer kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta idrar yolu enfeksiyonu sonrası ağrı var, yeni gelişti; Umbilikal granülom şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta göbekte şişlik var, özellikle ağladığında belirginleşiyor; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta kasık ağrısı var, acil servisten kontrol önerildi; İnmemiş testis şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "MR/USG çekildi değerlendirme istiyoruz; büyüme gelişme geriliği devam ediyor, Meckel divertikülü olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "acil servisten kontrol önerildi; doğumsal anomali şüphesi devam ediyor, Umbilikal herni olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Kordon kisti düşünüldü; sünnet planlama mevcut ve doğumdan beri var. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta karın ağrısı var, antibiyotik sonrası da geçmedi; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hipospadias düşünüldü; yutma güçlüğü mevcut ve antibiyotik sonrası da geçmedi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "kusma şikayeti nedeniyle Hirschsprung hastalığı açısından muayene istiyoruz, akşamları belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta idrar yolu enfeksiyonu sonrası ağrı var, MR/USG çekildi değerlendirme istiyoruz; Karaciğer kisti şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta sağ alt kadran ağrısı var, antibiyotik sonrası da geçmedi; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yarada iltihap ve kızarıklık var, koşunca artıyor; Pektus karinatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "acil servisten kontrol önerildi; safra taşına bağlı ağrı devam ediyor, Anal stenoz olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pektus ekskavatum düşünüldü; kabızlık mevcut ve özellikle ağladığında belirginleşiyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "koşunca artıyor; idrar yapmada zorlanma devam ediyor, Karaciğer kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yarada iltihap ve kızarıklık var, dün akşam başladı; Karaciğer kisti şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "erkek çocukta testis şişliği şikayeti nedeniyle Anal stenoz açısından muayene istiyoruz, iki haftadır sürüyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta karında hassasiyet var, iki haftadır sürüyor; Pilor stenozu şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta sünnet planlama var, MR/USG çekildi değerlendirme istiyoruz; Umbilikal granülom şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yarada açılma şikayeti nedeniyle Meckel divertikülü açısından muayene istiyoruz, akşamları belirginleşiyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Kordon kisti düşünüldü; karında hassasiyet mevcut ve ultrason raporu sonrası yönlendirildik. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnmemiş testis düşünüldü; karında ele gelen kitle mevcut ve özellikle ağladığında belirginleşiyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Meckel divertikülü düşünüldü; sünnet planlama mevcut ve akşamları belirginleşiyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yarada iltihap ve kızarıklık var, yatınca kayboluyor; Hirschsprung hastalığı şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "antibiyotik sonrası da geçmedi; kasıkta şişlik devam ediyor, İnmemiş testis olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Meckel divertikülü düşünüldü; sünnet planlama mevcut ve antibiyotik sonrası da geçmedi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "antibiyotik sonrası da geçmedi; safra taşına bağlı ağrı devam ediyor, Appendisit olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Karaciğer kisti düşünüldü; ateş ve karın ağrısı mevcut ve akşamları belirginleşiyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "dün akşam başladı; ateş ve karın ağrısı devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "kız çocukta kasıkta şişlik şikayeti nedeniyle Umbilikal herni açısından muayene istiyoruz, antibiyotik sonrası da geçmedi.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yarada açılma var, ayakta iken artıyor; Umbilikal herni şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta büyüme gelişme geriliği var, antibiyotik sonrası da geçmedi; Safra kesesi taşı şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "umbilikal akıntı şikayeti nedeniyle Umbilikal granülom açısından muayene istiyoruz, dün akşam başladı.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnguinal herni düşünüldü; yeni doğanda kusma mevcut ve yatınca kayboluyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yarada açılma var, 3 gündür var; Pektus karinatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta göbekten akıntı var, akşamları belirginleşiyor; İnmemiş testis şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yarada iltihap ve kızarıklık var, dün akşam başladı; Hirschsprung hastalığı şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "gaz ve karında şişlik şikayeti nedeniyle Anal stenoz açısından muayene istiyoruz, ayakta iken artıyor.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta idrar yapmada zorlanma var, akşamları belirginleşiyor; İnguinal herni şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "yatınca kayboluyor; kasık ağrısı devam ediyor, Safra kesesi taşı olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "dün akşam başladı; karında kramp devam ediyor, Pankreas kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta sünnet sonrası kontrol var, ayakta iken artıyor; Pankreas kisti şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta torbada su toplaması var, doğumdan beri var; Appendisit şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "3 gündür var; yutma güçlüğü devam ediyor, Pektus ekskavatum olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Meckel divertikülü düşünüldü; umbilikal akıntı mevcut ve antibiyotik sonrası da geçmedi. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "acil servisten kontrol önerildi; yarada iltihap ve kızarıklık devam ediyor, Safra kesesi taşı olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnguinal herni düşünüldü; kasık ağrısı mevcut ve MR/USG çekildi değerlendirme istiyoruz. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "acil servisten kontrol önerildi; yarada iltihap ve kızarıklık devam ediyor, Kordon kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta ameliyat sonrası dikiş kontrolü var, antibiyotik sonrası da geçmedi; Pektus ekskavatum şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "MR/USG çekildi değerlendirme istiyoruz; karında hassasiyet devam ediyor, Meckel divertikülü olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "özellikle ağladığında belirginleşiyor; ameliyat sonrası dikiş kontrolü devam ediyor, Kordon kisti olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "iki haftadır sürüyor; kusma devam ediyor, Pilor stenozu olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta yeni doğanda kusma var, ayakta iken artıyor; Pankreas kisti şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Umbilikal herni düşünüldü; sünnet sonrası kontrol mevcut ve doğumdan beri var. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Çocukta sağ alt kadran ağrısı var, ayakta iken artıyor; Umbilikal herni şüphesiyle değerlendirilmeye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hipospadias düşünüldü; göbekte şişlik mevcut ve yatınca kayboluyor. Cerrahi görüş istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "aile hekimi cerrahiye sevk etti; yarada açılma devam ediyor, İnguinal herni olabilir diye yönlendirildik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Karaciğer kisti operasyonu sonrası ameliyat sonrası dikiş kontrolü için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Appendisit operasyonu sonrası patoloji sonucunu göstermek için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnguinal herni operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Meckel divertikülü operasyonu sonrası ameliyat sonrası pansuman değişimi için randevu aldık.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnguinal herni operasyonu sonrası ameliyat sonrası dikiş kontrolü için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pilor stenozu operasyonu sonrası ameliyat sonrası dikiş kontrolü için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Anal stenoz operasyonu sonrası ameliyat sonrası ağrısı azalmadı, cerrahi kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Anal stenoz operasyonu sonrası patoloji sonucunu göstermek için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Appendisit operasyonu sonrası ameliyat sonrası ağrısı azalmadı, cerrahi kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Safra kesesi taşı operasyonu sonrası yara yerinde kızarıklık ve akıntı oldu, kontrol istedik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnmemiş testis operasyonu sonrası ameliyat sonrası pansuman değişimi için randevu aldık.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Umbilikal herni operasyonu sonrası ameliyat sonrası dikiş kontrolü için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pektus ekskavatum operasyonu sonrası yara yerinde kızarıklık ve akıntı oldu, kontrol istedik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hirschsprung hastalığı operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Safra kesesi taşı operasyonu sonrası ameliyat sonrası pansuman değişimi için randevu aldık.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Safra kesesi taşı operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Anal stenoz operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pankreas kisti operasyonu sonrası ameliyat sonrası dikiş kontrolü için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Anal stenoz operasyonu sonrası yara yerinde kızarıklık ve akıntı oldu, kontrol istedik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Safra kesesi taşı operasyonu sonrası patoloji sonucunu göstermek için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pilor stenozu operasyonu sonrası ameliyat sonrası ağrısı azalmadı, cerrahi kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hipospadias operasyonu sonrası ameliyat sonrası ağrısı azalmadı, cerrahi kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hirschsprung hastalığı operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Umbilikal herni operasyonu sonrası yara yerinde kızarıklık ve akıntı oldu, kontrol istedik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hidrosel operasyonu sonrası patoloji sonucunu göstermek için geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "İnguinal herni operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pektus karinatum operasyonu sonrası ameliyat sonrası ağrısı azalmadı, cerrahi kontrol istiyoruz.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Pektus karinatum operasyonu sonrası ameliyat sonrası pansuman değişimi için randevu aldık.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Umbilikal herni operasyonu sonrası ameliyat sonrası pansuman değişimi için randevu aldık.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "Hipospadias operasyonu sonrası ameliyat yeri şişti, enfeksiyon olabilir diye geldik.", "clinic": "Çocuk Cerrahisi"}
+{"complaint": "8 yaşında bebeğimda süt dişi sallanması var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda süt dişi ağrısı var, antibiyotik sonrası geçmedi; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında kızımda diş rengi değişikliği var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda biberon çürüğü var, yüzünde şişlik gelişti; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında oğlumda diş eti şişliği var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda süt dişi ağrısı var, antibiyotik sonrası geçmedi; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında kızımda diş rengi değişikliği var, iki gündür ağrısı arttı; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında bebeğimda diş eti şişliği var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında çocuğumda süt dişi sallanması var, soğuk-sıcağa hassas; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında çocuğumda diş rengi değişikliği var, yüzünde şişlik gelişti; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında bebeğimda dolgu düşmesi var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda süt dişi ağrısı var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda süt dişi çürüğü var, yüzünde şişlik gelişti; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında bebeğimda diş eti şişliği var, iki gündür ağrısı arttı; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda süt dişi çürüğü var, yemek yemeyi reddediyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda diş eti şişliği var, yüzünde şişlik gelişti; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda diş kırığı var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında oğlumda biberon çürüğü var, geceleri ağlayarak uyanıyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında oğlumda diş eti şişliği var, geceleri ağlayarak uyanıyor; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında çocuğumda diş kırığı var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında bebeğimda süt dişi sallanması var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda diş kırığı var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında oğlumda diş rengi değişikliği var, soğuk-sıcağa hassas; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda süt dişi sallanması var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında kızımda diş eti şişliği var, yemek yemeyi reddediyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında çocuğumda süt dişi çürüğü var, soğuk-sıcağa hassas; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda diş kırığı var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında kızımda dolgu düşmesi var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında bebeğimda biberon çürüğü var, antibiyotik sonrası geçmedi; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında bebeğimda diş kırığı var, geceleri ağlayarak uyanıyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında kızımda biberon çürüğü var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında kızımda diş kırığı var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda diş eti şişliği var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda diş eti şişliği var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında kızımda dolgu düşmesi var, iki gündür ağrısı arttı; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda diş kırığı var, iki gündür ağrısı arttı; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında oğlumda dolgu düşmesi var, iki gündür ağrısı arttı; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda diş rengi değişikliği var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında çocuğumda diş kırığı var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda diş kırığı var, iki gündür ağrısı arttı; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında bebeğimda diş rengi değişikliği var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında kızımda süt dişi çürüğü var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda süt dişi çürüğü var, geceleri ağlayarak uyanıyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında kızımda diş rengi değişikliği var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında kızımda süt dişinde apse var, antibiyotik sonrası geçmedi; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında bebeğimda diş kırığı var, yemek yemeyi reddediyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda biberon çürüğü var, antibiyotik sonrası geçmedi; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında bebeğimda süt dişi ağrısı var, soğuk-sıcağa hassas; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda biberon çürüğü var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda biberon çürüğü var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında çocuğumda süt dişi sallanması var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda dolgu düşmesi var, antibiyotik sonrası geçmedi; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda süt dişi çürüğü var, parkta düştü; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında kızımda dolgu düşmesi var, yemek yemeyi reddediyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda süt dişi çürüğü var, yemek yemeyi reddediyor; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda diş rengi değişikliği var, yüzünde şişlik gelişti; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında kızımda biberon çürüğü var, geceleri ağlayarak uyanıyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda süt dişinde apse var, yemek yemeyi reddediyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında kızımda dolgu düşmesi var, geceleri ağlayarak uyanıyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda süt dişi ağrısı var, iki gündür ağrısı arttı; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda süt dişi ağrısı var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda süt dişinde apse var, geceleri ağlayarak uyanıyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında bebeğimda dolgu düşmesi var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında oğlumda süt dişi çürüğü var, soğuk-sıcağa hassas; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda süt dişi ağrısı var, iki gündür ağrısı arttı; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda diş rengi değişikliği var, iki gündür ağrısı arttı; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında oğlumda süt dişinde apse var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında bebeğimda süt dişinde apse var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda dolgu düşmesi var, soğuk-sıcağa hassas; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda diş eti şişliği var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda süt dişi çürüğü var, soğuk-sıcağa hassas; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında kızımda süt dişinde apse var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda dolgu düşmesi var, yüzünde şişlik gelişti; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında kızımda dolgu düşmesi var, antibiyotik sonrası geçmedi; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında bebeğimda süt dişi sallanması var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında çocuğumda diş eti şişliği var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda diş rengi değişikliği var, yemek yemeyi reddediyor; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda diş kırığı var, yüzünde şişlik gelişti; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında çocuğumda süt dişi çürüğü var, parkta düştü; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda süt dişi ağrısı var, iki gündür ağrısı arttı; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında çocuğumda süt dişi ağrısı var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında oğlumda süt dişi çürüğü var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında bebeğimda süt dişi ağrısı var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında kızımda süt dişi ağrısı var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda diş rengi değişikliği var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda süt dişinde apse var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda süt dişi ağrısı var, yemek yemeyi reddediyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda süt dişi ağrısı var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında çocuğumda süt dişi sallanması var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında bebeğimda diş rengi değişikliği var, parkta düştü; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda dolgu düşmesi var, antibiyotik sonrası geçmedi; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında kızımda süt dişi sallanması var, geceleri ağlayarak uyanıyor; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında çocuğumda süt dişi çürüğü var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında çocuğumda süt dişi ağrısı var, soğuk-sıcağa hassas; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda diş rengi değişikliği var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında kızımda süt dişi ağrısı var, soğuk-sıcağa hassas; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda diş rengi değişikliği var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında bebeğimda süt dişi çürüğü var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında oğlumda süt dişinde apse var, antibiyotik sonrası geçmedi; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda dolgu düşmesi var, yemek yemeyi reddediyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında oğlumda süt dişi çürüğü var, geceleri ağlayarak uyanıyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda dolgu düşmesi var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda diş eti şişliği var, geceleri ağlayarak uyanıyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda biberon çürüğü var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında bebeğimda diş kırığı var, soğuk-sıcağa hassas; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında çocuğumda diş rengi değişikliği var, yüzünde şişlik gelişti; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında çocuğumda diş kırığı var, soğuk-sıcağa hassas; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında çocuğumda diş kırığı var, parkta düştü; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda biberon çürüğü var, iki gündür ağrısı arttı; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda diş kırığı var, geceleri ağlayarak uyanıyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda diş kırığı var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında bebeğimda diş rengi değişikliği var, yüzünde şişlik gelişti; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında çocuğumda diş eti şişliği var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda diş kırığı var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında kızımda süt dişinde apse var, iki gündür ağrısı arttı; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda süt dişinde apse var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda diş eti şişliği var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda süt dişinde apse var, antibiyotik sonrası geçmedi; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda süt dişinde apse var, geceleri ağlayarak uyanıyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında kızımda süt dişi ağrısı var, antibiyotik sonrası geçmedi; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında oğlumda süt dişinde apse var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında bebeğimda süt dişinde apse var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında kızımda süt dişi ağrısı var, antibiyotik sonrası geçmedi; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda süt dişinde apse var, soğuk-sıcağa hassas; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında bebeğimda diş kırığı var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda diş kırığı var, antibiyotik sonrası geçmedi; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında kızımda diş kırığı var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında bebeğimda süt dişi ağrısı var, yüzünde şişlik gelişti; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda süt dişi sallanması var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında çocuğumda diş rengi değişikliği var, yemek yemeyi reddediyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda diş eti şişliği var, parkta düştü; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında çocuğumda süt dişinde apse var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda süt dişi çürüğü var, yüzünde şişlik gelişti; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda süt dişi sallanması var, geceleri ağlayarak uyanıyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında kızımda süt dişi ağrısı var, antibiyotik sonrası geçmedi; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında oğlumda süt dişinde apse var, soğuk-sıcağa hassas; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda diş eti şişliği var, soğuk-sıcağa hassas; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında çocuğumda diş kırığı var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında kızımda dolgu düşmesi var, yüzünde şişlik gelişti; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında kızımda süt dişi sallanması var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında bebeğimda süt dişi ağrısı var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda diş rengi değişikliği var, soğuk-sıcağa hassas; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında çocuğumda dolgu düşmesi var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında bebeğimda süt dişinde apse var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında kızımda süt dişi ağrısı var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında çocuğumda diş kırığı var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında bebeğimda süt dişi ağrısı var, geceleri ağlayarak uyanıyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında çocuğumda diş eti şişliği var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında bebeğimda diş eti şişliği var, soğuk-sıcağa hassas; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında oğlumda süt dişi ağrısı var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda dolgu düşmesi var, yemek yemeyi reddediyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında oğlumda süt dişinde apse var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında kızımda süt dişi ağrısı var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında kızımda diş rengi değişikliği var, parkta düştü; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında kızımda süt dişi sallanması var, yemek yemeyi reddediyor; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında oğlumda diş kırığı var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda süt dişi çürüğü var, yemek yemeyi reddediyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında bebeğimda biberon çürüğü var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında çocuğumda biberon çürüğü var, antibiyotik sonrası geçmedi; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında kızımda süt dişi ağrısı var, iki gündür ağrısı arttı; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda süt dişi çürüğü var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında çocuğumda süt dişi sallanması var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında bebeğimda süt dişi çürüğü var, yüzünde şişlik gelişti; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda diş eti şişliği var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında bebeğimda süt dişi çürüğü var, antibiyotik sonrası geçmedi; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında kızımda süt dişi çürüğü var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında bebeğimda biberon çürüğü var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında kızımda dolgu düşmesi var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında çocuğumda dolgu düşmesi var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında bebeğimda süt dişi ağrısı var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında bebeğimda diş eti şişliği var, iki gündür ağrısı arttı; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında kızımda diş kırığı var, yemek yemeyi reddediyor; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında oğlumda diş kırığı var, yüzünde şişlik gelişti; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında çocuğumda diş rengi değişikliği var, antibiyotik sonrası geçmedi; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında kızımda dolgu düşmesi var, yemek yemeyi reddediyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında bebeğimda diş kırığı var, soğuk-sıcağa hassas; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında çocuğumda diş rengi değişikliği var, yemek yemeyi reddediyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında kızımda dolgu düşmesi var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında kızımda süt dişi ağrısı var, iki gündür ağrısı arttı; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında çocuğumda diş eti şişliği var, parkta düştü; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında oğlumda süt dişi sallanması var, parkta düştü; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında bebeğimda diş eti şişliği var, parkta düştü; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında kızımda süt dişinde apse var, geceleri ağlayarak uyanıyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında oğlumda süt dişi ağrısı var, yüzünde şişlik gelişti; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "7 yaşında oğlumda süt dişinde apse var, yüzünde şişlik gelişti; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda biberon çürüğü var, yemek yemeyi reddediyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında kızımda dolgu düşmesi var, parkta düştü; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "10 yaşında oğlumda diş eti şişliği var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "6 yaşında kızımda süt dişi ağrısı var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında bebeğimda dolgu düşmesi var, iki gündür ağrısı arttı; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "9 yaşında bebeğimda biberon çürüğü var, yüzünde şişlik gelişti; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında bebeğimda diş kırığı var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında bebeğimda biberon çürüğü var, geceleri ağlayarak uyanıyor; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında oğlumda dolgu düşmesi var, yemek yemeyi reddediyor; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "8 yaşında bebeğimda dolgu düşmesi var, antibiyotik sonrası geçmedi; muayene olmak istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "4 yaşında oğlumda süt dişinde apse var, parkta düştü; çekim gerekip gerekmediğini öğrenmek istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "3 yaşında çocuğumda süt dişi ağrısı var, parkta düştü; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "5 yaşında oğlumda diş kırığı var, geceleri ağlayarak uyanıyor; tedavi planı için geldik.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "2 yaşında çocuğumda süt dişi sallanması var, geceleri ağlayarak uyanıyor; acil değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+{"complaint": "11 yaşında oğlumda süt dişi sallanması var, yüzünde şişlik gelişti; röntgen ile değerlendirme istiyoruz.", "clinic": "Çocuk Diş Hekimliği"}
+
