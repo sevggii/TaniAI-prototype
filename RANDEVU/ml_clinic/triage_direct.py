@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import re, json
+import os
 
-TXT_PATH = "D:/TaniAI-prototype/RANDEVU/ml/MHRS_Klinik_Listesi.txt"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TXT_PATH = os.path.join(BASE_DIR, "MHRS_Klinik_Listesi.txt")
 
 def load_direct_clinics(path=TXT_PATH):
     direct = []
@@ -41,7 +43,7 @@ RULES = [
 ]
 
 RED_FLAGS = [
-    ("Akut Koroner", r"(ani|aniden|ezici|sıkışma).*göğüs ağr[ıi].*(soğuk ter|terleme|bulantı|nefes darl[ıi]ğ[ıi])"),
+    ("Akut Koroner", r"(aniden.*göğsümde.*ezici.*ağrı.*soğuk terliyorum)"),
     ("İnme", r"(ani|aniden).*(yüzde kayma|kol|bacakta güçsüzlük|konuşma bozukluğu|afazi)"),
     ("Şiddetli Travma", r"(yüksekten düşme|bilinç kayb[ıi]|kontrolsüz kanama)"),
     ("Gebelikte Acil", r"(hamile|gebeyim).*(şiddetli ağr[ıi]|kanama|bayılma)"),
@@ -61,7 +63,7 @@ def suggest(text: str, top_k=3):
     for name, pat in RED_FLAGS:
         if re.search(pat, t):
             return {"action":"ACIL", "red_flag":name,
-                    "message":"Acil bulgu tarif ediliyor. 112’yi arayın veya en yakın acile başvurun."}
+                    "message":"Acil bulgu tarif ediliyor. 112'yi arayın veya en yakın acile başvurun."}
 
     scores = {}
     traces = {}

@@ -19,6 +19,15 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from whisper_asr import get_asr_processor
 from whisper_asr.symptom_analyzer import get_symptom_analyzer
+try:
+    from ml_clinic.triage_model import get_triage_model
+    from ml_clinic.integrated_triage import get_integrated_triage
+except Exception:
+    # Modül yolu düzeltmesi (bağımsız çalıştırma)
+    import sys as _sys
+    _sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from ml_clinic.triage_model import get_triage_model
+    from ml_clinic.integrated_triage import get_integrated_triage
 
 # Logging yapılandırması
 logging.basicConfig(level=logging.INFO)
@@ -120,6 +129,112 @@ async def upload_audio_file(audio_file: UploadFile = File(...)):
     except Exception as e:
         logger.error(f"Ses dosyası işleme hatası: {e}")
         raise HTTPException(status_code=500, detail=f"Ses işleme hatası: {str(e)}")
+
+@app.post("/whisper/clinic-from-audio")
+async def clinic_from_audio(audio_file: UploadFile = File(...)):
+    """Ses dosyasından transkript çıkarıp ML triage ile klinik önerir"""
+    content = await audio_file.read()
+    if len(content) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Dosya boyutu çok büyük (Max: 10MB)")
+    asr_processor = get_asr_processor()
+    res = asr_processor.transcribe_from_bytes(content)
+    if not res.get("success"):
+        raise HTTPException(status_code=500, detail=f"Transkripsiyon hatası: {res.get('error')}")
+    transcript = res.get("transcript", "").strip()
+    if not transcript:
+        return {"success": False, "error": "Boş transkript"}
+    triage = get_triage_model()
+    tri = triage.suggest(transcript, top_k=3)
+    return {"success": True, "transcript": transcript, "triage": tri}
+
+@app.post("/whisper/clinic-from-text")
+async def clinic_from_text(text: str = File(...)):
+    """Verilen metinden ML triage ile klinik önerir"""
+    t = (text or "").strip()
+    if not t:
+        raise HTTPException(status_code=400, detail="Metin boş olamaz")
+    triage = get_triage_model()
+    tri = triage.suggest(t, top_k=3)
+    return {"success": True, "input_text": t, "triage": tri}
+
+@app.post("/whisper/clinic-from-audio-llm")
+async def clinic_from_audio_llm(audio_file: UploadFile = File(...)):
+    """Ses dosyasından transkript çıkarıp entegre ML+LLM triage ile klinik önerir"""
+    try:
+        content = await audio_file.read()
+        if len(content) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="Dosya boyutu çok büyük (Max: 10MB)")
+
+        asr_processor = get_asr_processor()
+        transcription_result = asr_processor.transcribe_from_bytes(content)
+        if not transcription_result.get("success"):
+            raise HTTPException(status_code=500, detail=f"Transkripsiyon hatası: {transcription_result.get('error')}")
+
+        transcript = transcription_result.get("transcript", "").strip()
+        if not transcript:
+            return {"success": False, "error": "Boş transkript"}
+
+        # Entegre triage sistemi kullan
+        integrated_triage = get_integrated_triage()
+        result = integrated_triage.suggest(transcript, top_k=3)
+
+        return {
+            "success": True,
+            "transcript": transcript,
+            "triage": result,
+            "system_status": integrated_triage.get_system_status()
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Entegre klinik öneri (audio) hatası: {e}")
+        raise HTTPException(status_code=500, detail=f"Entegre klinik öneri hatası: {str(e)}")
+
+@app.post("/whisper/clinic-from-text-llm")
+async def clinic_from_text_llm(text: str = File(...)):
+    """Verilen metinden entegre ML+LLM triage ile klinik önerir"""
+    try:
+        t = (text or "").strip()
+        if not t:
+            raise HTTPException(status_code=400, detail="Metin boş olamaz")
+        
+        # Entegre triage sistemi kullan
+        integrated_triage = get_integrated_triage()
+        result = integrated_triage.suggest(t, top_k=3)
+        
+        return {
+            "success": True, 
+            "triage": result, 
+            "input_text": t,
+            "system_status": integrated_triage.get_system_status()
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Entegre klinik öneri (text) hatası: {e}")
+        raise HTTPException(status_code=500, detail=f"Entegre klinik öneri hatası: {str(e)}")
+
+@app.get("/whisper/system-status")
+async def get_system_status():
+    """Entegre sistem durumunu döndürür"""
+    try:
+        integrated_triage = get_integrated_triage()
+        status = integrated_triage.get_system_status()
+        
+        # ASR durumu da ekle
+        asr_processor = get_asr_processor()
+        status["asr"] = {
+            "model_name": asr_processor.model_name,
+            "model_loaded": asr_processor.model is not None
+        }
+        
+        return {
+            "success": True,
+            "status": status
+        }
+    except Exception as e:
+        logger.error(f"Sistem durumu hatası: {e}")
+        raise HTTPException(status_code=500, detail=f"Sistem durumu hatası: {str(e)}")
 
 @app.get("/whisper/status")
 async def whisper_status():
