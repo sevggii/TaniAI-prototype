@@ -14,6 +14,7 @@ import 'features/auth/notification_test_page.dart';
 import 'features/pharmacy/pharmacy_finder_page.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/platform_utils.dart';
+import 'features/randevu/presentation/voice_randevu_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -77,17 +78,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> _startCall(BuildContext context) async {
-    final uri = Uri(scheme: 'tel', path: '182');
-    final can = await canLaunchUrl(uri);
-    if (can) {
-      await launchUrl(uri);
-    } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Arama başlatılamadı.')),
-        );
-      }
-    }
+    // Ses ile randevu sayfasına git
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const VoiceRandevuPage(),
+      ),
+    );
   }
 
   @override

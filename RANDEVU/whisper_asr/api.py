@@ -13,20 +13,71 @@ import os
 
 from .whisper_asr import get_asr_processor
 from .symptom_analyzer import get_symptom_analyzer
-try:
-    from ml_clinic.triage_model import get_triage_model
-    from ml_clinic.integrated_triage import get_integrated_triage
-except Exception:
-    # Fallback: relative import when run as a package-less script
-    import sys, os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from ml_clinic.triage_model import get_triage_model
-    from ml_clinic.integrated_triage import get_integrated_triage
+# Yeni triage sistemi import et
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# test_system.py'den BetterTriageSystem'i import et
+from test_system import BetterTriageSystem
 
 logger = logging.getLogger(__name__)
 
 # Router oluştur
 router = APIRouter(prefix="/whisper", tags=["Whisper ASR"])
+
+# Triage sistemi instance
+triage_system = BetterTriageSystem()
+
+@router.post("/flutter-randevu")
+async def flutter_randevu(audio_file: UploadFile = File(...)):
+    """
+    Flutter'dan gelen ses dosyasını işle ve klinik öner
+    """
+    try:
+        logger.info(f"Flutter randevu isteği: {audio_file.filename}")
+        
+        # Ses dosyasını geçici olarak kaydet
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
+            content = await audio_file.read()
+            temp_file.write(content)
+            temp_file_path = temp_file.name
+        
+        try:
+            # Whisper ile transkripsiyon yap
+            asr_processor = get_asr_processor()
+            transcript = asr_processor.transcribe(temp_file_path)
+            
+            logger.info(f"Transkript: {transcript}")
+            
+            # Triage sistemi ile klinik öner
+            suggestions = triage_system.suggest(transcript, top_k=3)
+            
+            # Sonuçları formatla
+            result = {
+                "success": True,
+                "transcript": transcript,
+                "suggestions": suggestions,
+                "timestamp": os.path.getmtime(temp_file_path)
+            }
+            
+            return JSONResponse(content=result)
+            
+        finally:
+            # Geçici dosyayı sil
+            if os.path.exists(temp_file_path):
+                os.unlink(temp_file_path)
+                
+    except Exception as e:
+        logger.error(f"Flutter randevu hatası: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": str(e),
+                "message": "Ses işleme hatası"
+            }
+        )
 
 @router.post("/upload-audio")
 async def upload_audio_file(audio_file: UploadFile = File(...)):

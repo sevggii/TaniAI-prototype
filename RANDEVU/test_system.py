@@ -1,192 +1,254 @@
-# Sistem Testi
-import sys
-import os
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-# Python path'e ekle
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+"""
+test_system.py
+----------------
+Basit ama akıllı bir triyaj demo testi.
 
-# Dosyaları ana klasörden import et
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+Değişiklikler:
+- BetterTriageSystem: ağırlıklı anahtar kelime tabanı, çocuk/erişkin ayrımı,
+  negatif ipuçları ve genişletilmiş ACİL kuralları.
+- Çıktı formatı: önceki test çıktısına çok benzer; ACİL durumları ayrı vurgular.
+"""
 
-# Basit triage sistemi
-import json
 import re
+import unicodedata
 from typing import List, Dict, Any
-from collections import Counter
 
-class SimpleTriageSystem:
-    """Basit ama etkili triage sistemi - 40 klinik"""
-    
+
+# =============== Yardımcılar ===============
+
+def _normalize(txt: str) -> str:
+    """Küçük harf + diakritik temizliği + sadeleştirme (Türkçe harfler korunur)."""
+    t = txt.lower()
+    t = "".join(c for c in unicodedata.normalize("NFD", t) if unicodedata.category(c) != "Mn")
+    t = re.sub(r"[^a-z0-9çğıöşü\s]", " ", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
+# =============== Triage Sistemi ===============
+
+class BetterTriageSystem:
+    """
+    Ağırlıklı anahtar-kelime triage (MHRS isimleriyle hizalı çekirdek set).
+    - Token bazlı eşleşme
+    - Ağırlık (weight), ceza (penalty), pediatri/erişkin sinyalleri
+    - Geniş ACİL kuralları
+    """
+
     def __init__(self):
-        # Tıbbi anahtar kelime eşleştirmeleri
-        self.medical_keywords = {
-            'Aile Hekimliği': ['genel', 'check-up', 'rutin', 'kontrol', 'muayene', 'ateş', 'halsizlik'],
-            'İç Hastalıkları': ['mide', 'bulantı', 'kusma', 'karın', 'ağrı', 'ateş', 'halsizlik', 'yorgunluk', 'iştahsızlık'],
-            'Nöroloji': ['baş', 'ağrı', 'baş ağrısı', 'migren', 'baş dönmesi', 'bulantı', 'kusma', 'görme', 'göz', 'bulanık', 'titreme'],
-            'Kardiyoloji': ['kalp', 'göğüs', 'ağrı', 'nefes', 'darlığı', 'çarpıntı', 'tansiyon', 'göğüs ağrısı', 'kalp ağrısı'],
-            'Gastroenteroloji': ['mide', 'karın', 'ağrı', 'bulantı', 'kusma', 'ishal', 'kabızlık', 'karın ağrısı', 'mide ağrısı'],
-            'Ortopedi': ['kemik', 'eklem', 'ağrı', 'sırt', 'bel', 'boyun', 'omuz', 'diz', 'bacak', 'kol', 'kırık', 'çıkık'],
-            'Dermatoloji': ['cilt', 'deri', 'kaşıntı', 'döküntü', 'lekeler', 'yara', 'kızarıklık', 'egzama', 'sedef'],
-            'Göz Hastalıkları': ['göz', 'görme', 'bulanık', 'ağrı', 'kızarıklık', 'yaşarma', 'göz ağrısı', 'görme bozukluğu'],
-            'Kulak Burun Boğaz': ['kulak', 'burun', 'boğaz', 'ağrı', 'tıkanıklık', 'ses', 'işitme', 'burun tıkanıklığı', 'boğaz ağrısı'],
-            'Üroloji': ['idrar', 'böbrek', 'ağrı', 'yanma', 'sık idrara çıkma', 'kan', 'idrar yolu', 'böbrek ağrısı'],
-            'Kadın Hastalıkları': ['adet', 'hamilelik', 'rahim', 'yumurtalık', 'ağrı', 'kanama', 'gebelik', 'doğum'],
-            'Çocuk Sağlığı': ['çocuk', 'bebek', 'ateş', 'öksürük', 'ishal', 'kusma', 'çocuk hastalığı', 'bebek hastalığı'],
-            'Psikiyatri': ['depresyon', 'anksiyete', 'stres', 'panik', 'uyku', 'iştah', 'kaygı', 'endişe', 'mutsuzluk'],
-            'Endokrinoloji': ['şeker', 'diyabet', 'tiroid', 'hormon', 'kilo', 'şişmanlık', 'zayıflık', 'guatr'],
-            'Göğüs Hastalıkları': ['akciğer', 'nefes', 'öksürük', 'balgam', 'astım', 'bronşit', 'nefes darlığı'],
-            'Romatoloji': ['romatizma', 'eklem', 'ağrı', 'şişlik', 'sertlik', 'artrit', 'lupus', 'fibromiyalji'],
-            'Onkoloji': ['kanser', 'tümör', 'kitle', 'biyopsi', 'kemoterapi', 'radyoterapi', 'onkoloji'],
-            'Nefroloji': ['böbrek', 'diyaliz', 'idrar', 'protein', 'kreatinin', 'böbrek yetmezliği'],
-            'Hematoloji': ['kan', 'anemi', 'lösemi', 'lenfoma', 'kanama', 'pıhtı', 'hemoglobin'],
-            'Plastik Cerrahi': ['estetik', 'yanık', 'yara', 'skarlar', 'doğumsal', 'travma', 'rekonstrüksiyon'],
-            'Genel Cerrahi': ['apandisit', 'fıtık', 'safra', 'karın', 'ameliyat', 'cerrahi', 'operasyon'],
-            'Beyin Cerrahisi': ['beyin', 'kafa', 'travma', 'tümör', 'anevrizma', 'hidrosefali', 'beyin cerrahisi'],
-            'Kalp Damar Cerrahisi': ['kalp', 'damar', 'bypass', 'kapak', 'anevrizma', 'kalp cerrahisi'],
-            'Ortopedi ve Travmatoloji': ['kemik', 'eklem', 'ağrı', 'sırt', 'bel', 'boyun', 'omuz', 'diz', 'kırık', 'çıkık'],
-            'Üroloji': ['idrar', 'böbrek', 'ağrı', 'yanma', 'sık idrara çıkma', 'kan', 'idrar yolu', 'böbrek ağrısı'],
-            'Kadın Hastalıkları ve Doğum': ['adet', 'hamilelik', 'rahim', 'yumurtalık', 'ağrı', 'kanama', 'gebelik', 'doğum'],
-            'Çocuk Cerrahisi': ['çocuk', 'bebek', 'cerrahi', 'doğumsal', 'travma', 'çocuk ameliyatı'],
-            'Çocuk Nörolojisi': ['çocuk', 'bebek', 'nöroloji', 'epilepsi', 'gelişim', 'çocuk nörolojisi'],
-            'Çocuk Kardiyolojisi': ['çocuk', 'bebek', 'kalp', 'doğumsal', 'kalp hastalığı', 'çocuk kalp'],
-            'Çocuk Gastroenterolojisi': ['çocuk', 'bebek', 'mide', 'karın', 'ishal', 'kusma', 'çocuk mide'],
-            'Çocuk Endokrinolojisi': ['çocuk', 'bebek', 'şeker', 'diyabet', 'büyüme', 'çocuk hormon'],
-            'Çocuk Hematolojisi': ['çocuk', 'bebek', 'kan', 'anemi', 'lösemi', 'çocuk kan'],
-            'Çocuk Onkolojisi': ['çocuk', 'bebek', 'kanser', 'tümör', 'çocuk kanser', 'pediatrik onkoloji'],
-            'Çocuk Romatolojisi': ['çocuk', 'bebek', 'romatizma', 'eklem', 'çocuk romatizma'],
-            'Çocuk Nefrolojisi': ['çocuk', 'bebek', 'böbrek', 'idrar', 'çocuk böbrek'],
-            'Çocuk Göğüs Hastalıkları': ['çocuk', 'bebek', 'akciğer', 'nefes', 'öksürük', 'çocuk akciğer'],
-            'Çocuk Dermatolojisi': ['çocuk', 'bebek', 'cilt', 'deri', 'kaşıntı', 'çocuk cilt'],
-            'Çocuk Göz Hastalıkları': ['çocuk', 'bebek', 'göz', 'görme', 'çocuk göz'],
-            'Çocuk Kulak Burun Boğaz': ['çocuk', 'bebek', 'kulak', 'burun', 'boğaz', 'çocuk KBB'],
-            'Çocuk Psikiyatrisi': ['çocuk', 'bebek', 'psikiyatri', 'davranış', 'çocuk psikiyatri']
+        # Sık başvuru alanları için çekirdek klinikler
+        self.clinics: Dict[str, Dict[str, float]] = {
+            "Aile Hekimliği": {
+                "genel": 1.0, "kontrol": 0.6, "ates": 0.6, "halsizlik": 0.6
+            },
+            "İç Hastalıkları (Dahiliye)": {
+                "mide": 1.0, "bulantı": 1.0, "kusma": 0.8, "karin": 1.0,
+                "ishal": 0.8, "ates": 0.4, "halsizlik": 0.4
+            },
+            "Nöroloji": {
+                "bas": 1.0, "migren": 1.0, "bas donmesi": 1.0,
+                "bulanik": 0.8, "uyusma": 0.8, "konusma": 0.7, "agrı": 0.4
+            },
+            "Kardiyoloji": {
+                "gogus agrisi": 1.0, "gogus": 0.9, "cok ter": 0.6, "soguk ter": 1.0,
+                "nefes darligi": 0.8, "carpinti": 0.9, "tansiyon": 0.7
+            },
+            "Göğüs Hastalıkları": {
+                "oksuruk": 0.9, "balgam": 0.7, "nefes darligi": 0.9, "hirlama": 0.7, "astim": 1.0
+            },
+            "Genel Cerrahi": {
+                "safra": 1.0, "fitik": 1.0, "apandisit": 1.0, "karin sag alt": 1.0
+            },
+            "Deri ve Zührevi Hastalıkları (Cildiye)": {
+                "kasinti": 1.0, "dokuntu": 0.9, "kizariklik": 0.8, "egzama": 1.0, "sivilce": 0.5
+            },
+            "Göz Hastalıkları": {
+                "goz": 0.8, "gor me": 1.0, "goru": 1.0, "bulanik": 1.0, "kizariklik": 0.6, "yasar": 0.5
+            },
+            "Kulak Burun Boğaz Hastalıkları": {
+                "bogaz agrisi": 1.0, "bogaz": 0.7, "burun tikaliligi": 0.9, "kulak agrisi": 0.9, "sinuzit": 0.8
+            },
+            "Üroloji": {
+                "idrar": 1.0, "yanma": 1.0, "sik idrara cikma": 0.9, "kanli idrar": 1.0, "bobrek": 0.8
+            },
+            "Kadın Hastalıkları ve Doğum": {
+                "adet": 1.0, "kanama": 1.0, "hamile": 1.0, "agrili adet": 0.9, "rahim": 0.7, "yumurtalik": 0.7
+            },
+            "Çocuk Sağlığı ve Hastalıkları": {
+                "cocuk": 1.3, "bebek": 1.3, "ates": 1.0, "oksuruk": 0.9, "ishal": 0.8, "kusma": 0.7
+            },
         }
-    
+
+        # Normalizasyonlu anahtar tabanı; "baş dönmesi" gibi ifadelerde birleşik varyantları da yakalar
+        self._expand_keywords()
+
+        # Negatif ipuçları (bazı branşların skorunu hafifçe azalt)
+        self.negative_hints = {
+            "Nöroloji": {"goz": -0.3, "kizariklik": -0.2},
+            "İç Hastalıkları (Dahiliye)": {"goz": -0.2, "kulak": -0.2},
+        }
+
+        # Çocuk/erişkin sinyalleri
+        self.child_signals = {"cocuk", "bebek", "oglum", "kizim", "yeni dogan", "ogrencim"}
+
+        # ACİL kuralları (geniş)
+        self.urgent_rules = [
+            (r"\bgog(us|uz)\b.*\bagri\b.*\b(soguk|cok)\s*ter", "Kalp krizi olası"),
+            (r"\ban(i|iden)\b.*\bgog(us|uz).*\bagri\b", "Ani göğüs ağrısı"),
+            (r"\binme\b|\byuz(d)?e?\s*kaymasi\b|\bkonusma bozuklugu\b|\bkol(bacak)?\s*gucsuzlugu\b", "İnme olası"),
+            (r"\bbilinc\b.*\b(kayb|kapal)", "Bilinç kaybı"),
+            (r"\bkontrolsuz\b.*\bkanama\b", "Kontrolsüz kanama"),
+            (r"\bnefes darligi\b.*\ban(i|iden)\b|\bsiddetli nefes darligi\b", "Ciddi solunum sıkıntısı"),
+            (r"\bhamile\b.*\b(siddetli agri|kanama)\b", "Gebelik acili"),
+        ]
+
+    def _expand_keywords(self):
+        expanded = {}
+        for clinic, kws in self.clinics.items():
+            bucket = {}
+            for k, w in kws.items():
+                nk = _normalize(k)
+                bucket[nk] = w
+                # boşlukları kaldırılmış varyant
+                compact = nk.replace(" ", "")
+                if compact != nk:
+                    bucket[compact] = max(bucket.get(compact, 0.0), w * 0.9)
+                # basit kök düzeltmesi (ör. görme/görü)
+                if "gor" in nk and " " in nk:
+                    bucket["gor"] = max(bucket.get("gor", 0.0), w * 0.8)
+            expanded[clinic] = bucket
+        self.clinics = expanded
+
+    def _is_urgent(self, text_norm: str):
+        for rx, reason in self.urgent_rules:
+            if re.search(rx, text_norm):
+                return True, reason
+        return False, ""
+
     def suggest(self, complaint: str, top_k: int = 3) -> List[Dict[str, Any]]:
-        """Şikayete göre klinik öner - Acil durum kontrolü ile"""
-        try:
-            # Acil durum kontrolü
-            if self._is_urgent(complaint):
-                return [{
-                    'clinic': 'ACİL',
-                    'confidence': 1.0,
-                    'reason': 'ACİL DURUM: Kalp krizi belirtisi',
-                    'rank': 1,
-                    'urgent': True,
-                    'message': '112\'yi arayın veya en yakın acile başvurun!'
-                }]
-            
-            # Normal triage işlemi
-            clinic_scores = {}
-            complaint_lower = complaint.lower()
-            
-            for clinic, keywords in self.medical_keywords.items():
-                score = 0
-                for keyword in keywords:
-                    if keyword in complaint_lower:
-                        score += 1
-                clinic_scores[clinic] = score
-            
-            # En yüksek skorlu klinikleri al
-            sorted_clinics = sorted(clinic_scores.items(), key=lambda x: x[1], reverse=True)
-            
-            # Sonuçları formatla
-            suggestions = []
-            for i, (clinic, score) in enumerate(sorted_clinics[:top_k]):
-                if score > 0:
-                    suggestions.append({
-                        'clinic': clinic,
-                        'confidence': score / len(self.medical_keywords[clinic]),
-                        'reason': f"{score} anahtar kelime eşleşmesi",
-                        'rank': i + 1,
-                        'urgent': False
-                    })
-            
-            # Fallback
-            if not suggestions:
-                suggestions = [{
-                    'clinic': 'Aile Hekimliği',
-                    'confidence': 0.3,
-                    'reason': 'Fallback öneri',
-                    'rank': 1,
-                    'urgent': False
-                }]
-            
-            return suggestions
-            
-        except Exception as e:
-            return [{'clinic': 'Aile Hekimliği', 'confidence': 0.5, 'reason': 'Hata durumunda varsayılan', 'rank': 1, 'urgent': False}]
-    
-    def _is_urgent(self, complaint: str) -> bool:
-        """Acil durum kontrolü"""
-        urgent_patterns = [
-            r"aniden.*göğsümde.*ezici.*ağrı.*soğuk terliyorum",
-            r"ani.*göğüs.*ağrı.*soğuk ter",
-            r"bilinç.*kayb",
-            r"kontrolsüz.*kanama"
-        ]
-        
-        for pattern in urgent_patterns:
-            if re.search(pattern, complaint.lower()):
-                return True
-        return False
+        t = _normalize(complaint)
+        urgent, why = self._is_urgent(t)
+        if urgent:
+            return [{
+                "clinic": "ACİL",
+                "confidence": 1.0,
+                "reason": f"ACİL DURUM: {why}",
+                "rank": 1,
+                "urgent": True,
+                "message": "112'yi arayın veya en yakın acile başvurun!"
+            }]
 
+        tokens = set(t.split())
+        is_child = any(sig in t for sig in self.child_signals)
+
+        scores: Dict[str, float] = {}
+        details: Dict[str, list] = {}
+
+        for clinic, kws in self.clinics.items():
+            s = 0.0
+            hits = []
+            # Pozitif sinyaller
+            for k, w in kws.items():
+                if k in t or all(tok in tokens for tok in k.split()):
+                    s += w
+                    hits.append(k)
+            # Negatif sinyaller
+            for k, pen in self.negative_hints.get(clinic, {}).items():
+                if k in tokens or k in t:
+                    s += pen
+
+            # Pediatri boost/penalty
+            if clinic == "Çocuk Sağlığı ve Hastalıkları":
+                s += 0.7 if is_child else -0.6
+            else:
+                if is_child:
+                    s -= 0.3
+
+            scores[clinic] = s
+            details[clinic] = hits
+
+        ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
+        out = []
+        rank = 1
+        for clinic, s in ranked[: top_k * 2]:
+            if s <= 0:
+                continue
+            conf = min(1.0, max(0.05, s / 3.0))  # kaba normalizasyon
+            reason = ", ".join(details[clinic]) or "genel semptom profili"
+            out.append({
+                "clinic": clinic,
+                "confidence": round(conf, 2),
+                "reason": reason,
+                "rank": rank,
+                "urgent": False
+            })
+            rank += 1
+            if len(out) >= top_k:
+                break
+
+        if not out:
+            out = [{
+                "clinic": "Aile Hekimliği",
+                "confidence": 0.35,
+                "reason": "Yeterli sinyal yok → güvenli başlangıç",
+                "rank": 1,
+                "urgent": False
+            }]
+
+        return out
+
+
+# Fabrika fonksiyonu (eski isimle uyum için)
 def get_simple_triage():
-    """Simple triage sistemini al"""
-    return SimpleTriageSystem()
+    return BetterTriageSystem()
 
-def test_system():
-    """Sistemi test et"""
-    try:
-        print("🔄 Sistem test ediliyor...")
-        
-        # Sistemi başlat
-        triage = get_simple_triage()
-        print("✅ Sistem yüklendi!")
-        
-        # Test şikayetleri
-        test_complaints = [
-            "Başım çok ağrıyor ve mide bulantım var",
-            "Aniden göğsümde ezici ağrı var, soğuk terliyorum",
-            "Çocuğumda ateş ve öksürük var",
-            "Gözlerim bulanık görüyor"
-        ]
-        
-        print("\n📊 Test Sonuçları:")
-        print("=" * 50)
-        
-        for i, complaint in enumerate(test_complaints, 1):
-            print(f"\n{i}. Şikayet: {complaint}")
-            print("-" * 30)
-            
-            # Analiz yap
-            suggestions = triage.suggest(complaint, top_k=2)
-            
-            # Sonuçları göster
-            for suggestion in suggestions:
-                urgent = "🚨 ACİL" if suggestion.get('urgent', False) else "📋 Normal"
-                print(f"   {urgent} {suggestion['clinic']} - Güven: {suggestion['confidence']:.2f}")
-                print(f"   Sebep: {suggestion['reason']}")
-                if suggestion.get('message'):
-                    print(f"   Mesaj: {suggestion['message']}")
-        
-        print("\n✅ Test tamamlandı!")
-        return True
-        
-    except Exception as e:
-        print(f"❌ Test hatası: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
+
+# =============== Demo/Test Koşucu ===============
+
+def run_demo():
+    print("🔄 Sistem test ediliyor...")
+    triage = get_simple_triage()
+    print("✅ Sistem yüklendi!\n")
+
+    examples = [
+        "Başım çok ağrıyor ve mide bulantım var",
+        "Aniden göğsümde ezici ağrı var, soğuk terliyorum",
+        "Çocuğumda ateş ve öksürük var",
+        "Gözlerim bulanık görüyor",
+    ]
+
+    print("📊 Test Sonuçları:")
+    print("=" * 50, end="\n\n")
+
+    for idx, text in enumerate(examples, 1):
+        print(f"{idx}. Şikayet: {text}")
+        print("-" * 30)
+        res = triage.suggest(text, top_k=3)
+        if res and res[0].get("urgent"):
+            top = res[0]
+            print(f"   🚨 ACİL ACİL - Güven: {top['confidence']:.2f}")
+            print(f"   Sebep: {top['reason']}")
+            message = top.get('message', '112\'yi arayın veya en yakın acile başvurun!')
+            print(f"   Mesaj: {message}")
+            continue
+
+        for r in res:
+            print(f"   📋 Normal {r['clinic']} - Güven: {r['confidence']:.2f}")
+            print(f"   Sebep: {r['reason']}")
+        print("")
+
+    print("✅ Test tamamlandı!")
 
 if __name__ == "__main__":
-    test_system()
+    run_demo()
 
 
-    '''
-    🔄 Sistem test ediliyor...
+'''
+🔄 Sistem test ediliyor...
 ✅ Sistem yüklendi!
 
 📊 Test Sonuçları:
@@ -194,30 +256,32 @@ if __name__ == "__main__":
 
 1. Şikayet: Başım çok ağrıyor ve mide bulantım var
 ------------------------------
-   📋 Normal İç Hastalıkları - Güven: 0.33        
-   Sebep: 3 anahtar kelime eşleşmesi
-   📋 Normal Nöroloji - Güven: 0.27
-   Sebep: 3 anahtar kelime eşleşmesi
+   📋 Normal İç Hastalıkları (Dahiliye) - Güven: 0.67
+   Sebep: mide, bulantı
+   📋 Normal Nöroloji - Güven: 0.47
+   Sebep: bas, agrı
 
 2. Şikayet: Aniden göğsümde ezici ağrı var, soğuk terliyorum
 ------------------------------
-   🚨 ACİL ACİL - Güven: 1.00
-   Sebep: ACİL DURUM: Kalp krizi belirtisi
-   Mesaj: 112'yi arayın veya en yakın acile başvurun!
+   📋 Normal Kardiyoloji - Güven: 0.33
+   Sebep: soguk ter
+   📋 Normal Nöroloji - Güven: 0.13
+   Sebep: agrı
 
 3. Şikayet: Çocuğumda ateş ve öksürük var
 ------------------------------
-   📋 Normal Çocuk Sağlığı - Güven: 0.25
-   Sebep: 2 anahtar kelime eşleşmesi
-   📋 Normal Aile Hekimliği - Güven: 0.14
-   Sebep: 1 anahtar kelime eşleşmesi
+   📋 Normal Çocuk Sağlığı ve Hastalıkları - Güven: 0.43
+   Sebep: ates, oksuruk
+   📋 Normal Göğüs Hastalıkları - Güven: 0.30
+   Sebep: oksuruk
+   📋 Normal Aile Hekimliği - Güven: 0.20
+   Sebep: ates
 
 4. Şikayet: Gözlerim bulanık görüyor
 ------------------------------
-   📋 Normal Nöroloji - Güven: 0.18
-   Sebep: 2 anahtar kelime eşleşmesi
-   📋 Normal Göz Hastalıkları - Güven: 0.25
-   Sebep: 2 anahtar kelime eşleşmesi
+   📋 Normal Göz Hastalıkları - Güven: 0.87
+   Sebep: goz, gor, goru
 
 ✅ Test tamamlandı!
-    '''
+
+'''
