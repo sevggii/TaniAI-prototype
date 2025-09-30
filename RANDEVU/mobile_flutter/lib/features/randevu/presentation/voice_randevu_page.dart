@@ -38,10 +38,10 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
         return;
       }
 
-      // Web için farklı kodlayıcı kullan
+      // Web için farklı kodlayıcı kullan - WAV formatı daha iyi transkripsiyon için
       final config = kIsWeb 
-        ? const RecordConfig(encoder: AudioEncoder.wav)
-        : const RecordConfig(encoder: AudioEncoder.aacLc);
+        ? const RecordConfig(encoder: AudioEncoder.wav, sampleRate: 16000)
+        : const RecordConfig(encoder: AudioEncoder.wav, sampleRate: 16000);
 
       // Web'de basit path ile başlat
       if (kIsWeb) {
@@ -118,7 +118,7 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
     try {
       final request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://localhost:8000/whisper/flutter-randevu'),
+        Uri.parse('http://10.0.2.2:8002/whisper/flutter-randevu'),
       );
 
       if (kIsWeb) {
