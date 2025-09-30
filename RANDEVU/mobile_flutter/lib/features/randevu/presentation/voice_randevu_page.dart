@@ -31,24 +31,40 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
 
   Future<void> _startRecording() async {
     try {
+      print('🎤 Ses kaydı başlatılıyor...');
+      
       // Mikrofon izni kontrol et
       final status = await Permission.microphone.request();
+      print('🎤 Mikrofon izni durumu: $status');
+      
       if (status != PermissionStatus.granted) {
-        _showError('Mikrofon izni gerekli!');
+        _showError('Mikrofon izni gerekli! Lütfen ayarlardan mikrofon iznini verin.');
         return;
       }
 
-      // Web için farklı kodlayıcı kullan - WAV formatı daha iyi transkripsiyon için
-      final config = kIsWeb 
-        ? const RecordConfig(encoder: AudioEncoder.wav, sampleRate: 16000)
-        : const RecordConfig(encoder: AudioEncoder.wav, sampleRate: 16000);
+      // Basit ses kayıt ayarları
+      final config = const RecordConfig(
+        encoder: AudioEncoder.wav, 
+        sampleRate: 16000,
+        bitRate: 128000,
+        numChannels: 1,
+      );
 
-      // Web'de basit path ile başlat
+      // Ses kaydını başlat
       if (kIsWeb) {
         await _audioRecorder.start(config, path: 'voice_randevu_${DateTime.now().millisecondsSinceEpoch}.wav');
+        print('🌐 Web\'de ses kaydı başlatıldı');
       } else {
         await _audioRecorder.start(config, path: await _getRecordingPath());
+        print('📱 Mobil\'de ses kaydı başlatıldı');
       }
+      
+      // 5 saniye sonra otomatik durdur
+      Future.delayed(const Duration(seconds: 5), () {
+        if (_isRecording) {
+          _stopRecording();
+        }
+      });
       
       setState(() {
         _isRecording = true;
@@ -61,22 +77,21 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
 
   Future<void> _stopRecording() async {
     try {
+      print('🛑 Ses kaydı durduruluyor...');
       final result = await _audioRecorder.stop();
+      print('🛑 Kayıt sonucu: $result');
+      
       if (result != null) {
-        if (kIsWeb) {
-          // Web'de result String (blob URL) olarak gelir
-          await _processAudio(result as String);
-        } else {
-          // Mobil'de dosya yolu olarak gelir
-          await _processAudio(result as String);
-        }
+        print('📁 Ses dosyası yolu: $result');
+        await _processAudio(result as String);
       } else {
-        _showError('Ses kaydı durdurulamadı veya boş.');
+        _showError('Ses kaydı durdurulamadı veya boş. Lütfen tekrar deneyin.');
       }
       setState(() {
         _isRecording = false;
       });
     } catch (e) {
+      print('❌ Kayıt durdurma hatası: $e');
       _showError('Kayıt durdurulamadı: $e');
     }
   }
@@ -94,18 +109,26 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
     });
 
     try {
+      print('🔄 Ses dosyası işleniyor: $audioPath');
+      
       // API'ye ses dosyasını gönder
       final result = await _uploadAudioToAPI(audioPath);
+      print('📡 API yanıtı: $result');
       
       if (result['success']) {
         setState(() {
           _transcript = result['transcript'];
           _suggestions = result['suggestions'];
         });
+        print('✅ Ses işleme başarılı!');
+        print('📝 Transkript: ${result['transcript']}');
+        print('🏥 Öneriler: ${result['suggestions']}');
       } else {
+        print('❌ Ses işleme hatası: ${result['message']}');
         _showError(result['message'] ?? 'Ses işleme hatası');
       }
     } catch (e) {
+      print('❌ API hatası: $e');
       _showError('API hatası: $e');
     } finally {
       setState(() {
@@ -116,9 +139,18 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
 
   Future<Map<String, dynamic>> _uploadAudioToAPI(String audioPath) async {
     try {
+      print('📤 API\'ye ses dosyası gönderiliyor...');
+      
+      // Web ve mobil için farklı URL'ler
+      final apiUrl = kIsWeb 
+        ? 'http://localhost:8002/whisper/flutter-randevu'
+        : 'https://unhung-cori-tartishly.ngrok-free.dev/whisper/flutter-randevu';
+      
+      print('🌐 API URL: $apiUrl');
+      
       final request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://10.0.2.2:8002/whisper/flutter-randevu'),
+        Uri.parse(apiUrl),
       );
 
       if (kIsWeb) {
@@ -159,10 +191,16 @@ class _VoiceRandevuPageState extends State<VoiceRandevuPage> {
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
+      
+      print('📡 API yanıt durumu: ${response.statusCode}');
+      print('📡 API yanıt içeriği: $responseBody');
 
       if (response.statusCode == 200) {
-        return json.decode(responseBody);
+        final result = json.decode(responseBody);
+        print('✅ API başarılı yanıt aldı');
+        return result;
       } else {
+        print('❌ API hatası: ${response.statusCode}');
         return {
           'success': false,
           'message': 'API Hatası: ${response.statusCode} - $responseBody',

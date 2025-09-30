@@ -50,6 +50,10 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Galeriden radyolojik görüntü seçmek için gereklidir.</string>
 	
+	<!-- Audio recording permissions -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Sesli randevu almak için mikrofon erişimi gereklidir.</string>
+	
 	<!-- Location permissions -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Yakınlardaki eczaneleri bulmak için konum bilgisine ihtiyaç vardır.</string>

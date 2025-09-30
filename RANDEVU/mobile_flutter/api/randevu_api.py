@@ -15,6 +15,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 from whisper_asr import get_asr_processor
 
+# LLM Clinic Analyzer'ı import et
+from llm_clinic_analyzer import get_clinic_analyzer
+
 # Logging yapılandırması
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -101,13 +104,41 @@ async def flutter_randevu(audio_file: UploadFile = File(...)):
         
         logger.info(f"Transkripsiyon başarılı: {len(transcript)} karakter")
         
-        # Klinik önerileri
-        suggestions = _get_clinic_suggestions(transcript)
+        # LLM ile klinik analizi
+        clinic_analyzer = get_clinic_analyzer()
+        analysis_result = clinic_analyzer.analyze_complaint(transcript)
+        
+        if analysis_result["success"]:
+            # LLM sonucunu formatla
+            analysis = analysis_result["analysis"]
+            suggestions = []
+            
+            # Primary clinic
+            if "primary_clinic" in analysis:
+                primary = analysis["primary_clinic"]
+                suggestions.append({
+                    "clinic": primary["name"],
+                    "reason": primary["reason"],
+                    "confidence": primary["confidence"]
+                })
+            
+            # Secondary clinics
+            if "secondary_clinics" in analysis:
+                for secondary in analysis["secondary_clinics"]:
+                    suggestions.append({
+                        "clinic": secondary["name"],
+                        "reason": secondary["reason"],
+                        "confidence": secondary["confidence"]
+                    })
+        else:
+            # Fallback: eski sistem
+            suggestions = _get_clinic_suggestions(transcript)
         
         return {
             "success": True,
             "transcript": transcript,
-            "suggestions": suggestions
+            "suggestions": suggestions,
+            "analysis_method": analysis_result.get("method", "unknown")
         }
         
     except HTTPException:
