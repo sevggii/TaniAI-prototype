@@ -40,6 +40,25 @@ async def root():
     """Ana sayfa"""
     return {"message": "TanıAI Randevu API", "status": "active"}
 
+@app.get("/whisper/status")
+async def whisper_status():
+    """Whisper ASR sistem durumu"""
+    try:
+        asr_processor = get_asr_processor()
+        
+        return {
+            "status": "active",
+            "model_name": asr_processor.model_name,
+            "model_loaded": asr_processor.model is not None,
+            "supported_formats": [".wav", ".mp3", ".m4a", ".flac", ".ogg"],
+            "max_file_size_mb": 10,
+            "supported_languages": ["tr", "en", "auto"]
+        }
+        
+    except Exception as e:
+        logger.error(f"Durum kontrolü hatası: {e}")
+        raise HTTPException(status_code=500, detail=f"Durum kontrolü hatası: {str(e)}")
+
 @app.post("/whisper/flutter-randevu")
 async def flutter_randevu(audio_file: UploadFile = File(...)):
     """
