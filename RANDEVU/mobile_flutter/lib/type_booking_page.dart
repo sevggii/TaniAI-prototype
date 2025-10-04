@@ -46,7 +46,8 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
       );
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final responseData = json.decode(response.body);
+        final data = responseData['analysis']; // API response'u 'analysis' objesi içinde
         _showClinicRecommendations(data);
       } else {
         throw Exception('API hatası: ${response.statusCode}');
