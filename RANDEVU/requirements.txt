@@ -1,3 +1,4 @@
+# Core ML ve Data Science
 pandas>=1.3.0
 numpy>=1.21.0
 scikit-learn>=1.0.0
@@ -22,3 +23,11 @@ fastapi>=0.100.0
 uvicorn>=0.20.0
 python-multipart>=0.0.6
 python-jose>=3.3.0
+
+# Production Triage System
+functools32>=3.2.3; python_version < '3.2'
+difflib2>=0.1.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0

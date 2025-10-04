@@ -10,6 +10,7 @@ import uvicorn
 import logging
 import os
 import sys
+from typing import Any, Dict, List
 
 # Whisper ASR modülünü import et
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
@@ -107,38 +108,48 @@ async def flutter_randevu(audio_file: UploadFile = File(...)):
         # LLM ile klinik analizi
         clinic_analyzer = get_clinic_analyzer()
         analysis_result = clinic_analyzer.analyze_complaint(transcript)
-        
-        if analysis_result["success"]:
-            # LLM sonucunu formatla
-            analysis = analysis_result["analysis"]
-            suggestions = []
-            
-            # Primary clinic
-            if "primary_clinic" in analysis:
-                primary = analysis["primary_clinic"]
+
+        analysis_payload: Dict[str, Any] = analysis_result.get("analysis", {}) or {}
+        suggestions: List[Dict[str, Any]] = []
+
+        if analysis_result.get("success") and analysis_payload:
+            primary = analysis_payload.get("primary_clinic")
+            if isinstance(primary, dict):
                 suggestions.append({
-                    "clinic": primary["name"],
-                    "reason": primary["reason"],
-                    "confidence": primary["confidence"]
+                    "clinic": primary.get("name"),
+                    "reason": primary.get("reason"),
+                    "confidence": primary.get("confidence"),
                 })
-            
-            # Secondary clinics
-            if "secondary_clinics" in analysis:
-                for secondary in analysis["secondary_clinics"]:
+            for secondary in analysis_payload.get("secondary_clinics", []) or []:
+                if isinstance(secondary, dict):
                     suggestions.append({
-                        "clinic": secondary["name"],
-                        "reason": secondary["reason"],
-                        "confidence": secondary["confidence"]
+                        "clinic": secondary.get("name"),
+                        "reason": secondary.get("reason"),
+                        "confidence": secondary.get("confidence"),
                     })
         else:
-            # Fallback: eski sistem
+            # LLM başarısızsa minimal fallback'e dön
             suggestions = _get_clinic_suggestions(transcript)
-        
+            if not analysis_payload:
+                analysis_payload = {
+                    "primary_clinic": suggestions[0] if suggestions else {},
+                    "secondary_clinics": suggestions[1:],
+                    "strategy": "legacy_fallback",
+                    "model_version": "rule_based",
+                    "latency_ms": 0,
+                    "requires_prior": False,
+                    "prior_list": [],
+                    "gate_note": "",
+                }
+
         return {
             "success": True,
             "transcript": transcript,
+            "analysis": analysis_payload,
             "suggestions": suggestions,
-            "analysis_method": analysis_result.get("method", "unknown")
+            "analysis_method": analysis_result.get("method", "unknown"),
+            "model": analysis_result.get("model"),
+            "raw_response": analysis_result.get("raw_response"),
         }
         
     except HTTPException:

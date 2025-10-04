@@ -34,77 +34,23 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
     FocusScope.of(context).unfocus();
 
     try {
-      // Mock data ile test (API server sorunu çözülene kadar)
-      await Future.delayed(const Duration(seconds: 2)); // Loading simülasyonu
-      
-      final complaint = _controller.text.trim().toLowerCase();
-      Map<String, dynamic> mockData = {};
-      
-      // Basit keyword matching ile mock öneriler
-      if (complaint.contains('baş') || complaint.contains('kafa') || complaint.contains('migren')) {
-        mockData = {
-          'primary_clinic': {
-            'name': 'Nöroloji',
-            'reason': 'Baş ağrısı ve migren şikayetleri için en uygun klinik',
-            'confidence': 0.85
-          },
-          'secondary_clinics': [
-            {
-              'name': 'İç Hastalıkları',
-              'reason': 'Genel değerlendirme için alternatif seçenek',
-              'confidence': 0.70
-            }
-          ]
-        };
-      } else if (complaint.contains('mide') || complaint.contains('karın') || complaint.contains('bulantı')) {
-        mockData = {
-          'primary_clinic': {
-            'name': 'Gastroenteroloji',
-            'reason': 'Mide ve sindirim sistemi şikayetleri için en uygun klinik',
-            'confidence': 0.90
-          },
-          'secondary_clinics': [
-            {
-              'name': 'İç Hastalıkları',
-              'reason': 'Genel değerlendirme için alternatif seçenek',
-              'confidence': 0.75
-            }
-          ]
-        };
-      } else if (complaint.contains('kalp') || complaint.contains('göğüs') || complaint.contains('çarpıntı')) {
-        mockData = {
-          'primary_clinic': {
-            'name': 'Kardiyoloji',
-            'reason': 'Kalp ve damar sistemi şikayetleri için en uygun klinik',
-            'confidence': 0.88
-          },
-          'secondary_clinics': [
-            {
-              'name': 'İç Hastalıkları',
-              'reason': 'Genel değerlendirme için alternatif seçenek',
-              'confidence': 0.65
-            }
-          ]
-        };
+              // LLM Server'a istek gönder (klinik_dataset.jsonl kullanıyor)
+              final response = await http.post(
+                Uri.parse('http://10.0.2.2:8000/analyze-complaint'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'complaint': _controller.text.trim(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        _showClinicRecommendations(data);
       } else {
-        mockData = {
-          'primary_clinic': {
-            'name': 'Aile Hekimliği',
-            'reason': 'Genel sağlık sorunları için ilk başvuru noktası',
-            'confidence': 0.80
-          },
-          'secondary_clinics': [
-            {
-              'name': 'İç Hastalıkları',
-              'reason': 'Detaylı değerlendirme için alternatif seçenek',
-              'confidence': 0.70
-            }
-          ]
-        };
+        throw Exception('API hatası: ${response.statusCode}');
       }
-      
-      _showClinicRecommendations(mockData);
-      
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Hata: ${e.toString()}')),
@@ -238,8 +184,14 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
                     controller: _controller,
                     minLines: 4,
                     maxLines: 8,
+                    textInputAction: TextInputAction.newline,
+                    textCapitalization: TextCapitalization.none,
+                    keyboardType: TextInputType.multiline,
+                    enableSuggestions: true,
+                    autocorrect: true,
                     decoration: const InputDecoration(
                       labelText: 'Mesajınız',
+                      hintText: 'Örnek: başım ağrıyor, mide bulantım var...',
                     ),
                   ),
                 ),
