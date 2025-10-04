@@ -48,7 +48,38 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
         complaint = (data.get('complaint') or '').strip()
         result = self.analyzer.analyze_complaint(complaint)
-        self._send_response(200, result)
+        response_payload = dict(result)
+
+        analysis = result.get('analysis')
+        if not isinstance(analysis, dict):
+            analysis = {}
+            if result.get('primary_clinic'):
+                analysis['primary_clinic'] = result.get('primary_clinic')
+            if result.get('secondary_clinics') is not None:
+                analysis['secondary_clinics'] = result.get('secondary_clinics', [])
+            for key in ('strategy', 'model_version', 'latency_ms', 'requires_prior', 'prior_list', 'gate_note'):
+                if key in result:
+                    analysis[key] = result[key]
+
+        suggestions = []
+        primary = analysis.get('primary_clinic') if isinstance(analysis, dict) else None
+        if isinstance(primary, dict):
+            suggestions.append({
+                'clinic': primary.get('name'),
+                'reason': primary.get('reason'),
+                'confidence': primary.get('confidence'),
+            })
+        for secondary in (analysis.get('secondary_clinics') or []):
+            if isinstance(secondary, dict):
+                suggestions.append({
+                    'clinic': secondary.get('name'),
+                    'reason': secondary.get('reason'),
+                    'confidence': secondary.get('confidence'),
+                })
+
+        response_payload['analysis'] = analysis
+        response_payload['suggestions'] = suggestions
+        self._send_response(200, response_payload)
 
     def _send_response(self, status_code, data):
         self.send_response(status_code)

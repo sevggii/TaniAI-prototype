@@ -34,9 +34,8 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
     FocusScope.of(context).unfocus();
 
     try {
-              // LLM Server'a istek gönder (klinik_dataset.jsonl kullanıyor)
-              final response = await http.post(
-                Uri.parse('http://10.0.2.2:8000/analyze-complaint'),
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:8000/analyze-complaint'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -47,8 +46,7 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        final data = responseData['analysis']; // API response'u 'analysis' objesi içinde
-        _showClinicRecommendations(data);
+        _showClinicRecommendations(responseData);
       } else {
         throw Exception('API hatası: ${response.statusCode}');
       }
@@ -63,7 +61,39 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
     }
   }
 
-  void _showClinicRecommendations(Map<String, dynamic> data) {
+  void _showClinicRecommendations(Map<String, dynamic> rawData) {
+    final analysisData = rawData['analysis'];
+    Map<String, dynamic> clinicData = {};
+
+    if (analysisData is Map<String, dynamic> && analysisData.containsKey('primary_clinic')) {
+      clinicData = analysisData;
+    } else if (rawData.containsKey('primary_clinic')) {
+      clinicData = rawData;
+    } else if (rawData['suggestions'] is List && (rawData['suggestions'] as List).isNotEmpty) {
+      final suggestions = (rawData['suggestions'] as List)
+          .whereType<Map<String, dynamic>>()
+          .toList();
+      if (suggestions.isNotEmpty) {
+        clinicData = {
+          'primary_clinic': suggestions.first,
+          'secondary_clinics': suggestions.skip(1).toList(),
+        };
+      }
+    }
+
+    final primaryClinic = clinicData['primary_clinic'] as Map<String, dynamic>?;
+    final secondaryClinics = (clinicData['secondary_clinics'] as List?)
+            ?.whereType<Map<String, dynamic>>()
+            .toList() ??
+        const [];
+
+    if (primaryClinic == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Klinik önerisi alınamadı. Lütfen tekrar deneyin.')),
+      );
+      return;
+    }
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -73,36 +103,32 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (data['primary_clinic'] != null) ...[
-                const Text(
-                  'Ana Öneri:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                _buildClinicCard(
-                  data['primary_clinic']['name'],
-                  data['primary_clinic']['reason'],
-                  data['primary_clinic']['confidence'],
-                  isPrimary: true,
-                ),
-                const SizedBox(height: 16),
-              ],
-              if (data['secondary_clinics'] != null) ...[
+              const Text(
+                'Ana Öneri:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              _buildClinicCard(
+                primaryClinic['name']?.toString() ?? 'Bilinmiyor',
+                primaryClinic['reason']?.toString() ?? 'Açıklama mevcut değil',
+                _asDouble(primaryClinic['confidence']),
+                isPrimary: true,
+              ),
+              const SizedBox(height: 16),
+              if (secondaryClinics.isNotEmpty) ...[
                 const Text(
                   'Alternatif Öneriler:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                ...data['secondary_clinics'].map<Widget>((clinic) => 
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: _buildClinicCard(
-                      clinic['name'],
-                      clinic['reason'],
-                      clinic['confidence'],
-                    ),
-                  ),
-                ),
+                ...secondaryClinics.map((clinic) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: _buildClinicCard(
+                        clinic['name']?.toString() ?? 'Bilinmiyor',
+                        clinic['reason']?.toString() ?? 'Açıklama mevcut değil',
+                        _asDouble(clinic['confidence']),
+                      ),
+                    )),
               ],
             ],
           ),
@@ -115,6 +141,11 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
         ],
       ),
     );
+  }
+
+  double _asDouble(dynamic value) {
+    if (value is num) return value.toDouble();
+    return double.tryParse(value?.toString() ?? '') ?? 0.0;
   }
 
   Widget _buildClinicCard(String name, String reason, double confidence, {bool isPrimary = false}) {

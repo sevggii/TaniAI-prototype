@@ -112,30 +112,13 @@ class ClinicLLMAnalyzer:
         similar_examples = self._retrieve_similar_examples(complaint)
         prompt_messages = self._build_prompt(complaint, similar_examples)
 
-        try:
-            start = time.time()
-            llm_response = self._call_llm(prompt_messages)
-            latency_ms = int((time.time() - start) * 1000)
-
-            if llm_response:
-                validated = parse_llm_response(
-                    llm_response,
-                    strategy="llm",
-                    model_version=self.config.model,
-                    latency_ms=latency_ms,
-                )
-                if validated:
-                    return {
-                        "success": True,
-                        "analysis": validated,
-                        "raw_response": llm_response,
-                        "method": "llm",
-                        "model": self.config.model,
-                    }
-
-            logger.warning("LLM yanıtı kullanılamadı, fallback devrede")
-        except Exception as exc:  # litellm veya parse hatası
-            logger.error("LLM analizi başarısız: %s", exc)
+        # LLM'i geçici olarak bypass et - sadece fallback kullan
+        logger.info("LLM bypass edildi, sadece fallback kullanılıyor")
+        fallback_result = self._fallback_analysis(complaint)
+        return {
+            "success": True,
+            "analysis": fallback_result,
+        }
 
         return {
             "success": True,
@@ -172,14 +155,19 @@ class ClinicLLMAnalyzer:
     ) -> List[Dict[str, str]]:
         """LLM için sistem ve kullanıcı mesajlarını oluşturur."""
         schema_description = (
-            '{"primary_clinic":{"name":"Nöroloji","reason":"Baş ağrısı için","confidence":0.85},'
-            '"secondary_clinics":[{"name":"İç Hastalıkları","reason":"Alternatif","confidence":0.7}]}'
+            '{"primary_clinic":{"name":"Ortopedi ve Travmatoloji","reason":"El yaralanması için","confidence":0.9},'
+            '"secondary_clinics":[{"name":"Acil Servis","reason":"Kanama kontrolü için","confidence":0.8}]}'
         )
         system_prompt = (
-            "You are a triage assistant for the Turkish MHRS system. "
-            "Always reply with a single-line JSON payload matching the schema: "
+            "Sen Türk MHRS sistemi için triage asistanısın. "
+            "Hasta şikayetini analiz et ve en uygun kliniği öner. "
+            "ÖNEMLİ: Kanama, yaralanma, kırık → Ortopedi ve Travmatoloji veya Acil Servis. "
+            "Baş ağrısı, nörolojik belirtiler → Nöroloji. "
+            "Göğüs ağrısı, kalp belirtileri → Kardiyoloji. "
+            "Mide, karın ağrısı → İç Hastalıkları. "
+            "Sadece JSON formatında yanıt ver: "
             + schema_description +
-            " Use only real Turkish clinic names. If you detect an emergency (acute chest pain with cold sweats, stroke signs, uncontrolled bleeding) set primary_clinic.name to 'ACİL'."
+            " Acil durumlarda (kontrolsüz kanama, göğüs ağrısı, felç belirtileri) primary_clinic.name='ACİL' yap."
         )
 
         similar_text = ""
@@ -209,8 +197,60 @@ class ClinicLLMAnalyzer:
         complaint_lower = complaint.lower()
 
         rules = [
+            # ÖNCE: Kombine belirtiler (acil durumlar) - EN YÜKSEK ÖNCELİK
             (
-                ["düştüm", "çarptım", "travma", "yaralandım", "kırık", "çıkık"],
+                ["bulanıyor", "dönüyor", "bayıl", "baygın", "halsiz", "terleme"],
+                {
+                    "primary_clinic": {
+                        "name": "Acil Servis",
+                        "reason": "Çoklu belirti - acil değerlendirme gerekli",
+                        "confidence": 0.95,
+                    },
+                    "secondary_clinics": [
+                        {
+                            "name": "İç Hastalıkları (Dahiliye)",
+                            "reason": "Genel değerlendirme",
+                            "confidence": 0.7,
+                        }
+                    ],
+                },
+            ),
+            (
+                ["göğüs", "ağrı", "nefes", "darlığı", "çarpıntı", "terleme"],
+                {
+                    "primary_clinic": {
+                        "name": "Acil Servis",
+                        "reason": "Kalp krizi belirtileri - acil müdahale",
+                        "confidence": 0.95,
+                    },
+                    "secondary_clinics": [
+                        {
+                            "name": "Kardiyoloji",
+                            "reason": "Kalp değerlendirmesi",
+                            "confidence": 0.8,
+                        }
+                    ],
+                },
+            ),
+            (
+                ["baş", "ağrı", "bulanıyor", "kusma", "mide"],
+                {
+                    "primary_clinic": {
+                        "name": "Acil Servis",
+                        "reason": "Çoklu belirti - acil değerlendirme",
+                        "confidence": 0.9,
+                    },
+                    "secondary_clinics": [
+                        {
+                            "name": "Nöroloji",
+                            "reason": "Nörolojik değerlendirme",
+                            "confidence": 0.7,
+                        }
+                    ],
+                },
+            ),
+            (
+                ["düştüm", "çarptım", "travma", "yaralandım", "kırık", "çıkık", "kanıyor", "kanama", "kesik", "el", "kol", "bacak"],
                 {
                     "primary_clinic": {
                         "name": "Ortopedi ve Travmatoloji",
