@@ -5,7 +5,7 @@ PROMPT=$(cat router_prompt.txt)
 USER_MSG="$*"
 
 # Ollama prompt formatı: SYSTEM + USER
-ollama run gemma2:2b <<EOF
+ollama run llama3.2:3b <<EOF
 SYSTEM:
 $PROMPT
 
