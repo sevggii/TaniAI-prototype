@@ -1,0 +1,11 @@
+{
+  "model_list": [
+    {
+      "model_name": "ollama/llama3:8b",
+      "litellm_params": {
+        "model": "ollama/llama3:8b",
+        "api_base": "${OLLAMA_HOST}"
+      }
+    }
+  ]
+}

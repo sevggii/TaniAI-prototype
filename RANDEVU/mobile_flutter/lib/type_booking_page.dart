@@ -35,12 +35,12 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/analyze-complaint'),
+        Uri.parse('http://10.0.2.2:8000/triage'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          'complaint': _controller.text.trim(),
+          'text': _controller.text.trim(),
         }),
       );
 
@@ -62,30 +62,41 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
   }
 
   void _showClinicRecommendations(Map<String, dynamic> rawData) {
-    final analysisData = rawData['analysis'];
-    Map<String, dynamic> clinicData = {};
-
-    if (analysisData is Map<String, dynamic> && analysisData.containsKey('primary_clinic')) {
-      clinicData = analysisData;
-    } else if (rawData.containsKey('primary_clinic')) {
-      clinicData = rawData;
-    } else if (rawData['suggestions'] is List && (rawData['suggestions'] as List).isNotEmpty) {
-      final suggestions = (rawData['suggestions'] as List)
-          .whereType<Map<String, dynamic>>()
-          .toList();
-      if (suggestions.isNotEmpty) {
-        clinicData = {
-          'primary_clinic': suggestions.first,
-          'secondary_clinics': suggestions.skip(1).toList(),
-        };
-      }
-    }
-
-    final primaryClinic = clinicData['primary_clinic'] as Map<String, dynamic>?;
-    final secondaryClinics = (clinicData['secondary_clinics'] as List?)
+    // Yeni API format: {"clinic": "acil servis", "candidates": [...], "red_flag": true}
+    final primaryClinicName = rawData['clinic'] as String?;
+    final candidates = (rawData['candidates'] as List?)
             ?.whereType<Map<String, dynamic>>()
             .toList() ??
         const [];
+    final redFlag = rawData['red_flag'] as bool? ?? false;
+    final explanations = (rawData['explanations'] as List?)
+            ?.whereType<String>()
+            .toList() ??
+        const [];
+
+    if (primaryClinicName == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Klinik önerisi alınamadı. Lütfen tekrar deneyin.')),
+      );
+      return;
+    }
+
+    // Primary clinic'i formatla
+    final primaryClinic = {
+      'name': primaryClinicName,
+      'reason': explanations.isNotEmpty ? explanations.first : 'LLM önerisi',
+      'confidence': candidates.isNotEmpty ? candidates.first['confidence'] ?? 0.8 : 0.8,
+    };
+
+    // Secondary clinics'i formatla
+    final secondaryClinics = candidates
+        .skip(1)
+        .map((candidate) => {
+              'name': candidate['clinic'] ?? '',
+              'reason': candidate['reason'] ?? '',
+              'confidence': candidate['confidence'] ?? 0.5,
+            })
+        .toList();
 
     if (primaryClinic == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -113,6 +124,7 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
                 primaryClinic['reason']?.toString() ?? 'Açıklama mevcut değil',
                 _asDouble(primaryClinic['confidence']),
                 isPrimary: true,
+                isRedFlag: redFlag,
               ),
               const SizedBox(height: 16),
               if (secondaryClinics.isNotEmpty) ...[
@@ -148,25 +160,56 @@ class _TypeBookingPageState extends State<TypeBookingPage> {
     return double.tryParse(value?.toString() ?? '') ?? 0.0;
   }
 
-  Widget _buildClinicCard(String name, String reason, double confidence, {bool isPrimary = false}) {
+  Widget _buildClinicCard(String name, String reason, double confidence, {bool isPrimary = false, bool isRedFlag = false}) {
+    Color cardColor = isPrimary ? Colors.blue.shade50 : Colors.grey.shade50;
+    Color borderColor = isPrimary ? Colors.blue.shade200 : Colors.grey.shade300;
+    
+    if (isRedFlag) {
+      cardColor = Colors.red.shade50;
+      borderColor = Colors.red.shade300;
+    }
+    
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isPrimary ? Colors.blue.shade50 : Colors.grey.shade50,
+        color: cardColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isPrimary ? Colors.blue.shade200 : Colors.grey.shade300,
+          color: borderColor,
+          width: isRedFlag ? 2 : 1,
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            name,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: isPrimary ? Colors.blue.shade800 : Colors.grey.shade800,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isPrimary ? Colors.blue.shade800 : Colors.grey.shade800,
+                  ),
+                ),
+              ),
+              if (isRedFlag)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade100,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    'ACİL',
+                    style: TextStyle(
+                      color: Colors.red.shade800,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: 4),
           Text(
