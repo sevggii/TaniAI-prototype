@@ -4,7 +4,7 @@ import 'services/firebase_auth_service.dart';
 import 'models/user.dart';
 import 'features/profile/profile_page.dart';
 import 'features/radiology/radiology_page.dart';
-import 'features/meds/meds_page.dart';
+import 'features/medication/medication_page.dart';
 import 'features/settings/settings_page.dart';
 import 'features/auth/login_page.dart';
 import 'features/auth/firebase_test_page.dart';
@@ -2440,7 +2440,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Icons.medication_rounded,
           () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const MedsPage()),
+              MaterialPageRoute(builder: (_) => const MedicationPage()),
             );
           },
         ),
@@ -2488,7 +2488,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Icons.medication_rounded,
           () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const MedsPage()),
+              MaterialPageRoute(builder: (_) => const MedicationPage()),
             );
           },
         ),
@@ -2944,7 +2944,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const MedsPage()),
+                      MaterialPageRoute(builder: (_) => const MedicationPage()),
                     );
                   },
                 ),
