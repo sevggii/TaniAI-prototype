@@ -7,10 +7,7 @@ import 'features/radiology/radiology_page.dart';
 import 'features/medication/medication_page.dart';
 import 'features/settings/settings_page.dart';
 import 'features/auth/login_page.dart';
-import 'features/auth/firebase_test_page.dart';
-import 'features/auth/notification_test_page.dart';
 import 'features/pharmacy/pharmacy_finder_page.dart';
-import 'core/theme/app_theme.dart';
 import 'core/utils/platform_utils.dart';
 import 'features/randevu/presentation/voice_randevu_page.dart';
 import 'features/chat/chat_page.dart';
@@ -2857,50 +2854,51 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget _buildModernDrawer(BuildContext context, ThemeData theme) {
     return Drawer(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
       child: Column(
         children: [
+          // Basit header
           Container(
-            height: 200,
+            height: 120,
             decoration: BoxDecoration(
-              gradient: AppTheme.primaryGradient,
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(20),
+              gradient: LinearGradient(
+                colors: [Colors.blue.shade600, Colors.purple.shade600],
               ),
             ),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.all(16),
+                child: Row(
                   children: [
-                    const SizedBox(height: 20),
                     CircleAvatar(
-                      radius: 30,
+                      radius: 25,
                       backgroundColor: Colors.white.withOpacity(0.2),
                       child: const Icon(
                         Icons.person_rounded,
                         color: Colors.white,
-                        size: 32,
+                        size: 24,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _user?.name ?? _firebaseUser?.displayName ?? 'Kullanıcı',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      _user?.email ?? _firebaseUser?.email ?? '',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withOpacity(0.8),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _user?.name ?? _firebaseUser?.displayName ?? 'Kullanıcı',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            _user?.email ?? _firebaseUser?.email ?? '',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -2908,11 +2906,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
             ),
           ),
+          // Basit menü - sadece ana özellikler
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               children: [
-                _buildDrawerItem(
+                _buildSimpleDrawerItem(
                   context,
                   theme,
                   'Profilim',
@@ -2924,19 +2923,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                   },
                 ),
-                _buildDrawerItem(
-                  context,
-                  theme,
-                  'Radyolojik Görüntü',
-                  Icons.medical_information_rounded,
-                  () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const RadiologyPage()),
-                    );
-                  },
-                ),
-                _buildDrawerItem(
+                _buildSimpleDrawerItem(
                   context,
                   theme,
                   'İlaç Takibi',
@@ -2948,7 +2935,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                   },
                 ),
-                _buildDrawerItem(
+                _buildSimpleDrawerItem(
                   context,
                   theme,
                   'AI Asistanı',
@@ -2960,7 +2947,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                   },
                 ),
-                _buildDrawerItem(
+                _buildSimpleDrawerItem(
                   context,
                   theme,
                   'Ayarlar',
@@ -2972,32 +2959,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                   },
                 ),
-                _buildDrawerItem(
-                  context,
-                  theme,
-                  'Firebase Test',
-                  Icons.bug_report_rounded,
-                  () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const FirebaseTestPage()),
-                    );
-                  },
-                ),
-                _buildDrawerItem(
-                  context,
-                  theme,
-                  'Bildirim Test',
-                  Icons.notifications_active_rounded,
-                  () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const NotificationTestPage()),
-                    );
-                  },
-                ),
                 const Divider(),
-                _buildDrawerItem(
+                _buildSimpleDrawerItem(
                   context,
                   theme,
                   'Çıkış Yap',
@@ -3017,6 +2980,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSimpleDrawerItem(
+    BuildContext context,
+    ThemeData theme,
+    String title,
+    IconData icon,
+    VoidCallback onTap, {
+    bool isDestructive = false,
+  }) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: isDestructive ? Colors.red : Colors.grey.shade700,
+        size: 24,
+      ),
+      title: Text(
+        title,
+        style: theme.textTheme.titleMedium?.copyWith(
+          color: isDestructive ? Colors.red : Colors.black87,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      onTap: onTap,
     );
   }
 
