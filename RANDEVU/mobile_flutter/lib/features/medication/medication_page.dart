@@ -107,37 +107,10 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF4CAF50), Color(0xFF45A049)],
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(
-                Icons.medication_rounded,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'İlaç Takibi',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
+        title: const Text('İlaç Takibi'),
+        backgroundColor: Colors.blue.shade600,
         elevation: 0,
         actions: [
           IconButton(
@@ -153,10 +126,6 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
               }
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.refresh_rounded, color: Colors.white),
-            onPressed: _loadData,
-          ),
         ],
         bottom: TabBar(
           controller: _tabController,
@@ -164,25 +133,14 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
           tabs: const [
-            Tab(text: 'Bugün', icon: Icon(Icons.today_rounded)),
-            Tab(text: 'Tüm İlaçlar', icon: Icon(Icons.medication_rounded)),
-            Tab(text: 'Özet', icon: Icon(Icons.analytics_rounded)),
+            Tab(text: 'Bugün'),
+            Tab(text: 'Tüm İlaçlar'),
+            Tab(text: 'Özet'),
           ],
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFF4CAF50).withOpacity(0.1),
-              const Color(0xFF45A049).withOpacity(0.05),
-              Colors.white,
-            ],
-            stops: const [0.0, 0.3, 1.0],
-          ),
-        ),
+        color: Colors.grey.shade50,
         child: TabBarView(
           controller: _tabController,
           children: [
@@ -214,12 +172,8 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
               const SizedBox(height: 16),
             ],
             
-            // Bugünkü İlaçlar
-            _buildTodayMedicationsSection(),
-            const SizedBox(height: 16),
-            
-            // Hızlı Aksiyonlar
-            _buildQuickActionsSection(),
+                  // Bugünkü İlaçlar
+                  _buildTodayMedicationsSection(),
           ],
         ),
       ),
@@ -278,15 +232,21 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFF6B6B), Color(0xFFFF5252)],
+        gradient: LinearGradient(
+          colors: [Colors.amber.shade50, Colors.orange.shade50],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.amber.shade200,
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.red.withOpacity(0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.amber.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -295,19 +255,23 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
         children: [
           Row(
             children: [
-              const Icon(Icons.warning_rounded, color: Colors.white, size: 24),
+              Icon(
+                Icons.info_rounded,
+                color: Colors.amber.shade600,
+                size: 24,
+              ),
               const SizedBox(width: 8),
               Text(
-                'Uyarılar (${_alerts.length})',
-                style: const TextStyle(
-                  color: Colors.white,
+                'Bilgilendirmeler (${_alerts.length})',
+                style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber.shade700,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           ..._alerts.map((alert) => _buildAlertItem(alert)).toList(),
         ],
       ),
@@ -319,32 +283,46 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
       margin: const EdgeInsets.only(top: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.amber.shade200,
           width: 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.amber.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: Row(
         children: [
+          Icon(
+            Icons.info_rounded,
+            color: Colors.amber.shade600,
+            size: 20,
+          ),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   alert.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber.shade700,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   alert.message,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 12,
+                    fontSize: 13,
+                    color: Colors.grey.shade700,
                   ),
                 ),
               ],
@@ -352,7 +330,7 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
           ),
           if (alert.requiresAction)
             IconButton(
-              icon: const Icon(Icons.check_rounded, color: Colors.white),
+              icon: Icon(Icons.check_rounded, color: Colors.green.shade600, size: 24),
               onPressed: () async {
                 await MedicationService.markAlertAsRead(alert.id);
                 _loadData();
@@ -367,29 +345,14 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF4CAF50).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(
-                Icons.today_rounded,
-                color: Color(0xFF4CAF50),
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'Bugün Alınacak İlaçlar',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
-            ),
-          ],
+        // Basit başlık
+        Text(
+          'Bugünkü İlaçlar',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
         const SizedBox(height: 16),
         if (_medicationsDueToday.isEmpty)
@@ -402,37 +365,68 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
 
   Widget _buildEmptyTodayState() {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          colors: [Colors.green.shade50, Colors.green.shade100],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.green.withOpacity(0.2),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
         border: Border.all(
-          color: Colors.grey.withOpacity(0.3),
+          color: Colors.green.shade200,
           width: 1,
         ),
       ),
       child: Column(
         children: [
-          Icon(
-            Icons.medication_rounded,
-            size: 48,
-            color: Colors.grey.withOpacity(0.6),
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.green.shade400, Colors.green.shade600],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(40),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.green.withOpacity(0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.check_circle_rounded,
+              size: 48,
+              color: Colors.white,
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Text(
-            'Bugün alınacak ilaç yok',
+            'Harika! 🎉',
             style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.withOpacity(0.8),
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.green.shade800,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Tüm ilaçlarınızı aldınız!',
+            'Bugünkü tüm ilaçlar alındı',
             style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.withOpacity(0.6),
+              fontSize: 16,
+              color: Colors.green.shade600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -446,194 +440,297 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
     final isCompleted = isTaken || isSkipped;
     
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isCompleted 
-            ? [Colors.green.withOpacity(0.1), Colors.green.withOpacity(0.05)]
-            : [Colors.white, Colors.grey.withOpacity(0.05)],
+            ? [Colors.green.shade50, Colors.green.shade100]
+            : [Colors.white, Colors.blue.shade50],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
             color: isCompleted 
               ? Colors.green.withOpacity(0.2)
-              : Colors.black.withOpacity(0.1),
-            blurRadius: 8,
+              : Colors.blue.withOpacity(0.1),
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
         border: Border.all(
           color: isCompleted 
-            ? Colors.green.withOpacity(0.3)
-            : Colors.grey.withOpacity(0.2),
+            ? Colors.green.shade200
+            : Colors.blue.shade100,
           width: 1,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: isCompleted 
-                    ? Colors.green.withOpacity(0.2)
-                    : const Color(0xFF4CAF50).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  isTaken 
-                    ? Icons.check_circle_rounded
-                    : isSkipped 
-                      ? Icons.cancel_rounded
-                      : Icons.medication_rounded,
-                  color: isTaken 
-                    ? Colors.green
-                    : isSkipped 
-                      ? Colors.orange
-                      : const Color(0xFF4CAF50),
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      medication.medicationName,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: isCompleted ? Colors.green.shade700 : Colors.black,
-                      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // İlaç bilgisi - Estetik
+            Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: isCompleted 
+                        ? [Colors.green.shade400, Colors.green.shade600]
+                        : [Colors.blue.shade400, Colors.blue.shade600],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    Text(
-                      '${medication.dosageAmount} ${medication.dosageUnit.displayName}',
-                      style: TextStyle(
-                        fontSize: 14,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
                         color: isCompleted 
-                          ? Colors.green.withOpacity(0.7)
-                          : Colors.grey.withOpacity(0.8),
-                      ),
-                    ),
-                    if (isCompleted) ...[
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            isTaken ? '✅ Alındı' : '⏭️ Atlandı',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: isTaken ? Colors.green.shade600 : Colors.orange.shade600,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          GestureDetector(
-                            onTap: () => _undoMedication(medication),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.undo_rounded,
-                                    size: 12,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                  const SizedBox(width: 2),
-                                  Text(
-                                    'Geri Al',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.grey.shade600,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                          ? Colors.green.withOpacity(0.3)
+                          : Colors.blue.withOpacity(0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
                     ],
+                  ),
+                  child: Icon(
+                    Icons.medication_rounded,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        medication.medicationName,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: isCompleted ? Colors.green.shade800 : Colors.grey.shade800,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${medication.dosageAmount} ${medication.dosageUnit.displayName}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (isCompleted)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: isTaken 
+                          ? [Colors.green.shade400, Colors.green.shade600]
+                          : [Colors.orange.shade400, Colors.orange.shade600],
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: isTaken 
+                            ? Colors.green.withOpacity(0.3)
+                            : Colors.orange.withOpacity(0.3),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      isTaken ? '✓ Alındı' : '⏭ Atlandı',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            
+            // İlaç yenileme uyarısı - Yumuşak
+            if (medication.isLowOnPills && !isCompleted) ...[
+              const SizedBox(height: 16),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.amber.shade50, Colors.orange.shade50],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Colors.amber.shade200,
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.amber.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.amber.shade100,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.info_rounded,
+                        color: Colors.amber.shade700,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'İlaç az kaldı! Yenileme zamanı',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber.shade800,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              if (medication.isLowOnPills && !isCompleted)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.orange.withOpacity(0.3),
-                      width: 1,
-                    ),
-                  ),
-                  child: Text(
-                    'Az Kaldı',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.orange.shade700,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
             ],
-          ),
-          if (!isCompleted) ...[
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () => _takeMedication(medication),
-                    icon: const Icon(Icons.check_rounded, size: 18),
-                    label: const Text('Aldım'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4CAF50),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
+            
+            // Estetik butonlar
+            if (!isCompleted) ...[
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF4CAF50), Color(0xFF45A049)],
+                        ),
                         borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () => _takeMedication(medication),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Aldım',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () => _skipMedication(medication),
-                    icon: const Icon(Icons.skip_next_rounded, size: 18),
-                    label: const Text('Atla'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.grey.shade600,
-                      side: BorderSide(color: Colors.grey.shade300),
-                      shape: RoundedRectangleBorder(
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFFF9800), Color(0xFFF57C00)],
+                        ),
                         borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () => _skipMedication(medication),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Atla',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                ],
+              ),
+            ] else ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Colors.grey.shade300,
+                    width: 1,
+                  ),
                 ),
-              ],
-            ),
+                child: TextButton(
+                  onPressed: () => _undoMedication(medication),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'Geri Al',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
+
 
   Widget _buildQuickActionsSection() {
     return Column(
@@ -1249,3 +1346,4 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
     );
   }
 }
+
