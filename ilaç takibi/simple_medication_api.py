@@ -73,12 +73,15 @@ class MedicationLogResponse(BaseModel):
     medication_id: int
     user_id: int
     taken_at: str
+    scheduled_time: Optional[str] = None
     dosage_taken: float
     dosage_unit: str
     was_taken: bool
     was_skipped: bool
     was_delayed: bool
+    delay_minutes: Optional[int] = None
     notes: Optional[str] = None
+    side_effects_noted: bool = False
     created_at: str
 
 class MedicationSummary(BaseModel):
@@ -101,6 +104,8 @@ class MedicationAlert(BaseModel):
     is_dismissed: bool
     requires_action: bool
     created_at: str
+    read_at: Optional[str] = None
+    dismissed_at: Optional[str] = None
 
 # Mock data
 medications_db = [
@@ -154,12 +159,15 @@ medication_logs_db = [
         "medication_id": 1,
         "user_id": 1,
         "taken_at": "2024-01-20T08:00:00",
+        "scheduled_time": None,
         "dosage_taken": 500,
         "dosage_unit": "mg",
         "was_taken": True,
         "was_skipped": False,
         "was_delayed": False,
+        "delay_minutes": None,
         "notes": None,
+        "side_effects_noted": False,
         "created_at": "2024-01-20T08:00:00",
     },
     {
@@ -167,12 +175,15 @@ medication_logs_db = [
         "medication_id": 2,
         "user_id": 1,
         "taken_at": "2024-01-20T09:00:00",
+        "scheduled_time": None,
         "dosage_taken": 1000,
         "dosage_unit": "iu",
         "was_taken": True,
         "was_skipped": False,
         "was_delayed": False,
+        "delay_minutes": None,
         "notes": None,
+        "side_effects_noted": False,
         "created_at": "2024-01-20T09:00:00",
     }
 ]
@@ -189,6 +200,8 @@ alerts_db = [
         "is_dismissed": False,
         "requires_action": True,
         "created_at": "2024-01-20T10:00:00",
+        "read_at": None,
+        "dismissed_at": None,
     }
 ]
 
@@ -201,6 +214,32 @@ async def root():
 async def get_medications():
     """Kullanıcının ilaçlarını getir"""
     return [MedicationResponse(**med) for med in medications_db]
+
+@app.get("/medications/summary", response_model=MedicationSummary)
+async def get_medication_summary():
+    """İlaç özeti"""
+    active_medications = [med for med in medications_db if med["is_active"] and med["status"] == "active"]
+    missed_doses_today = len([log for log in medication_logs_db if log["was_skipped"]])
+    
+    return MedicationSummary(
+        total_medications=len(medications_db),
+        active_medications=len(active_medications),
+        medications_due_today=len(active_medications),
+        missed_doses_today=missed_doses_today,
+        upcoming_refills=len([med for med in active_medications if med["remaining_pills"] is not None and med["remaining_pills"] <= 7]),
+        active_side_effects=0,
+        critical_interactions=0,
+    )
+
+@app.get("/medications/alerts", response_model=List[MedicationAlert])
+async def get_medication_alerts():
+    """İlaç uyarılarını getir"""
+    return [MedicationAlert(**alert) for alert in alerts_db if not alert["is_dismissed"]]
+
+@app.get("/medications/today/due", response_model=List[MedicationResponse])
+async def get_medications_due_today():
+    """Bugün alınması gereken ilaçlar"""
+    return [MedicationResponse(**med) for med in medications_db if med["is_active"] and med["status"] == "active"]
 
 @app.get("/medications/{medication_id}", response_model=MedicationResponse)
 async def get_medication(medication_id: int):
@@ -293,12 +332,15 @@ async def log_medication_taken(log: MedicationLogCreate):
         "medication_id": log.medication_id,
         "user_id": 1,  # Mock user ID
         "taken_at": log.taken_at or now,
+        "scheduled_time": None,
         "dosage_taken": log.dosage_taken,
         "dosage_unit": log.dosage_unit,
         "was_taken": log.was_taken,
         "was_skipped": log.was_skipped,
         "was_delayed": log.was_delayed,
+        "delay_minutes": None,
         "notes": log.notes,
+        "side_effects_noted": False,
         "created_at": now,
     }
     
@@ -326,12 +368,15 @@ async def take_medication_now(medication_id: int, dosage_taken: Optional[float] 
         "medication_id": medication_id,
         "user_id": 1,
         "taken_at": now,
+        "scheduled_time": None,
         "dosage_taken": dosage_taken or medication["dosage_amount"],
         "dosage_unit": medication["dosage_unit"],
         "was_taken": True,
         "was_skipped": False,
         "was_delayed": False,
+        "delay_minutes": None,
         "notes": notes,
+        "side_effects_noted": False,
         "created_at": now,
     }
     
@@ -365,43 +410,21 @@ async def skip_medication(medication_id: int, reason: Optional[str] = None):
         "medication_id": medication_id,
         "user_id": 1,
         "taken_at": now,
+        "scheduled_time": None,
         "dosage_taken": 0.0,
         "dosage_unit": medication["dosage_unit"],
         "was_taken": False,
         "was_skipped": True,
         "was_delayed": False,
+        "delay_minutes": None,
         "notes": f"İlaç atlandı: {reason}" if reason else "İlaç atlandı",
+        "side_effects_noted": False,
         "created_at": now,
     }
     
     medication_logs_db.append(new_log)
     return MedicationLogResponse(**new_log)
 
-@app.get("/medications/today/due", response_model=List[MedicationResponse])
-async def get_medications_due_today():
-    """Bugün alınması gereken ilaçlar"""
-    return [MedicationResponse(**med) for med in medications_db if med["is_active"] and med["status"] == "active"]
-
-@app.get("/medications/summary", response_model=MedicationSummary)
-async def get_medication_summary():
-    """İlaç özeti"""
-    active_medications = [med for med in medications_db if med["is_active"] and med["status"] == "active"]
-    missed_doses_today = len([log for log in medication_logs_db if log["was_skipped"]])
-    
-    return MedicationSummary(
-        total_medications=len(medications_db),
-        active_medications=len(active_medications),
-        medications_due_today=len(active_medications),
-        missed_doses_today=missed_doses_today,
-        upcoming_refills=len([med for med in active_medications if med["remaining_pills"] is not None and med["remaining_pills"] <= 7]),
-        active_side_effects=0,
-        critical_interactions=0,
-    )
-
-@app.get("/medications/alerts", response_model=List[MedicationAlert])
-async def get_medication_alerts():
-    """İlaç uyarılarını getir"""
-    return [MedicationAlert(**alert) for alert in alerts_db if not alert["is_dismissed"]]
 
 @app.patch("/medications/alerts/{alert_id}/read", status_code=204)
 async def mark_alert_as_read(alert_id: int):

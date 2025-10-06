@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 import '../models/user_role.dart';
+import 'firebase_medication_service.dart';
 
 class FirebaseAuthService {
   static final FirebaseAuthService _instance = FirebaseAuthService._internal();
@@ -142,6 +143,15 @@ class FirebaseAuthService {
         await _clearRememberMeData();
       }
 
+      // Sync medication data from Firebase
+      try {
+        await FirebaseMedicationService.syncUserData();
+        print('📊 Medication data synced for user: ${userModel.name}');
+      } catch (e) {
+        print('⚠️ Failed to sync medication data: $e');
+        // Don't fail login if medication sync fails
+      }
+
       return userModel;
     } on FirebaseAuthException catch (e) {
       String errorMessage;
@@ -173,6 +183,9 @@ class FirebaseAuthService {
   /// Logout
   Future<void> logout() async {
     try {
+      // Clean up medication data (local cache only, Firebase data remains)
+      await FirebaseMedicationService.cleanupOnLogout();
+      
       await _auth.signOut();
       await _clearRememberMeData();
     } catch (e) {

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../models/medication.dart';
 
 class MedicationService {
-  static const String _baseUrl = 'http://127.0.0.1:8002'; // İlaç Takibi API URL
+  static const String _baseUrl = 'http://10.0.2.2:8002'; // İlaç Takibi API URL (Android emülatör için)
 
   // İlaç CRUD İşlemleri
   static Future<List<Medication>> getMedications() async {

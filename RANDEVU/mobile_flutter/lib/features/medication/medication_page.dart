@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import '../../models/medication.dart';
 import '../../services/medication_service.dart';
+import '../../services/firebase_medication_service.dart';
 import 'add_medication_page.dart';
 import 'medication_detail_page.dart';
 
@@ -21,12 +22,16 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
   MedicationSummary? _summary;
   List<MedicationAlert> _alerts = [];
   bool _isLoading = true;
+  
+  // İlaç durumlarını takip etmek için
+  Map<int, bool> _medicationTakenToday = {};
+  Map<int, bool> _medicationSkippedToday = {};
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _loadData();
+    _initializeData();
   }
 
   @override
@@ -35,11 +40,39 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
     super.dispose();
   }
 
-  Future<void> _loadData() async {
+  Future<void> _initializeData() async {
     setState(() {
       _isLoading = true;
     });
 
+    try {
+      // Önce günlük verileri yükle
+      await _loadDailyData();
+      
+      // Sonra API verilerini yükle
+      await _loadData();
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      _showErrorSnackBar('Veriler yüklenirken hata oluştu: $e');
+    }
+  }
+
+  Future<void> _loadDailyData() async {
+    try {
+      // Firebase'den günlük verileri yükle
+      _medicationTakenToday = await FirebaseMedicationService.loadMedicationTaken();
+      _medicationSkippedToday = await FirebaseMedicationService.loadMedicationSkipped();
+    } catch (e) {
+      print('Firebase load error: $e');
+      // Hata durumunda boş map'ler kullan
+      _medicationTakenToday.clear();
+      _medicationSkippedToday.clear();
+    }
+  }
+
+  Future<void> _loadData() async {
     try {
       final results = await Future.wait([
         MedicationService.getMedications(),
@@ -408,26 +441,33 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
   }
 
   Widget _buildTodayMedicationCard(Medication medication) {
+    final isTaken = _medicationTakenToday[medication.id] ?? false;
+    final isSkipped = _medicationSkippedToday[medication.id] ?? false;
+    final isCompleted = isTaken || isSkipped;
+    
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            Colors.grey.withOpacity(0.05),
-          ],
+          colors: isCompleted 
+            ? [Colors.green.withOpacity(0.1), Colors.green.withOpacity(0.05)]
+            : [Colors.white, Colors.grey.withOpacity(0.05)],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: isCompleted 
+              ? Colors.green.withOpacity(0.2)
+              : Colors.black.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
         border: Border.all(
-          color: Colors.grey.withOpacity(0.2),
+          color: isCompleted 
+            ? Colors.green.withOpacity(0.3)
+            : Colors.grey.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -439,12 +479,22 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4CAF50).withOpacity(0.1),
+                  color: isCompleted 
+                    ? Colors.green.withOpacity(0.2)
+                    : const Color(0xFF4CAF50).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.medication_rounded,
-                  color: Color(0xFF4CAF50),
+                child: Icon(
+                  isTaken 
+                    ? Icons.check_circle_rounded
+                    : isSkipped 
+                      ? Icons.cancel_rounded
+                      : Icons.medication_rounded,
+                  color: isTaken 
+                    ? Colors.green
+                    : isSkipped 
+                      ? Colors.orange
+                      : const Color(0xFF4CAF50),
                   size: 20,
                 ),
               ),
@@ -455,22 +505,74 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
                   children: [
                     Text(
                       medication.medicationName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: isCompleted ? Colors.green.shade700 : Colors.black,
                       ),
                     ),
                     Text(
                       '${medication.dosageAmount} ${medication.dosageUnit.displayName}',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey.withOpacity(0.8),
+                        color: isCompleted 
+                          ? Colors.green.withOpacity(0.7)
+                          : Colors.grey.withOpacity(0.8),
                       ),
                     ),
+                    if (isCompleted) ...[
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Text(
+                            isTaken ? '✅ Alındı' : '⏭️ Atlandı',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: isTaken ? Colors.green.shade600 : Colors.orange.shade600,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () => _undoMedication(medication),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.undo_rounded,
+                                    size: 12,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    'Geri Al',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey.shade600,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
               ),
-              if (medication.isLowOnPills)
+              if (medication.isLowOnPills && !isCompleted)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
@@ -492,40 +594,42 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
                 ),
             ],
           ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () => _takeMedication(medication),
-                  icon: const Icon(Icons.check_rounded, size: 18),
-                  label: const Text('Aldım'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4CAF50),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+          if (!isCompleted) ...[
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => _takeMedication(medication),
+                    icon: const Icon(Icons.check_rounded, size: 18),
+                    label: const Text('Aldım'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF4CAF50),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () => _skipMedication(medication),
-                  icon: const Icon(Icons.skip_next_rounded, size: 18),
-                  label: const Text('Atla'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.grey.shade600,
-                    side: BorderSide(color: Colors.grey.shade300),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => _skipMedication(medication),
+                    icon: const Icon(Icons.skip_next_rounded, size: 18),
+                    label: const Text('Atla'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.grey.shade600,
+                      side: BorderSide(color: Colors.grey.shade300),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -1034,8 +1138,30 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
 
   Future<void> _takeMedication(Medication medication) async {
     try {
+      // API'ye kaydet
       await MedicationService.takeMedicationNow(medication.id);
+      
+      // UI'yi hemen güncelle
+      setState(() {
+        _medicationTakenToday[medication.id] = true;
+        _medicationSkippedToday[medication.id] = false;
+      });
+      
+      // Firebase'e kalıcı olarak kaydet
+      await _saveToFirebase();
+      
+      // Geçmişe kaydet
+      await FirebaseMedicationService.saveDailyHistory(
+        medicationId: medication.id,
+        medicationName: medication.medicationName,
+        wasTaken: true,
+        wasSkipped: false,
+        timestamp: DateTime.now(),
+      );
+      
       _showSuccessSnackBar('${medication.medicationName} alındı olarak kaydedildi');
+      
+      // Arka planda verileri güncelle
       _loadData();
     } catch (e) {
       _showErrorSnackBar('İlaç kaydedilemedi: $e');
@@ -1044,11 +1170,73 @@ class _MedicationPageState extends State<MedicationPage> with TickerProviderStat
 
   Future<void> _skipMedication(Medication medication) async {
     try {
+      // API'ye kaydet
       await MedicationService.skipMedication(medication.id);
+      
+      // UI'yi hemen güncelle
+      setState(() {
+        _medicationSkippedToday[medication.id] = true;
+        _medicationTakenToday[medication.id] = false;
+      });
+      
+      // Firebase'e kalıcı olarak kaydet
+      await _saveToFirebase();
+      
+      // Geçmişe kaydet
+      await FirebaseMedicationService.saveDailyHistory(
+        medicationId: medication.id,
+        medicationName: medication.medicationName,
+        wasTaken: false,
+        wasSkipped: true,
+        timestamp: DateTime.now(),
+      );
+      
       _showSuccessSnackBar('${medication.medicationName} atlandı olarak kaydedildi');
+      
+      // Arka planda verileri güncelle
       _loadData();
     } catch (e) {
       _showErrorSnackBar('İlaç atlanamadı: $e');
+    }
+  }
+
+  Future<void> _undoMedication(Medication medication) async {
+    try {
+      // UI'yi hemen güncelle
+      setState(() {
+        _medicationTakenToday[medication.id] = false;
+        _medicationSkippedToday[medication.id] = false;
+      });
+      
+      // Firebase'e kalıcı olarak kaydet
+      await _saveToFirebase();
+      
+      // Geçmişe kaydet
+      await FirebaseMedicationService.saveDailyHistory(
+        medicationId: medication.id,
+        medicationName: medication.medicationName,
+        wasTaken: false,
+        wasSkipped: false,
+        timestamp: DateTime.now(),
+        notes: 'Geri alındı',
+      );
+      
+      _showSuccessSnackBar('${medication.medicationName} geri alındı');
+    } catch (e) {
+      _showErrorSnackBar('Geri alma işlemi başarısız: $e');
+    }
+  }
+
+  /// Firebase'e verileri kaydet
+  Future<void> _saveToFirebase() async {
+    try {
+      await Future.wait([
+        FirebaseMedicationService.saveMedicationTaken(_medicationTakenToday),
+        FirebaseMedicationService.saveMedicationSkipped(_medicationSkippedToday),
+      ]);
+    } catch (e) {
+      print('Firebase save error: $e');
+      // Hata durumunda kullanıcıyı bilgilendir ama uygulamayı durdurma
     }
   }
 
