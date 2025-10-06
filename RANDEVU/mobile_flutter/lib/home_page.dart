@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'type_booking_page.dart';
 import 'services/firebase_auth_service.dart';
@@ -15,6 +14,8 @@ import 'features/pharmacy/pharmacy_finder_page.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/platform_utils.dart';
 import 'features/randevu/presentation/voice_randevu_page.dart';
+import 'features/chat/chat_page.dart';
+import 'widgets/modern_fab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -97,6 +98,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         title: 'TanıAI Randevu',
         actions: [
           IconButton(
+            icon: const Icon(Icons.chat_rounded),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ChatPage()),
+              );
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
               // Bildirimler sayfasına git
@@ -126,6 +135,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             web: _buildWebLayout(context, theme),
           ),
         ),
+      ),
+      floatingActionButton: AnimatedFloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ChatPage()),
+          );
+        },
+        icon: Icons.chat_rounded,
+        tooltip: 'AI Asistanı ile Sohbet Et',
+        isVisible: true,
       ),
     );
   }
@@ -693,6 +712,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
           },
         ),
+        const SizedBox(height: 12),
+        _buildFeatureCard(
+          context,
+          theme,
+          'AI Asistanı',
+          'TanıAI ile sohbet edin ve yardım alın',
+          Icons.smart_toy_rounded,
+          const Color(0xFF9C27B0),
+          () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const ChatPage()),
+            );
+          },
+        ),
       ],
     );
   }
@@ -938,6 +971,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const MedsPage()),
+                    );
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  theme,
+                  'AI Asistanı',
+                  Icons.smart_toy_rounded,
+                  () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ChatPage()),
                     );
                   },
                 ),

@@ -2,7 +2,7 @@ SENİN GÖREVİN: Hastanın Türkçe şikayetini okuyup EN UYGUN KLİNİĞİ ön
 
 KURALLAR:
 - SADECE TEK SATIR JSON döndür
-- JSON formatı: {"klinik":"<tam_ad>","gerekçe":"<açıklama>","aciliyet":"rutin|öncelikli|acil"}
+#- JSON formatı: {"klinik":"<tam_ad>","gerekçe":"<açıklama>","aciliyet":"rutin|öncelikli|acil"}
 
 ACİL DURUMLAR (MUTLAKA "Acil Servis" + "acil"):
 1. "gece" kelimesi geçen herhangi bir ağrı şikayeti

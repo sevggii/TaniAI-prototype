@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../core/theme/app_theme.dart';
 
 class LoadingOverlay extends StatefulWidget {
@@ -244,6 +245,121 @@ class _PulseAnimationState extends State<PulseAnimation>
         return Transform.scale(
           scale: _scaleAnimation.value,
           child: widget.child,
+        );
+      },
+    );
+  }
+}
+
+class StaggeredAnimationList extends StatelessWidget {
+  final List<Widget> children;
+  final Duration duration;
+  final Duration delay;
+  final Axis direction;
+
+  const StaggeredAnimationList({
+    super.key,
+    required this.children,
+    this.duration = const Duration(milliseconds: 600),
+    this.delay = const Duration(milliseconds: 100),
+    this.direction = Axis.vertical,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimationLimiter(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: children.length,
+        itemBuilder: (context, index) {
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: duration,
+            child: SlideAnimation(
+              verticalOffset: direction == Axis.vertical ? 50.0 : 0.0,
+              horizontalOffset: direction == Axis.horizontal ? 50.0 : 0.0,
+              child: FadeInAnimation(
+                child: children[index],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class BounceInAnimation extends StatefulWidget {
+  final Widget child;
+  final Duration duration;
+  final double delay;
+
+  const BounceInAnimation({
+    super.key,
+    required this.child,
+    this.duration = const Duration(milliseconds: 600),
+    this.delay = 0.0,
+  });
+
+  @override
+  State<BounceInAnimation> createState() => _BounceInAnimationState();
+}
+
+class _BounceInAnimationState extends State<BounceInAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+    
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.elasticOut,
+    ));
+    
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeOut,
+    ));
+    
+    Future.delayed(Duration(milliseconds: (widget.delay * 1000).round()), () {
+      if (mounted) {
+        _animationController.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _scaleAnimation.value,
+          child: Opacity(
+            opacity: _opacityAnimation.value,
+            child: widget.child,
+          ),
         );
       },
     );
