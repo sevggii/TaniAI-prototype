@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/chat_message.dart';
+import 'llm_service.dart';
 
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -35,12 +36,40 @@ class ChatService {
   // AI yanıtı al
   Future<String> getAIResponse(String userMessage) async {
     try {
-      // Gerçek AI servisi yerine simüle edilmiş yanıtlar
-      await Future.delayed(const Duration(seconds: 2)); // Gerçekçi gecikme
-      
-      return _generateAIResponse(userMessage);
+      // LLM servisini kullan
+      final response = await LLMService.getChatResponse(userMessage);
+      return response;
     } catch (e) {
+      print('Chat Service Error: $e');
       return 'Üzgünüm, şu anda bir sorun yaşıyorum. Lütfen daha sonra tekrar deneyin.';
+    }
+  }
+
+  // Triyaj yanıtı al
+  Future<Map<String, dynamic>> getTriageResponse(String symptoms) async {
+    try {
+      final response = await LLMService.getTriageResponse(symptoms);
+      return response;
+    } catch (e) {
+      print('Triage Service Error: $e');
+      return {
+        'success': false,
+        'error': 'Triyaj servisi şu anda kullanılamıyor.',
+      };
+    }
+  }
+
+  // Klinik önerisi al
+  Future<Map<String, dynamic>> getClinicRecommendation(String symptoms) async {
+    try {
+      final response = await LLMService.getClinicRecommendation(symptoms);
+      return response;
+    } catch (e) {
+      print('Clinic Recommendation Service Error: $e');
+      return {
+        'success': false,
+        'error': 'Klinik önerisi servisi şu anda kullanılamıyor.',
+      };
     }
   }
 

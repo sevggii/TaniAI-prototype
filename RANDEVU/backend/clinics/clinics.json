@@ -1,0 +1,134 @@
+{
+  "clinics": [
+    {
+      "id": "general",
+      "name": "Genel Pratisyen",
+      "description": "Genel sağlık kontrolü ve rutin muayeneler",
+      "specialties": ["Genel Tıp", "Aile Hekimliği"],
+      "keywords": ["genel", "rutin", "kontrol", "check-up", "muayene"],
+      "urgency_level": "low",
+      "appointment_types": ["Rutin kontrol", "Genel muayene", "Reçete yenileme"],
+      "wait_time": "1-3 gün"
+    },
+    {
+      "id": "cardiology",
+      "name": "Kardiyoloji",
+      "description": "Kalp ve damar hastalıkları",
+      "specialties": ["Kardiyoloji", "Kalp Cerrahisi"],
+      "keywords": ["göğüs", "kalp", "nefes", "çarpıntı", "ağrı", "tansiyon", "kalp krizi"],
+      "urgency_level": "high",
+      "appointment_types": ["EKG", "Ekokardiyografi", "Stres testi", "Anjiyografi"],
+      "wait_time": "1-7 gün"
+    },
+    {
+      "id": "neurology",
+      "name": "Nöroloji",
+      "description": "Sinir sistemi hastalıkları",
+      "specialties": ["Nöroloji", "Beyin Cerrahisi"],
+      "keywords": ["baş", "baş ağrısı", "nöroloji", "sinir", "felç", "titreme", "epilepsi"],
+      "urgency_level": "high",
+      "appointment_types": ["EEG", "EMG", "Beyin MR", "Nörolojik muayene"],
+      "wait_time": "1-7 gün"
+    },
+    {
+      "id": "orthopedics",
+      "name": "Ortopedi",
+      "description": "Kemik, eklem ve kas hastalıkları",
+      "specialties": ["Ortopedi", "Travmatoloji"],
+      "keywords": ["kemik", "eklem", "kas", "ağrı", "travma", "kırık", "bel", "boyun"],
+      "urgency_level": "medium",
+      "appointment_types": ["Röntgen", "MR", "Fizik tedavi", "Cerrahi konsültasyon"],
+      "wait_time": "3-7 gün"
+    },
+    {
+      "id": "dermatology",
+      "name": "Dermatoloji",
+      "description": "Cilt hastalıkları",
+      "specialties": ["Dermatoloji"],
+      "keywords": ["cilt", "deri", "döküntü", "kaşıntı", "ben", "leke", "egzama"],
+      "urgency_level": "low",
+      "appointment_types": ["Cilt muayenesi", "Ben kontrolü", "Dermatoskopi"],
+      "wait_time": "1-5 gün"
+    },
+    {
+      "id": "gastroenterology",
+      "name": "Gastroenteroloji",
+      "description": "Sindirim sistemi hastalıkları",
+      "specialties": ["Gastroenteroloji"],
+      "keywords": ["mide", "karın", "sindirim", "bulantı", "kusma", "ishal", "kabızlık"],
+      "urgency_level": "medium",
+      "appointment_types": ["Endoskopi", "Kolonoskopi", "Ultrasonografi"],
+      "wait_time": "3-10 gün"
+    },
+    {
+      "id": "pulmonology",
+      "name": "Göğüs Hastalıkları",
+      "description": "Solunum sistemi hastalıkları",
+      "specialties": ["Göğüs Hastalıkları", "Pulmonoloji"],
+      "keywords": ["öksürük", "nefes", "akciğer", "astım", "bronşit", "zatürre"],
+      "urgency_level": "medium",
+      "appointment_types": ["Spirometri", "Akciğer grafisi", "Bronkoskopi"],
+      "wait_time": "3-7 gün"
+    },
+    {
+      "id": "endocrinology",
+      "name": "Endokrinoloji",
+      "description": "Hormon hastalıkları",
+      "specialties": ["Endokrinoloji"],
+      "keywords": ["şeker", "diyabet", "tiroit", "hormon", "kilo", "metabolizma"],
+      "urgency_level": "medium",
+      "appointment_types": ["Kan tahlili", "Hormon testi", "Ultrasonografi"],
+      "wait_time": "3-10 gün"
+    },
+    {
+      "id": "urology",
+      "name": "Üroloji",
+      "description": "İdrar yolları ve erkek sağlığı",
+      "specialties": ["Üroloji"],
+      "keywords": ["idrar", "böbrek", "prostat", "mesane", "erkek sağlığı"],
+      "urgency_level": "medium",
+      "appointment_types": ["Ultrasonografi", "PSA testi", "Ürodinami"],
+      "wait_time": "3-7 gün"
+    },
+    {
+      "id": "gynecology",
+      "name": "Kadın Hastalıkları",
+      "description": "Kadın sağlığı ve doğum",
+      "specialties": ["Kadın Hastalıkları", "Doğum"],
+      "keywords": ["kadın", "hamilelik", "doğum", "jinekoloji", "menstruasyon"],
+      "urgency_level": "medium",
+      "appointment_types": ["Ultrasonografi", "Smear testi", "Doğum kontrolü"],
+      "wait_time": "3-7 gün"
+    },
+    {
+      "id": "pediatrics",
+      "name": "Çocuk Sağlığı",
+      "description": "Çocuk hastalıkları",
+      "specialties": ["Pediatri"],
+      "keywords": ["çocuk", "bebek", "pediatri", "aşı", "gelişim"],
+      "urgency_level": "medium",
+      "appointment_types": ["Gelişim kontrolü", "Aşı", "Rutin muayene"],
+      "wait_time": "1-5 gün"
+    },
+    {
+      "id": "psychiatry",
+      "name": "Psikiyatri",
+      "description": "Ruh sağlığı",
+      "specialties": ["Psikiyatri"],
+      "keywords": ["psikoloji", "depresyon", "anksiyete", "stres", "uyku"],
+      "urgency_level": "medium",
+      "appointment_types": ["Psikiyatrik muayene", "Terapi", "İlaç konsültasyonu"],
+      "wait_time": "5-14 gün"
+    },
+    {
+      "id": "emergency",
+      "name": "Acil Servis",
+      "description": "Acil müdahale gerektiren durumlar",
+      "specialties": ["Acil Tıp"],
+      "keywords": ["acil", "kritik", "hayati", "kanama", "travma", "bayılma", "112"],
+      "urgency_level": "critical",
+      "appointment_types": ["Acil müdahale", "Yoğun bakım", "Cerrahi müdahale"],
+      "wait_time": "Hemen"
+    }
+  ]
+}

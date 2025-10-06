@@ -6,7 +6,9 @@ import '../../models/chat_message.dart';
 import '../../services/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final String? initialMessage;
+  
+  const ChatPage({super.key, this.initialMessage});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -29,6 +31,14 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     _currentUser = FirebaseAuth.instance.currentUser;
     _setupAnimations();
     _scrollToBottom();
+    
+    // Eğer initial message varsa, otomatik gönder
+    if (widget.initialMessage != null && widget.initialMessage!.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _messageController.text = widget.initialMessage!;
+        _sendMessage();
+      });
+    }
   }
 
   void _setupAnimations() {
@@ -94,8 +104,16 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       _isTyping = true;
     });
 
-    // AI yanıtını al
-    final aiResponse = await _chatService.getAIResponse(message);
+    // Mesaj tipine göre farklı işlemler yap
+    String aiResponse;
+    if (_isAppointmentRequest(message)) {
+      aiResponse = await _handleAppointmentRequest(message);
+    } else if (_isSymptomQuery(message)) {
+      aiResponse = await _handleSymptomQuery(message);
+    } else {
+      // Normal chat yanıtı
+      aiResponse = await _chatService.getAIResponse(message);
+    }
     
     setState(() {
       _isTyping = false;
@@ -112,6 +130,187 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     _scrollToBottom();
   }
 
+  // Randevu isteği mi kontrol et
+  bool _isAppointmentRequest(String message) {
+    final lowerMessage = message.toLowerCase();
+    return lowerMessage.contains('randevu') || 
+           lowerMessage.contains('appointment') ||
+           lowerMessage.contains('doktor') ||
+           lowerMessage.contains('muayene');
+  }
+
+  // Semptom sorgusu mu kontrol et
+  bool _isSymptomQuery(String message) {
+    final lowerMessage = message.toLowerCase();
+    return lowerMessage.contains('semptom') ||
+           lowerMessage.contains('ağrı') ||
+           lowerMessage.contains('hasta') ||
+           lowerMessage.contains('rahatsızlık') ||
+           lowerMessage.contains('şikayet');
+  }
+
+  // Randevu isteğini işle
+  Future<String> _handleAppointmentRequest(String message) async {
+    try {
+      // Triyaj yaparak uygun klinik önerisi al
+      final triageResponse = await _chatService.getTriageResponse(message);
+      
+      if (triageResponse['success']) {
+        final data = triageResponse['data'];
+        final urgency = data['urgency'] ?? 'normal';
+        final recommendedClinic = data['recommended_clinic'] ?? 'Genel Pratisyen';
+        
+        String response = 'Randevu talebinizi aldım. ';
+        
+        if (urgency == 'high') {
+          response += '⚠️ Acil durum tespit ettim. En kısa sürede bir sağlık kuruluşuna başvurmanızı öneririm. ';
+        } else if (urgency == 'medium') {
+          response += '🟡 Orta öncelikli bir durum. 24-48 saat içinde randevu almanızı öneririm. ';
+        } else {
+          response += '✅ Normal öncelikli durum. Uygun bir zamanda randevu alabilirsiniz. ';
+        }
+        
+        response += 'Önerilen bölüm: **$recommendedClinic**\n\n';
+        response += 'Randevu almak için aşağıdaki seçenekleri kullanabilirsiniz:\n';
+        response += '• 📞 Sesli randevu (telefon)\n';
+        response += '• 🏥 Yakın hastaneler\n';
+        response += '• 📅 Online randevu sistemi';
+        
+        return response;
+      } else {
+        // Fallback yanıt
+        return 'Randevu almak için size yardımcı olabilirim! Hangi bölüm için randevu almak istiyorsunuz? Ayrıca sesli randevu almak için telefon özelliğini de kullanabilirsiniz.';
+      }
+    } catch (e) {
+      return 'Randevu almak için size yardımcı olabilirim! Hangi bölüm için randevu almak istiyorsunuz? Ayrıca sesli randevu almak için telefon özelliğini de kullanabilirsiniz.';
+    }
+  }
+
+  // Semptom sorgusunu işle
+  Future<String> _handleSymptomQuery(String message) async {
+    try {
+      // Triyaj yaparak semptom analizi al
+      final triageResponse = await _chatService.getTriageResponse(message);
+      
+      if (triageResponse['success']) {
+        final data = triageResponse['data'];
+        final urgency = data['urgency'] ?? 'normal';
+        final analysis = data['analysis'] ?? '';
+        final recommendations = data['recommendations'] ?? [];
+        final recommendedClinic = data['recommended_clinic'] ?? 'Genel Pratisyen';
+        
+        String response = 'Semptomlarınızı analiz ettim: 🩺\n\n';
+        
+        if (analysis.isNotEmpty) {
+          response += '📋 **Analiz:** $analysis\n\n';
+        }
+        
+        if (urgency == 'high') {
+          response += '🚨 **Acil Durum:** Bu semptomlar acil müdahale gerektirebilir. En kısa sürede bir sağlık kuruluşuna başvurun.\n\n';
+          response += '📞 **Hemen Yapılacaklar:**\n';
+          response += '• 112\'yi arayın (gerekirse)\n';
+          response += '• Acil servise gidin\n';
+          response += '• Yanınızda birisi olsun\n\n';
+        } else if (urgency == 'medium') {
+          response += '⚠️ **Orta Öncelik:** Bu semptomlar dikkat gerektiriyor. 24-48 saat içinde bir doktora başvurmanızı öneririm.\n\n';
+        } else {
+          response += '✅ **Normal Öncelik:** Bu semptomlar genellikle ciddi değildir, ancak takip edilmesi gerekebilir.\n\n';
+        }
+        
+        response += '🏥 **Önerilen Bölüm:** $recommendedClinic\n\n';
+        
+        if (recommendations.isNotEmpty) {
+          response += '💡 **Öneriler:**\n';
+          for (var rec in recommendations) {
+            response += '• $rec\n';
+          }
+          response += '\n';
+        }
+        
+        response += '📅 **Randevu Seçenekleri:**\n';
+        response += '• 📞 Sesli randevu (telefon)\n';
+        response += '• 🏥 Yakın hastaneler\n';
+        response += '• 📱 Online randevu sistemi\n\n';
+        
+        response += '⚠️ **Önemli:** Bu analiz sadece genel bilgi amaçlıdır. Kesin teşhis için mutlaka bir doktora başvurun.';
+        
+        return response;
+      } else {
+        // Fallback yanıt - daha akıllı
+        return _getSmartFallbackResponse(message);
+      }
+    } catch (e) {
+      return _getSmartFallbackResponse(message);
+    }
+  }
+
+  // Akıllı fallback yanıtı
+  String _getSmartFallbackResponse(String message) {
+    final lowerMessage = message.toLowerCase();
+    
+    if (lowerMessage.contains('baş') && lowerMessage.contains('ağrı')) {
+      return 'Baş ağrınız için size yardımcı olabilirim. 🧠\n\n'
+          '🔍 **Olası Nedenler:**\n'
+          '• Stres ve yorgunluk\n'
+          '• Migren\n'
+          '• Sinüzit\n'
+          '• Tansiyon\n'
+          '• Dehidrasyon\n\n'
+          '💡 **Öneriler:**\n'
+          '• Bol su için\n'
+          '• Karanlık ve sessiz bir yerde dinlenin\n'
+          '• Hafif masaj yapın\n'
+          '• Ağrı kesici alabilirsiniz\n\n'
+          '🏥 **Önerilen Bölüm:** Nöroloji veya İç Hastalıkları\n\n'
+          '⚠️ **Dikkat:** Şiddetli, ani başlayan veya sürekli baş ağrıları için mutlaka doktora başvurun.';
+    }
+    
+    if (lowerMessage.contains('karın') && lowerMessage.contains('ağrı')) {
+      return 'Karın ağrınız için size yardımcı olabilirim. 🫄\n\n'
+          '🔍 **Olası Nedenler:**\n'
+          '• Hazımsızlık\n'
+          '• Gaz\n'
+          '• Stres\n'
+          '• Gıda intoleransı\n'
+          '• Mide ülseri\n\n'
+          '💡 **Öneriler:**\n'
+          '• Hafif yiyecekler tüketin\n'
+          '• Bol su için\n'
+          '• Sıcak su torbası kullanın\n'
+          '• Dinlenin\n\n'
+          '🏥 **Önerilen Bölüm:** Gastroenteroloji veya İç Hastalıkları\n\n'
+          '⚠️ **Dikkat:** Şiddetli, ani başlayan veya sürekli karın ağrıları için mutlaka doktora başvurun.';
+    }
+    
+    if (lowerMessage.contains('göğüs') && lowerMessage.contains('ağrı')) {
+      return '🚨 **ACİL DURUM!**\n\n'
+          'Göğüs ağrısı ciddi bir durum olabilir. Hemen aşağıdaki adımları takip edin:\n\n'
+          '📞 **Hemen Yapılacaklar:**\n'
+          '• 112\'yi arayın\n'
+          '• Acil servise gidin\n'
+          '• Yanınızda birisi olsun\n'
+          '• Dinlenin, hareket etmeyin\n\n'
+          '🏥 **Önerilen Bölüm:** Acil Servis veya Kardiyoloji\n\n'
+          '⚠️ **Göğüs ağrısı kalp krizi belirtisi olabilir. Zaman kaybetmeyin!**';
+    }
+    
+    // Genel semptom yanıtı
+    return 'Semptomlarınız hakkında konuşabiliriz. Size daha iyi yardımcı olabilmem için:\n\n'
+        '🔍 **Lütfen belirtin:**\n'
+        '• Hangi semptomları yaşıyorsunuz?\n'
+        '• Ne kadar süredir devam ediyor?\n'
+        '• Şiddeti nasıl? (hafif/orta/şiddetli)\n'
+        '• Başka belirtiler var mı?\n\n'
+        '💡 **Örnek semptomlar:**\n'
+        '• Baş ağrısı\n'
+        '• Karın ağrısı\n'
+        '• Ateş\n'
+        '• Bulantı\n'
+        '• Yorgunluk\n\n'
+        '🏥 **Randevu için:** "Randevu almak istiyorum" yazabilirsiniz.\n\n'
+        '⚠️ **Önemli:** Bu analiz sadece genel bilgi amaçlıdır. Kesin teşhis için mutlaka bir doktora başvurun.';
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -122,44 +321,76 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         title: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                gradient: AppTheme.primaryGradient,
-                borderRadius: BorderRadius.circular(12),
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF667eea).withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: const Icon(
                 Icons.smart_toy_rounded,
                 color: Colors.white,
-                size: 20,
+                size: 24,
               ),
             ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'TanıAI Asistanı',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'TanıAI Asistanı',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-                Text(
-                  'Çevrimiçi',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: Colors.green,
-                    fontWeight: FontWeight.w500,
+                  Row(
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Çevrimiçi',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert_rounded),
-            onPressed: () {
-              _showChatOptions(context);
-            },
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.more_vert_rounded),
+              onPressed: () {
+                _showChatOptions(context);
+              },
+            ),
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -168,12 +399,15 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              AppTheme.primaryGradient.colors[0].withOpacity(0.05),
+              const Color(0xFF667eea).withOpacity(0.1),
+              const Color(0xFF764ba2).withOpacity(0.05),
+              const Color(0xFFf093fb).withOpacity(0.03),
               Colors.white,
             ],
+            stops: const [0.0, 0.3, 0.7, 1.0],
           ),
         ),
         child: SafeArea(
@@ -291,46 +525,71 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   Widget _buildEmptyState(ThemeData theme) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              gradient: AppTheme.primaryGradient,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.primaryGradient.colors[0].withOpacity(0.3),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // AI Avatar ve hoş geldin
+            Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                gradient: AppTheme.primaryGradient,
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.primaryGradient.colors[0].withOpacity(0.3),
+                    blurRadius: 30,
+                    offset: const Offset(0, 15),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.smart_toy_rounded,
+                color: Colors.white,
+                size: 64,
+              ),
+            ),
+            const SizedBox(height: 32),
+            Text(
+              'Merhaba! 👋',
+              style: theme.textTheme.headlineLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Ben TanıAI Asistanıyım',
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: AppTheme.primaryGradient.colors[0],
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.grey[50],
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: Colors.grey[200]!,
+                  width: 1,
                 ),
-              ],
+              ),
+              child: Text(
+                'Sağlık konularında size yardımcı olmak için buradayım. Randevu alma, semptom sorgulama ve genel sağlık bilgileri konularında rehberlik edebilirim.',
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: Colors.grey[700],
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-            child: const Icon(
-              Icons.chat_bubble_outline_rounded,
-              color: Colors.white,
-              size: 48,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'Merhaba! 👋',
-            style: theme.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Ben TanıAI Asistanıyım. Size nasıl yardımcı olabilirim?',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          _buildQuickActions(theme),
-        ],
+            const SizedBox(height: 32),
+            _buildQuickActions(theme),
+          ],
+        ),
       ),
     );
   }
@@ -339,25 +598,37 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     final quickActions = [
       {
         'title': 'Randevu Al',
+        'subtitle': 'Hızlı randevu alma',
         'icon': Icons.event_rounded,
         'message': 'Randevu almak istiyorum',
+        'gradient': const LinearGradient(
+          colors: [Color(0xFF34C759), Color(0xFF30D158)],
+        ),
       },
       {
         'title': 'Semptom Sorgula',
+        'subtitle': 'Sağlık durumu analizi',
         'icon': Icons.medical_information_rounded,
         'message': 'Semptomlarım hakkında bilgi almak istiyorum',
+        'gradient': const LinearGradient(
+          colors: [Color(0xFFFF3B30), Color(0xFFFF6B6B)],
+        ),
       },
       {
         'title': 'Eczane Bul',
+        'subtitle': 'Yakın eczaneler',
         'icon': Icons.local_pharmacy_rounded,
         'message': 'Yakınımdaki eczaneleri bul',
+        'gradient': const LinearGradient(
+          colors: [Color(0xFF007AFF), Color(0xFF5AC8FA)],
+        ),
       },
     ];
 
     return Column(
       children: quickActions.map((action) {
         return Container(
-          margin: const EdgeInsets.only(bottom: 12),
+          margin: const EdgeInsets.only(bottom: 16),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -365,35 +636,71 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 _messageController.text = action['message'] as String;
                 _sendMessage();
               },
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: theme.colorScheme.outline.withOpacity(0.2),
-                  ),
+                  gradient: action['gradient'] as LinearGradient,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (action['gradient'] as LinearGradient).colors[0].withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppTheme.primaryGradient.colors[0].withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.3),
+                          width: 1,
+                        ),
                       ),
                       child: Icon(
                         action['icon'] as IconData,
-                        color: AppTheme.primaryGradient.colors[0],
-                        size: 20,
+                        color: Colors.white,
+                        size: 24,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Text(
-                      action['title'] as String,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            action['title'] as String,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            action['subtitle'] as String,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.white.withOpacity(0.9),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white,
+                        size: 16,
                       ),
                     ),
                   ],
