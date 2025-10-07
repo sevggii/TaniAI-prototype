@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/splash_auth_gate.dart';
 import 'services/firebase_auth_service.dart';
 import 'services/notification_service.dart';
+import 'services/firebase_messaging_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,21 +24,22 @@ void main() async {
     print('🧹 Account cleanup completed');
     
     // Initialize notification service
-    final notificationService = NotificationService();
-    await notificationService.initialize();
+    await NotificationService.initialize();
     print('🔔 Notification service initialized');
     
-    // Request notification permissions and schedule notifications
-    final hasPermission = await notificationService.requestPermissions();
+    // Initialize Firebase Messaging
+    await FirebaseMessagingService.initialize();
+    print('📱 Firebase Messaging initialized');
+    
+    // Set background message handler
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    
+    // Request notification permissions
+    final hasPermission = await NotificationService.requestNotificationPermissions();
     print('📱 Notification permission granted: $hasPermission');
     
     if (hasPermission) {
-      await notificationService.scheduleAllNotifications();
-      print('✅ All notifications scheduled successfully');
-      
-      // Send a test notification to verify everything works
-      await Future.delayed(const Duration(seconds: 2));
-      await notificationService.sendTestNotification();
+      print('✅ Notification permissions granted');
     } else {
       print('⚠️ Notification permissions not granted - notifications will not work');
     }

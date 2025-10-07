@@ -12,7 +12,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final FirebaseAuthService _auth = FirebaseAuthService();
-  final NotificationService _notificationService = NotificationService();
   bool _isLoading = false;
   bool _notificationsEnabled = true;
 
@@ -23,7 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _checkNotificationStatus() async {
-    final enabled = await _notificationService.areNotificationsEnabled();
+    final enabled = await NotificationService.areNotificationsEnabled();
     setState(() {
       _notificationsEnabled = enabled;
     });
@@ -36,9 +35,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
     try {
       if (enabled) {
-        final hasPermission = await _notificationService.requestPermissions();
+        final hasPermission = await NotificationService.requestNotificationPermissions();
         if (hasPermission) {
-          await _notificationService.scheduleAllNotifications();
+          // Bildirimler etkinleştirildi
           setState(() {
             _notificationsEnabled = true;
           });
@@ -57,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
           );
         }
       } else {
-        await _notificationService.cancelAllNotifications();
+        await NotificationService.cancelAllNotifications();
         setState(() {
           _notificationsEnabled = false;
         });
@@ -277,7 +276,7 @@ class _SettingsPageState extends State<SettingsPage> {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceVariant.withOpacity(0.5),
+                color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(

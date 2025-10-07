@@ -11,6 +11,8 @@ import 'features/pharmacy/pharmacy_finder_page.dart';
 import 'core/utils/platform_utils.dart';
 import 'features/randevu/presentation/voice_randevu_page.dart';
 import 'features/chat/chat_page.dart';
+import 'features/notifications/notifications_page.dart';
+import 'services/global_notification_manager.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -291,17 +293,58 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ],
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-            onPressed: () {
-              // Bildirimler sayfasına git
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.menu_rounded, color: Colors.white),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.notifications_rounded, color: Colors.white),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotificationsPage(
+                        onNotificationRead: () {
+                          // Bildirim okunduğunda sayacı güncelle
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+              FutureBuilder<int>(
+                future: _getUnreadNotificationCount(),
+                builder: (context, snapshot) {
+                  final count = snapshot.data ?? 0;
+                  if (count > 0) {
+                    return Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          count > 99 ? '99+' : count.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -3036,5 +3079,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onTap: onTap,
       ),
     );
+  }
+
+  /// Okunmamış bildirim sayısını al
+  Future<int> _getUnreadNotificationCount() async {
+    try {
+      await GlobalNotificationManager.loadNotifications();
+      return GlobalNotificationManager.getUnreadCount();
+    } catch (e) {
+      debugPrint('Bildirim sayısı alınırken hata: $e');
+      return 0;
+    }
   }
 }

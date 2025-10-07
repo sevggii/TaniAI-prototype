@@ -1,541 +1,446 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:permission_handler/permission_handler.dart';
+import 'dart:typed_data';
 
-/// Friendly, warm and humorous notification service for wellbeing reminders
+/// Mobil Bildirim Servisi
+/// Saatlik ilaç hatırlatmaları ve diğer bildirimler için
 class NotificationService {
-  static final NotificationService _instance = NotificationService._internal();
-  factory NotificationService() => _instance;
-  NotificationService._internal();
+  static final FlutterLocalNotificationsPlugin _notifications = 
+      FlutterLocalNotificationsPlugin();
+  
+  static bool _initialized = false;
 
-  final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
-  NotificationConfig? _config;
-  final Map<String, List<String>> _usedMessages = {}; // Track used messages per category
-
-  /// Initialize the notification service
-  Future<void> initialize() async {
-    print('🔔 Initializing notification service...');
+  /// Bildirim servisini başlat
+  static Future<void> initialize() async {
+    if (_initialized) return;
     
-    // Initialize timezone data
+    // Timezone verilerini yükle
     tz.initializeTimeZones();
     
-    // Set default timezone to Istanbul
-    tz.setLocalLocation(tz.getLocation('Europe/Istanbul'));
-    print('🌍 Timezone set to: Europe/Istanbul');
-
-    // Android initialization settings
-    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     
-    // iOS initialization settings
-    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
-
-    // Combined initialization settings
-    const InitializationSettings initSettings = InitializationSettings(
-      android: androidSettings,
-      iOS: iosSettings,
-    );
-
-    // Initialize the plugin
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
+    
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+          android: initializationSettingsAndroid,
+          iOS: initializationSettingsIOS,
+        );
+    
     await _notifications.initialize(
-      initSettings,
+      initializationSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
-    print('✅ Notification plugin initialized');
-
-    // Create Android notification channel
-    await _createAndroidChannel();
-
-    // Load notification configuration
-    await _loadConfig();
-    print('📋 Notification config loaded');
-  }
-
-  /// Create Android notification channel
-  Future<void> _createAndroidChannel() async {
-    if (Platform.isAndroid) {
-      const AndroidNotificationChannel channel = AndroidNotificationChannel(
-        'wellbeing_reminders',
-        'Wellbeing Reminders',
-        description: 'Friendly reminders for your daily wellbeing activities',
-        importance: Importance.max,
-        playSound: true,
-        enableVibration: true,
-        enableLights: true,
-        showBadge: true,
-        sound: RawResourceAndroidNotificationSound('notification'),
-      );
-
-      await _notifications
-          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-          ?.createNotificationChannel(channel);
-      
-      print('📱 Android notification channel created with max importance');
-    }
-  }
-
-  /// Load notification configuration from JSON asset
-  Future<void> _loadConfig() async {
-    try {
-      final String jsonString = await rootBundle.loadString('assets/notifications_config.json');
-      final Map<String, dynamic> jsonData = json.decode(jsonString);
-      _config = NotificationConfig.fromJson(jsonData);
-    } catch (e) {
-      debugPrint('Error loading notification config: $e');
-    }
-  }
-
-  /// Handle notification tap
-  void _onNotificationTapped(NotificationResponse response) {
-    final String? payload = response.payload;
-    if (payload != null) {
-      final Map<String, dynamic> data = json.decode(payload);
-      final String action = data['action'] ?? 'OPEN_APP';
-      
-      switch (action) {
-        case 'OPEN_APP':
-          // App will be opened automatically
-          break;
-        case 'SNOOZE_30M':
-          _snoozeNotification(data['id']);
-          break;
-        case 'MARK_DONE':
-          _markNotificationDone(data['id']);
-          break;
-      }
-    }
-  }
-
-  /// Schedule all notifications based on configuration
-  Future<void> scheduleAllNotifications() async {
-    print('📅 Starting to schedule all notifications...');
     
-    if (_config == null) {
-      print('❌ Notification config not loaded');
-      debugPrint('Notification config not loaded');
-      return;
-    }
-
-    print('📋 Config loaded: ${_config!.notifications.length} notifications found');
-
-    // Cancel existing notifications first
-    await cancelAllNotifications();
-    print('🗑️ Existing notifications cancelled');
-
-    int scheduledCount = 0;
-    for (final notification in _config!.notifications) {
-      print('⏰ Scheduling notification: ${notification.category} at ${notification.time}');
-      await _scheduleNotification(notification);
-      scheduledCount++;
-    }
-
-    print('✅ All wellbeing notifications scheduled! 🌟 Total: $scheduledCount');
-    debugPrint('All wellbeing notifications scheduled! 🌟');
+    _initialized = true;
   }
 
-  /// Schedule a single notification
-  Future<void> _scheduleNotification(NotificationItem item) async {
-    if (_config == null) return;
-
-    // Parse time
-    final timeParts = item.time.split(':');
-    final hour = int.parse(timeParts[0]);
-    final minute = int.parse(timeParts[1]);
-
-    // Calculate jitter (±15 minutes by default)
-    final jitter = _config!.jitterMinutes;
-    final randomJitter = Random().nextInt(jitter * 2 + 1) - jitter;
-    final scheduledMinute = minute + randomJitter;
-
-    // Check if time falls within DND period
-    if (_isWithinDNDPeriod(hour, scheduledMinute)) {
-      debugPrint('Skipping notification at $hour:${scheduledMinute.toString().padLeft(2, '0')} (DND period)');
-      return;
-    }
-
-    // Schedule for each day of the week
-    for (final dayName in _config!.days) {
-      final dayOfWeek = _getDayOfWeek(dayName);
-      final scheduledTime = _getNextScheduledTime(dayOfWeek, hour, scheduledMinute);
-      
-      if (scheduledTime != null) {
-        await _scheduleSingleNotification(
-          id: _generateNotificationId(item, dayOfWeek),
-          scheduledTime: scheduledTime,
-          item: item,
-        );
-      }
-    }
+  /// Bildirime tıklandığında çağrılır
+  static void _onNotificationTapped(NotificationResponse response) {
+    // Bildirime tıklandığında yapılacak işlemler
+    debugPrint('Bildirime tıklandı: ${response.payload}');
   }
 
-  /// Schedule a single notification at specific time
-  Future<void> _scheduleSingleNotification({
+  /// İlaç hatırlatma bildirimi ayarla
+  static Future<void> scheduleMedicationReminder({
     required int id,
+    required String medicationName,
+    required String dosage,
     required DateTime scheduledTime,
-    required NotificationItem item,
+    required String frequency, // 'günde 1 kez', 'günde 2 kez', vb.
   }) async {
-    // Get random message from category
-    final message = _getRandomMessage(item.category, item.messages);
+    await initialize();
     
-    // Android notification details
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'wellbeing_reminders',
-      'Wellbeing Reminders',
-      channelDescription: 'Friendly reminders for your daily wellbeing activities',
-      importance: Importance.max,
-      priority: Priority.max,
-      showWhen: true,
-      enableLights: true,
-      enableVibration: true,
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('notification'),
-      fullScreenIntent: true,
-      category: AndroidNotificationCategory.alarm,
-      actions: [
-        AndroidNotificationAction('snooze', 'Snooze 30m', showsUserInterface: false),
-        AndroidNotificationAction('done', 'Mark Done', showsUserInterface: false),
-      ],
-    );
-
-    // iOS notification details
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    // Combined notification details
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    // Create payload for actions
-    final payload = json.encode({
-      'id': id,
-      'category': item.category,
-      'action': 'OPEN_APP',
-    });
-
-    // Schedule the notification
-    await _notifications.zonedSchedule(
-      id,
-      _getNotificationTitle(item.category),
-      message,
-      tz.TZDateTime.from(scheduledTime, tz.local),
-      notificationDetails,
-      payload: payload,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
-  }
-
-  /// Get random message from category, avoiding duplicates
-  String _getRandomMessage(String category, List<String> messages) {
-    // Initialize category if not exists
-    if (!_usedMessages.containsKey(category)) {
-      _usedMessages[category] = [];
-    }
-
-    // Get available messages (not used today)
-    final availableMessages = messages.where((msg) => !_usedMessages[category]!.contains(msg)).toList();
-    
-    // If all messages used, reset the list
-    if (availableMessages.isEmpty) {
-      _usedMessages[category] = [];
-      availableMessages.addAll(messages);
-    }
-
-    // Pick random message
-    final selectedMessage = availableMessages[Random().nextInt(availableMessages.length)];
-    _usedMessages[category]!.add(selectedMessage);
-
-    return selectedMessage;
-  }
-
-  /// Get notification title based on category
-  String _getNotificationTitle(String category) {
-    switch (category) {
-      case 'D_vitamini':
-        return '🌞 D Vitamini Saati';
-      case 'Su_icme':
-        return '💧 Su Molası';
-      case 'Ara_ogun_meyve':
-        return '🍎 Vitamin Molası';
-      case 'Yuruyus':
-        return '👟 Hareket Zamanı';
-      case 'Goz_202020':
-        return '👀 Göz Molası';
-      case 'Esneme_durus':
-        return '🧘 Esneme Zamanı';
-      case 'Moral':
-        return '✨ Moral Zamanı';
-      case 'Nefes':
-        return '🌬️ Nefes Molası';
-      case 'Gun_kapanisi':
-        return '🌙 Gün Kapanışı';
-      default:
-        return '💖 Sağlık Hatırlatması';
-    }
-  }
-
-  /// Check if time falls within Do Not Disturb period
-  bool _isWithinDNDPeriod(int hour, int minute) {
-    if (_config == null) return false;
-
-    final dndStart = _config!.dndStart;
-    final dndEnd = _config!.dndEnd;
-    
-    final startParts = dndStart.split(':');
-    final endParts = dndEnd.split(':');
-    
-    final startHour = int.parse(startParts[0]);
-    final startMinute = int.parse(startParts[1]);
-    final endHour = int.parse(endParts[0]);
-    final endMinute = int.parse(endParts[1]);
-
-    final currentTime = hour * 60 + minute;
-    final startTime = startHour * 60 + startMinute;
-    final endTime = endHour * 60 + endMinute;
-
-    // Handle overnight DND (e.g., 23:00 to 08:00)
-    if (startTime > endTime) {
-      return currentTime >= startTime || currentTime <= endTime;
-    } else {
-      return currentTime >= startTime && currentTime <= endTime;
-    }
-  }
-
-  /// Get day of week from string
-  int _getDayOfWeek(String dayName) {
-    switch (dayName) {
-      case 'Mon': return DateTime.monday;
-      case 'Tue': return DateTime.tuesday;
-      case 'Wed': return DateTime.wednesday;
-      case 'Thu': return DateTime.thursday;
-      case 'Fri': return DateTime.friday;
-      case 'Sat': return DateTime.saturday;
-      case 'Sun': return DateTime.sunday;
-      default: return DateTime.monday;
-    }
-  }
-
-  /// Get next scheduled time for a specific day
-  DateTime? _getNextScheduledTime(int dayOfWeek, int hour, int minute) {
-    final now = DateTime.now();
-    final today = now.weekday;
-    
-    // Calculate days until target day
-    int daysUntilTarget = (dayOfWeek - today) % 7;
-    if (daysUntilTarget == 0) {
-      // Same day - check if time has passed
-      final targetTime = DateTime(now.year, now.month, now.day, hour, minute);
-      if (targetTime.isBefore(now)) {
-        daysUntilTarget = 7; // Next week
-      }
-    }
-
-    return DateTime(now.year, now.month, now.day + daysUntilTarget, hour, minute);
-  }
-
-  /// Generate unique notification ID
-  int _generateNotificationId(NotificationItem item, int dayOfWeek) {
-    return item.hashCode + dayOfWeek;
-  }
-
-  /// Snooze notification by 30 minutes
-  Future<void> _snoozeNotification(int notificationId) async {
-    final snoozeTime = DateTime.now().add(const Duration(minutes: 30));
-    
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'wellbeing_reminders',
-      'Wellbeing Reminders',
-      channelDescription: 'Friendly reminders for your daily wellbeing activities',
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'medication_reminders',
+      'İlaç Hatırlatmaları',
+      channelDescription: 'Saatlik ilaç hatırlatma bildirimleri',
       importance: Importance.high,
       priority: Priority.high,
-    );
-
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    await _notifications.zonedSchedule(
-      notificationId + 10000, // Add offset to avoid ID conflicts
-      '💤 Snoozed Reminder',
-      'Hatırlatma 30 dakika ertelendi 😴',
-      tz.TZDateTime.from(snoozeTime, tz.local),
-      notificationDetails,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-    );
-  }
-
-  /// Mark notification as done
-  void _markNotificationDone(int notificationId) {
-    // You can implement tracking logic here
-    debugPrint('Notification $notificationId marked as done ✅');
-  }
-
-  /// Cancel all notifications
-  Future<void> cancelAllNotifications() async {
-    await _notifications.cancelAll();
-    debugPrint('All notifications cancelled');
-  }
-
-  /// Request notification permissions
-  Future<bool> requestPermissions() async {
-    print('🔐 Requesting notification permissions...');
-    
-    if (Platform.isAndroid) {
-      // Use permission_handler for more reliable permission requests
-      final notificationStatus = await Permission.notification.request();
-      print('📱 Notification permission status: $notificationStatus');
-      
-      // Also request exact alarm permissions for Android 12+
-      final exactAlarmStatus = await Permission.scheduleExactAlarm.request();
-      print('📱 Exact alarm permission status: $exactAlarmStatus');
-      
-      // Fallback to flutter_local_notifications method
-      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-          _notifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
-      
-      final bool? granted = await androidImplementation?.requestNotificationsPermission();
-      print('📱 Android POST_NOTIFICATIONS permission result: $granted');
-      
-      return notificationStatus.isGranted || (granted ?? false);
-    } else if (Platform.isIOS) {
-      final bool? granted = await _notifications
-          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
-      print('🍎 iOS permission result: $granted');
-      return granted ?? false;
-    }
-    print('❌ Platform not supported for permissions');
-    return false;
-  }
-
-  /// Check if notifications are enabled
-  Future<bool> areNotificationsEnabled() async {
-    if (Platform.isAndroid) {
-      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-          _notifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
-      return await androidImplementation?.areNotificationsEnabled() ?? false;
-    }
-    return true; // iOS doesn't have this method
-  }
-
-  /// Send a test notification immediately
-  Future<void> sendTestNotification() async {
-    print('🧪 Sending test notification...');
-    
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'wellbeing_reminders',
-      'Wellbeing Reminders',
-      channelDescription: 'Friendly reminders for your daily wellbeing activities',
-      importance: Importance.max,
-      priority: Priority.max,
-      showWhen: true,
+      icon: '@mipmap/ic_launcher',
+      sound: const RawResourceAndroidNotificationSound('notification_sound'),
+      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
       enableLights: true,
-      enableVibration: true,
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('notification'),
-      fullScreenIntent: true,
-      category: AndroidNotificationCategory.alarm,
+      color: const Color(0xFF2196F3),
     );
-
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+    
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails(
+      sound: 'notification_sound.aiff',
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
     );
-
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
+    
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics,
+        );
+    
+    await _notifications.zonedSchedule(
+      id,
+      'İlaç Zamanı 💊',
+      '$medicationName ($dosage) almayı unutmayın!',
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: 'medication_$id',
     );
+  }
 
-    await _notifications.show(
-      99999, // Test notification ID
-      '🧪 Test Bildirimi',
-      'Bildirimler çalışıyor! 🎉',
-      notificationDetails,
+  /// Günlük tekrarlayan ilaç hatırlatması ayarla
+  static Future<void> scheduleDailyMedicationReminder({
+    required int id,
+    required String medicationName,
+    required String dosage,
+    required TimeOfDay time,
+    required String frequency,
+  }) async {
+    await initialize();
+    
+    final now = DateTime.now();
+    var scheduledDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      time.hour,
+      time.minute,
     );
     
-    print('✅ Test notification sent');
+    // Eğer zaman geçmişse, yarın için ayarla
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'daily_medication_reminders',
+      'Günlük İlaç Hatırlatmaları',
+      channelDescription: 'Günlük tekrarlayan ilaç hatırlatma bildirimleri',
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
+      enableLights: true,
+      color: Color(0xFF4CAF50),
+    );
+    
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails(
+      sound: 'notification_sound.aiff',
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics,
+        );
+    
+    await _notifications.zonedSchedule(
+      id,
+      'İlaç Zamanı 💊',
+      '$medicationName ($dosage) almayı unutmayın!',
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: 'daily_medication_$id',
+    );
   }
-}
 
-/// Notification configuration model
-class NotificationConfig {
-  final String timezone;
-  final String dndStart;
-  final String dndEnd;
-  final int jitterMinutes;
-  final List<String> days;
-  final List<NotificationItem> notifications;
+  /// Randevu hatırlatma bildirimi ayarla
+  static Future<void> scheduleAppointmentReminder({
+    required int id,
+    required String doctorName,
+    required String clinicName,
+    required DateTime appointmentTime,
+    required int reminderMinutesBefore,
+  }) async {
+    await initialize();
+    
+    final reminderTime = appointmentTime.subtract(
+      Duration(minutes: reminderMinutesBefore),
+    );
+    
+    if (reminderTime.isBefore(DateTime.now())) {
+      return; // Geçmiş zaman için bildirim ayarlama
+    }
+    
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'appointment_reminders',
+      'Randevu Hatırlatmaları',
+      channelDescription: 'Randevu hatırlatma bildirimleri',
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
+      enableLights: true,
+      color: Color(0xFFFF9800),
+    );
+    
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails(
+      sound: 'notification_sound.aiff',
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics,
+        );
+    
+    await _notifications.zonedSchedule(
+      id,
+      'Randevu Hatırlatması 📅',
+      '$reminderMinutesBefore dakika sonra $doctorName ile $clinicName randevunuz var!',
+      tz.TZDateTime.from(reminderTime, tz.local),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: 'appointment_$id',
+    );
+  }
 
-  NotificationConfig({
-    required this.timezone,
-    required this.dndStart,
-    required this.dndEnd,
-    required this.jitterMinutes,
-    required this.days,
-    required this.notifications,
-  });
+  /// Genel sağlık hatırlatması
+  static Future<void> scheduleHealthReminder({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledTime,
+  }) async {
+    await initialize();
+    
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'health_reminders',
+      'Sağlık Hatırlatmaları',
+      channelDescription: 'Genel sağlık hatırlatma bildirimleri',
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+      icon: '@mipmap/ic_launcher',
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+      vibrationPattern: Int64List.fromList([0, 500, 250, 500]),
+      enableLights: true,
+      color: Color(0xFF9C27B0),
+    );
+    
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails(
+      sound: 'notification_sound.aiff',
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics,
+        );
+    
+    await _notifications.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: 'health_$id',
+    );
+  }
 
-  factory NotificationConfig.fromJson(Map<String, dynamic> json) {
-    return NotificationConfig(
-      timezone: json['timezone'] ?? 'Europe/Istanbul',
-      dndStart: json['do_not_disturb']?['start'] ?? '23:00',
-      dndEnd: json['do_not_disturb']?['end'] ?? '08:00',
-      jitterMinutes: json['jitter_minutes'] ?? 15,
-      days: List<String>.from(json['days'] ?? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']),
-      notifications: (json['notifications'] as List)
-          .map((item) => NotificationItem.fromJson(item))
-          .toList(),
+  /// Bekleyen bildirimleri iptal et
+  static Future<void> cancelNotification(int id) async {
+    await _notifications.cancel(id);
+  }
+
+  /// Tüm bildirimleri iptal et
+  static Future<void> cancelAllNotifications() async {
+    await _notifications.cancelAll();
+  }
+
+  /// Bekleyen bildirimleri listele
+  static Future<List<PendingNotificationRequest>> getPendingNotifications() async {
+    return await _notifications.pendingNotificationRequests();
+  }
+
+  /// Bildirim izinlerini kontrol et
+  static Future<bool> areNotificationsEnabled() async {
+    final result = await _notifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()?.areNotificationsEnabled();
+    return result ?? false;
+  }
+
+  /// Bildirim izinlerini iste
+  static Future<bool> requestNotificationPermissions() async {
+    final androidImplementation = _notifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    
+    final granted = await androidImplementation?.requestNotificationsPermission();
+    return granted ?? false;
+  }
+
+  /// Anında local bildirim göster
+  static Future<void> showLocalNotification({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
+    await initialize();
+    
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'instant_notifications',
+      'Anında Bildirimler',
+      channelDescription: 'Anında gösterilen bildirimler',
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
+      enableLights: true,
+      color: Color(0xFF2196F3),
+    );
+    
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails(
+      sound: 'notification_sound.aiff',
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics,
+        );
+    
+    await _notifications.show(
+      DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: payload,
     );
   }
 }
 
-/// Individual notification item model
-class NotificationItem {
-  final String time;
-  final String category;
-  final List<String> messages;
-  final int? weight;
+/// İlaç Hatırlatma Modeli
+class MedicationReminder {
+  final int id;
+  final String medicationName;
+  final String dosage;
+  final TimeOfDay time;
+  final String frequency;
+  final bool isActive;
+  final List<int> daysOfWeek; // 1-7 (Pazartesi-Pazar)
 
-  NotificationItem({
+  const MedicationReminder({
+    required this.id,
+    required this.medicationName,
+    required this.dosage,
     required this.time,
-    required this.category,
-    required this.messages,
-    this.weight,
+    required this.frequency,
+    this.isActive = true,
+    this.daysOfWeek = const [1, 2, 3, 4, 5, 6, 7], // Her gün
   });
 
-  factory NotificationItem.fromJson(Map<String, dynamic> json) {
-    return NotificationItem(
-      time: json['time'],
-      category: json['category'],
-      messages: List<String>.from(json['messages']),
-      weight: json['weight'],
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'medicationName': medicationName,
+      'dosage': dosage,
+      'time': '${time.hour}:${time.minute}',
+      'frequency': frequency,
+      'isActive': isActive,
+      'daysOfWeek': daysOfWeek,
+    };
+  }
+
+  factory MedicationReminder.fromJson(Map<String, dynamic> json) {
+    final timeParts = json['time'].split(':');
+    return MedicationReminder(
+      id: json['id'],
+      medicationName: json['medicationName'],
+      dosage: json['dosage'],
+      time: TimeOfDay(
+        hour: int.parse(timeParts[0]),
+        minute: int.parse(timeParts[1]),
+      ),
+      frequency: json['frequency'],
+      isActive: json['isActive'],
+      daysOfWeek: List<int>.from(json['daysOfWeek']),
+    );
+  }
+}
+
+/// Bildirim Ayarları Modeli
+class NotificationSettings {
+  final bool medicationReminders;
+  final bool appointmentReminders;
+  final bool healthReminders;
+  final bool soundEnabled;
+  final bool vibrationEnabled;
+  final bool lightsEnabled;
+  final int reminderMinutesBefore;
+
+  const NotificationSettings({
+    this.medicationReminders = true,
+    this.appointmentReminders = true,
+    this.healthReminders = true,
+    this.soundEnabled = true,
+    this.vibrationEnabled = true,
+    this.lightsEnabled = true,
+    this.reminderMinutesBefore = 30,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'medicationReminders': medicationReminders,
+      'appointmentReminders': appointmentReminders,
+      'healthReminders': healthReminders,
+      'soundEnabled': soundEnabled,
+      'vibrationEnabled': vibrationEnabled,
+      'lightsEnabled': lightsEnabled,
+      'reminderMinutesBefore': reminderMinutesBefore,
+    };
+  }
+
+  factory NotificationSettings.fromJson(Map<String, dynamic> json) {
+    return NotificationSettings(
+      medicationReminders: json['medicationReminders'] ?? true,
+      appointmentReminders: json['appointmentReminders'] ?? true,
+      healthReminders: json['healthReminders'] ?? true,
+      soundEnabled: json['soundEnabled'] ?? true,
+      vibrationEnabled: json['vibrationEnabled'] ?? true,
+      lightsEnabled: json['lightsEnabled'] ?? true,
+      reminderMinutesBefore: json['reminderMinutesBefore'] ?? 30,
     );
   }
 }
