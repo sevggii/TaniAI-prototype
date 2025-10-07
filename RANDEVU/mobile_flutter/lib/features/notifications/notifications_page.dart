@@ -14,45 +14,14 @@ class NotificationsPage extends StatefulWidget {
   State<NotificationsPage> createState() => _NotificationsPageState();
 }
 
-class _NotificationsPageState extends State<NotificationsPage>
-    with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-
+class _NotificationsPageState extends State<NotificationsPage> {
   List<NotificationItem> _notifications = [];
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _setupAnimations();
     _loadData();
-  }
-
-  void _setupAnimations() {
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
-
-    _animationController.forward();
   }
 
   Future<void> _loadData() async {
@@ -113,11 +82,6 @@ class _NotificationsPageState extends State<NotificationsPage>
     );
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,33 +145,28 @@ class _NotificationsPageState extends State<NotificationsPage>
         child: SafeArea(
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
-              : FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: SlideTransition(
-                    position: _slideAnimation,
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Özet Kartı
-                          _buildSummaryCard(theme),
-                          const SizedBox(height: 24),
-                          
-                          // İlaç Hatırlatmaları
-                          _buildMedicationRemindersSection(theme),
-                          const SizedBox(height: 24),
-                          
-                          // Bekleyen Bildirimler
-                          _buildPendingNotificationsSection(theme),
-                          const SizedBox(height: 24),
-                          
-                          // Hızlı Eylemler
-                          _buildQuickActionsSection(theme),
-                          const SizedBox(height: 20),
-                        ],
-                      ),
-                    ),
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Özet Kartı
+                      _buildSummaryCard(theme),
+                      const SizedBox(height: 24),
+                      
+                      // İlaç Hatırlatmaları
+                      _buildMedicationRemindersSection(theme),
+                      const SizedBox(height: 24),
+                      
+                      // Bekleyen Bildirimler
+                      _buildPendingNotificationsSection(theme),
+                      const SizedBox(height: 24),
+                      
+                      // Hızlı Eylemler
+                      _buildQuickActionsSection(theme),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
         ),
