@@ -7,6 +7,7 @@ class ChatMessage {
   final String senderName;
   final DateTime timestamp;
   final bool isAI;
+  final String? sessionId; // Konuşma oturumu ID'si
 
   ChatMessage({
     required this.id,
@@ -15,6 +16,7 @@ class ChatMessage {
     required this.senderName,
     required this.timestamp,
     this.isAI = false,
+    this.sessionId,
   });
 
   factory ChatMessage.fromFirestore(DocumentSnapshot doc) {
@@ -26,6 +28,7 @@ class ChatMessage {
       senderName: data['senderName'] ?? '',
       timestamp: (data['timestamp'] as Timestamp).toDate(),
       isAI: data['isAI'] ?? false,
+      sessionId: data['sessionId'],
     );
   }
 
@@ -36,6 +39,7 @@ class ChatMessage {
       'senderName': senderName,
       'timestamp': Timestamp.fromDate(timestamp),
       'isAI': isAI,
+      'sessionId': sessionId,
     };
   }
 
@@ -46,6 +50,7 @@ class ChatMessage {
     String? senderName,
     DateTime? timestamp,
     bool? isAI,
+    String? sessionId,
   }) {
     return ChatMessage(
       id: id ?? this.id,
@@ -54,6 +59,7 @@ class ChatMessage {
       senderName: senderName ?? this.senderName,
       timestamp: timestamp ?? this.timestamp,
       isAI: isAI ?? this.isAI,
+      sessionId: sessionId ?? this.sessionId,
     );
   }
 }

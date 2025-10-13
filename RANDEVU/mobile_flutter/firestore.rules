@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Chat mesajları - herkes okuyabilir ve yazabilir
+    match /chat_messages/{messageId} {
+      allow read, write: if true;
+    }
+    
+    // Kullanıcı verileri - sadece kendi verilerine erişim
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Kullanıcı sağlık profilleri - sadece kendi profiline erişim
+    match /user_health_profiles/{userId} {
+      // Kullanıcı kendi profiline erişebilir, AI asistanı da okuyabilir
+      allow read: if request.auth != null && 
+                     (request.auth.uid == userId || request.auth.uid == 'ai_assistant');
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Kullanıcı bildirimleri - sadece kendi bildirimlerine erişim
+    match /users/{userId}/notifications/{notificationId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // İlaç verileri - sadece kendi ilaçlarına erişim
+    match /users/{userId}/medications/{medicationId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Genel koleksiyonlar - herkes okuyabilir
+    match /clinics/{clinicId} {
+      allow read: if true;
+    }
+    
+    match /pharmacies/{pharmacyId} {
+      allow read: if true;
+    }
+  }
+}
+

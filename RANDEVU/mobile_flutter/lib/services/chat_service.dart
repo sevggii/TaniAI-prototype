@@ -1,10 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/chat_message.dart';
+import '../models/user_health_profile.dart';
 import 'llm_service.dart';
+import 'chat_cache_service.dart';
 
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collectionName = 'chat_messages';
+  final ChatCacheService _cacheService = ChatCacheService();
+  String? _currentSessionId;
+
+  // Yeni oturum başlat
+  String startNewSession() {
+    _currentSessionId = DateTime.now().millisecondsSinceEpoch.toString();
+    return _currentSessionId!;
+  }
+
+  // Mevcut oturum ID'sini al
+  String getCurrentSessionId() {
+    _currentSessionId ??= DateTime.now().millisecondsSinceEpoch.toString();
+    return _currentSessionId!;
+  }
 
   // Mesaj gönder
   Future<void> sendMessage(
@@ -12,6 +28,7 @@ class ChatService {
     String senderId,
     String senderName, {
     bool isAI = false,
+    String? sessionId,
   }) async {
     final message = ChatMessage(
       id: '', // Firestore otomatik ID oluşturacak
@@ -20,12 +37,25 @@ class ChatService {
       senderName: senderName,
       timestamp: DateTime.now(),
       isAI: isAI,
+      sessionId: sessionId ?? getCurrentSessionId(),
     );
 
     await _firestore.collection(_collectionName).add(message.toFirestore());
   }
 
-  // Mesajları getir
+  // Sadece bugünün mesajlarını getir
+  Stream<QuerySnapshot> getTodayMessages() {
+    final today = DateTime.now();
+    final startOfDay = DateTime(today.year, today.month, today.day);
+    
+    return _firestore
+        .collection(_collectionName)
+        .where('timestamp', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+
+  // Tüm mesajları getir
   Stream<QuerySnapshot> getMessages() {
     return _firestore
         .collection(_collectionName)
@@ -33,11 +63,116 @@ class ChatService {
         .snapshots();
   }
 
-  // AI yanıtı al
-  Future<String> getAIResponse(String userMessage) async {
+  // Belirli bir oturumun mesajlarını getir
+  Stream<QuerySnapshot> getSessionMessages(String sessionId) {
+    return _firestore
+        .collection(_collectionName)
+        .where('sessionId', isEqualTo: sessionId)
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+
+  // Kullanıcının geçmiş konuşmalarını al (son 10 mesaj)
+  Future<List<ChatMessage>> getUserHistory(String userId) async {
     try {
-      // LLM servisini kullan
-      final response = await LLMService.getChatResponse(userMessage);
+      // Index gerektirmeyen basit sorgu - sadece userId ile filtrele
+      final snapshot = await _firestore
+          .collection(_collectionName)
+          .where('senderId', isEqualTo: userId)
+          .limit(50) // Daha fazla al, sonra client-side sırala
+          .get();
+      
+      // Client-side'da timestamp'e göre sırala ve son 10'u al
+      final messages = snapshot.docs
+          .map((doc) => ChatMessage.fromFirestore(doc))
+          .toList();
+      
+      messages.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+      return messages.take(10).toList();
+    } catch (e) {
+      print('Error getting user history: $e');
+      return []; // Hata olursa boş liste dön
+    }
+  }
+
+  // Kullanıcı sağlık profilini al
+  Future<UserHealthProfile?> getUserHealthProfile(String userId) async {
+    try {
+      final doc = await _firestore
+          .collection('user_health_profiles')
+          .doc(userId)
+          .get();
+      
+      if (doc.exists) {
+        return UserHealthProfile.fromFirestore(doc);
+      }
+      return null;
+    } catch (e) {
+      print('Error getting health profile: $e');
+      return null;
+    }
+  }
+
+  // AI yanıtı al (HIZLI - cache ile)
+  Future<String> getAIResponse(String userMessage, {String? userId}) async {
+    try {
+      // 1. Önce hızlı yanıtları kontrol et (anında!)
+      final quickResponse = _cacheService.getQuickResponse(userMessage);
+      if (quickResponse != null) {
+        print('⚡ Hızlı yanıt kullanıldı!');
+        return quickResponse;
+      }
+
+      // 2. Cache'de var mı kontrol et (çok hızlı!)
+      final cachedResponse = await _cacheService.getCachedResponse(userMessage);
+      if (cachedResponse != null) {
+        print('💨 Cache\'den yanıt alındı!');
+        return cachedResponse;
+      }
+
+      // 3. Bağlam bilgilerini hazırla (paralel olarak)
+      String context = '';
+      
+      if (userId != null) {
+        // Paralel olarak profil ve geçmişi al
+        final results = await Future.wait([
+          getUserHealthProfile(userId),
+          getUserHistory(userId),
+        ]);
+        
+        final profile = results[0] as UserHealthProfile?;
+        final history = results[1] as List<ChatMessage>;
+        
+        // Profil bilgisi
+        if (profile != null) {
+          final profileSummary = profile.getSummary();
+          if (profileSummary.isNotEmpty) {
+            context += '\n\nKullanıcı Profili:\n$profileSummary';
+          }
+        }
+        
+        // Son kullanıcı mesajını ekle (SADECE 1 tane, çok doğal!)
+        if (history.isNotEmpty) {
+          // Sadece son kullanıcı mesajını bul
+          for (var msg in history.reversed) {
+            if (!msg.isAI && msg.text.length < 50) {
+              // Önceki mesaj: "Başım ağrıyor"
+              // Şimdiki mesaj: "geçmiyooo"
+              // AI'ya git: "Kullanıcı önce 'Başım ağrıyor' dedi, şimdi: [şimdiki mesaj]"
+              context = '\n\nÖnceki mesaj: "${msg.text}"';
+              break;
+            }
+          }
+        }
+      }
+      
+      // 4. LLM'den yanıt al
+      final fullMessage = context.isEmpty ? userMessage : '$userMessage$context';
+      final response = await LLMService.getChatResponse(fullMessage);
+      
+      // 5. Yanıtı cache'e kaydet (gelecek için)
+      await _cacheService.cacheResponse(userMessage, response);
+      
       return response;
     } catch (e) {
       print('Chat Service Error: $e');
@@ -73,8 +208,29 @@ class ChatService {
     }
   }
 
-  // Sohbeti temizle
-  Future<void> clearChat() async {
+  // Sohbeti temizle (sadece bugünün mesajlarını)
+  Future<void> clearTodayChat() async {
+    final today = DateTime.now();
+    final startOfDay = DateTime(today.year, today.month, today.day);
+    
+    final batch = _firestore.batch();
+    final messages = await _firestore
+        .collection(_collectionName)
+        .where('timestamp', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+        .get();
+    
+    for (final doc in messages.docs) {
+      batch.delete(doc.reference);
+    }
+    
+    await batch.commit();
+    
+    // Yeni oturum başlat
+    startNewSession();
+  }
+
+  // Tüm sohbeti temizle
+  Future<void> clearAllChat() async {
     final batch = _firestore.batch();
     final messages = await _firestore.collection(_collectionName).get();
     
@@ -83,6 +239,9 @@ class ChatService {
     }
     
     await batch.commit();
+    
+    // Yeni oturum başlat
+    startNewSession();
   }
 
   // AI yanıtları oluştur

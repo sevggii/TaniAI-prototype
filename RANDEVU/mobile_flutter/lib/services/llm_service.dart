@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class LLMService {
-  static const String _baseUrl = 'http://localhost:8001'; // FastAPI backend
-  static const Duration _timeout = Duration(seconds: 30);
+  // Android emulator için 10.0.2.2 kullan (localhost yerine)
+  static const String _baseUrl = 'http://10.0.2.2:8000'; 
+  static const Duration _timeout = Duration(seconds: 10); // 10 saniye - Ollama için yeterli
 
   /// LLM ile chat yanıtı al
   static Future<String> getChatResponse(String userMessage) async {
@@ -20,7 +21,9 @@ class LLMService {
       ).timeout(_timeout);
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        // UTF-8 encoding ile decode et (Türkçe karakter sorunu için)
+        final utf8Body = utf8.decode(response.bodyBytes);
+        final data = jsonDecode(utf8Body);
         return data['response'] ?? 'Üzgünüm, bir yanıt oluşturamadım.';
       } else {
         return 'Üzgünüm, şu anda bir sorun yaşıyorum. Lütfen daha sonra tekrar deneyin.';
@@ -45,7 +48,9 @@ class LLMService {
       ).timeout(_timeout);
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        // UTF-8 encoding ile decode et
+        final utf8Body = utf8.decode(response.bodyBytes);
+        final data = jsonDecode(utf8Body);
         return {
           'success': true,
           'data': data,
@@ -79,7 +84,9 @@ class LLMService {
       ).timeout(_timeout);
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        // UTF-8 encoding ile decode et
+        final utf8Body = utf8.decode(response.bodyBytes);
+        final data = jsonDecode(utf8Body);
         return {
           'success': true,
           'data': data,
@@ -99,25 +106,36 @@ class LLMService {
     }
   }
 
-  /// Fallback yanıtlar (LLM servisi çalışmıyorsa)
+  /// Fallback yanıtlar (LLM servisi çalışmıyorsa) - AKILLI
   static String _getFallbackResponse(String userMessage) {
     final message = userMessage.toLowerCase();
     
-    // Baş ağrısı - spesifik yanıt
+    // Baş ağrısı - spesifik ve kişiselleştirilmiş
     if (message.contains('baş') && message.contains('ağrı')) {
-      return 'Baş ağrınız için size yardımcı olabilirim. Baş ağrısı birçok nedenden kaynaklanabilir:\n\n'
-          '🔍 **Olası Nedenler:**\n'
-          '• Stres ve yorgunluk\n'
-          '• Migren\n'
-          '• Sinüzit\n'
-          '• Tansiyon\n'
-          '• Dehidrasyon\n\n'
-          '💡 **Öneriler:**\n'
-          '• Bol su için\n'
-          '• Karanlık ve sessiz bir yerde dinlenin\n'
-          '• Hafif masaj yapın\n'
-          '• Ağrı kesici alabilirsiniz\n\n'
-          '⚠️ **Dikkat:** Şiddetli, ani başlayan veya sürekli baş ağrıları için mutlaka doktora başvurun.';
+      String response = 'Anlıyorum! 🤔 Baş ağrısı gerçekten rahatsız edici olabilir.\n\n';
+      
+      // Dehidrasyon ipuçları
+      if (message.contains('su') || message.contains('diyette') || message.contains('diyet')) {
+        response += '💧 **Muhtemel Neden: Dehidrasyon**\n'
+            'Diyet yaparken veya az su içerken baş ağrısı normaldir.\n\n'
+            '✅ **Hemen Yapabilecekleriniz:**\n'
+            '• 1-2 bardak su için\n'
+            '• 15-20 dakika dinlenin\n'
+            '• Karanlık ve sessiz ortamda oturun\n\n';
+      } else {
+        response += '🔍 **Olası Nedenler:**\n'
+            '• Dehidrasyon (en yaygın)\n'
+            '• Stres ve yorgunluk\n'
+            '• Migren\n'
+            '• Tansiyon\n\n'
+            '💡 **Öneriler:**\n'
+            '• Bol su için\n'
+            '• Dinlenin\n'
+            '• Hafif masaj yapın\n\n';
+      }
+      
+      response += '⚠️ **Dikkat:** Şiddetli veya sürekli baş ağrıları için doktora başvurun.';
+      return response;
     }
     
     // Karın ağrısı - spesifik yanıt

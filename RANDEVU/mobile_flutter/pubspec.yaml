@@ -62,6 +62,11 @@ dependencies:
   path: ^1.8.3
   http: ^1.1.0
   
+  # Text to Speech and Voice features
+  flutter_tts: ^3.8.5
+  speech_to_text: ^6.6.0
+  flutter_sound: ^9.2.13
+  
   # Modern UI components
   flutter_staggered_animations: ^1.1.1
   lottie: ^3.1.2

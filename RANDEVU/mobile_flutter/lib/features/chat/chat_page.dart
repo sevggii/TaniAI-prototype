@@ -1,9 +1,12 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/chat_message.dart';
 import '../../services/chat_service.dart';
+import '../../services/voice_service.dart';
+import '../../services/ai_personality_service.dart';
 
 class ChatPage extends StatefulWidget {
   final String? initialMessage;
@@ -17,19 +20,30 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final FocusNode _messageFocusNode = FocusNode(); // Klavye kontrolü için
   final ChatService _chatService = ChatService();
+  final VoiceService _voiceService = VoiceService();
+  final AIPersonalityService _personalityService = AIPersonalityService();
+  
   late AnimationController _animationController;
+  late AnimationController _typingAnimationController;
+  late AnimationController _voiceAnimationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
+  late Animation<double> _typingAnimation;
+  late Animation<double> _voiceAnimation;
   
   User? _currentUser;
   bool _isTyping = false;
+  bool _isVoiceEnabled = false;
+  List<String> _conversationHistory = [];
 
   @override
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
     _setupAnimations();
+    _initializeVoiceService();
     _scrollToBottom();
     
     // Eğer initial message varsa, otomatik gönder
@@ -44,6 +58,16 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   void _setupAnimations() {
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    
+    _typingAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    
+    _voiceAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
     
@@ -63,14 +87,59 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       curve: Curves.easeOutCubic,
     ));
     
+    _typingAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _typingAnimationController,
+      curve: Curves.easeInOut,
+    ));
+    
+    _voiceAnimation = Tween<double>(
+      begin: 0.8,
+      end: 1.2,
+    ).animate(CurvedAnimation(
+      parent: _voiceAnimationController,
+      curve: Curves.easeInOut,
+    ));
+    
     _animationController.forward();
+  }
+
+  Future<void> _initializeVoiceService() async {
+    final success = await _voiceService.initialize();
+    if (success) {
+      setState(() {
+        _isVoiceEnabled = true;
+      });
+      
+      // Voice service callbacks
+      _voiceService.onSpeechResult = (text) {
+        _messageController.text = text;
+        _sendMessage();
+      };
+      
+      _voiceService.onSpeechError = (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Ses tanıma hatası: $error')),
+        );
+      };
+      
+      _voiceService.onTtsCompleted = () {
+        setState(() {});
+      };
+    }
   }
 
   @override
   void dispose() {
     _messageController.dispose();
     _scrollController.dispose();
+    _messageFocusNode.dispose(); // FocusNode'u temizle
     _animationController.dispose();
+    _typingAnimationController.dispose();
+    _voiceAnimationController.dispose();
+    _voiceService.dispose();
     super.dispose();
   }
 
@@ -91,6 +160,12 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
     final message = _messageController.text.trim();
     _messageController.clear();
+    
+    // Klavyeyi kapat (önemli!)
+    _messageFocusNode.unfocus();
+
+    // Konuşma geçmişine ekle
+    _conversationHistory.add(message);
 
     // Kullanıcı mesajını gönder
     await _chatService.sendMessage(
@@ -103,31 +178,64 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     setState(() {
       _isTyping = true;
     });
-
-    // Mesaj tipine göre farklı işlemler yap
-    String aiResponse;
-    if (_isAppointmentRequest(message)) {
-      aiResponse = await _handleAppointmentRequest(message);
-    } else if (_isSymptomQuery(message)) {
-      aiResponse = await _handleSymptomQuery(message);
-    } else {
-      // Normal chat yanıtı
-      aiResponse = await _chatService.getAIResponse(message);
-    }
     
-    setState(() {
-      _isTyping = false;
-    });
+    // Typing animasyonunu başlat
+    _typingAnimationController.repeat(reverse: true);
 
-    // AI yanıtını gönder
-    await _chatService.sendMessage(
-      aiResponse,
-      'ai_assistant',
-      'TanıAI Asistanı',
-      isAI: true,
-    );
+    try {
+      // Mesaj tipine göre farklı işlemler yap (TIMEOUT ile)
+      String aiResponse;
+      
+      final responseFuture = _getAIResponseByType(message);
+      aiResponse = await responseFuture.timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          return 'Yanıt vermem biraz uzun sürdü. Daha basit bir şekilde sorar mısınız? 😊';
+        },
+      );
+      
+      // AI yanıtını kişiselleştir (DEVRE DIŞI - Türkçe karakter sorunu)
+      // aiResponse = _personalityService.personalizeResponse(aiResponse, message);
+      // aiResponse = _personalityService.personalizeWithHistory(aiResponse, _conversationHistory);
+      
+      setState(() {
+        _isTyping = false;
+      });
+      
+      // Typing animasyonunu durdur
+      _typingAnimationController.stop();
+      _typingAnimationController.reset();
 
-    _scrollToBottom();
+      // Streaming ile AI yanıtını göster (ChatGPT tarzı)
+      await _streamAIResponse(aiResponse);
+
+      // Konuşma geçmişine AI yanıtını ekle
+      _conversationHistory.add(aiResponse);
+
+      // AI yanıtını sesli olarak oku
+      if (_isVoiceEnabled) {
+        await _voiceService.speak(aiResponse);
+      }
+
+      // _scrollToBottom() artık StreamBuilder'da otomatik yapılıyor
+    } catch (e) {
+      print('Mesaj gönderme hatası: $e');
+      setState(() {
+        _isTyping = false;
+      });
+      _typingAnimationController.stop();
+      _typingAnimationController.reset();
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Bir hata oluştu, lütfen tekrar deneyin')),
+      );
+    }
+  }
+
+  // Mesaj tipine göre AI yanıtı al
+  Future<String> _getAIResponseByType(String message) async {
+    // Basit çözüm: Sadece son mesajı gönder, gerisini backend halleder
+    return await _chatService.getAIResponse(message, userId: _currentUser?.uid);
   }
 
   // Randevu isteği mi kontrol et
@@ -137,6 +245,89 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
            lowerMessage.contains('appointment') ||
            lowerMessage.contains('doktor') ||
            lowerMessage.contains('muayene');
+  }
+
+  // Yeni konuşma başlat
+  Future<void> _startNewConversation() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Yeni Konuşma'),
+        content: const Text('Yeni bir konuşma başlatmak istediğinizden emin misiniz? Mevcut konuşma geçmişte kalacak.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('İptal'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Başlat'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      _chatService.startNewSession();
+      _conversationHistory.clear();
+      setState(() {});
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('✨ Yeni konuşma başlatıldı!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  // ChatGPT tarzı streaming yanıt (karakter karakter yazma)
+  Future<void> _streamAIResponse(String fullResponse) async {
+    // Direkt tam yanıtı Firebase'e kaydet (streaming sadece görsel olacak)
+    await _chatService.sendMessage(
+      fullResponse,
+      'ai_assistant',
+      'TanıAI Asistanı',
+      isAI: true,
+    );
+  }
+
+  // Sesli giriş başlat/durdur
+  Future<void> _toggleVoiceInput() async {
+    if (!_isVoiceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Ses servisi kullanılamıyor')),
+      );
+      return;
+    }
+
+    if (_voiceService.isListening) {
+      await _voiceService.stopListening();
+      _voiceAnimationController.stop();
+    } else {
+      await _voiceService.startListening();
+      _voiceAnimationController.repeat(reverse: true);
+    }
+  }
+
+  // AI yanıtını sesli olarak oku/durdur
+  Future<void> _toggleVoiceOutput() async {
+    if (!_isVoiceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Ses servisi kullanılamıyor')),
+      );
+      return;
+    }
+
+    if (_voiceService.isSpeaking) {
+      await _voiceService.stopSpeaking();
+    } else {
+      // Son AI mesajını bul ve oku
+      // Bu basit bir implementasyon, gerçek uygulamada daha gelişmiş olabilir
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Son mesajı okumak için önce bir mesaj gönderin')),
+      );
+    }
   }
 
   // Semptom sorgusu mu kontrol et
@@ -315,9 +506,14 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () {
+        // Ekrana tıklandığında klavyeyi kapat
+        _messageFocusNode.unfocus();
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
         title: Row(
           children: [
             Container(
@@ -379,6 +575,22 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           ],
         ),
         actions: [
+          // Yeni konuşma başlat butonu
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.add_comment_rounded),
+              tooltip: 'Yeni Konuşma',
+              onPressed: () {
+                _startNewConversation();
+              },
+            ),
+          ),
+          // Menü butonu
           Container(
             margin: const EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
@@ -416,7 +628,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
               // Chat mesajları
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: _chatService.getMessages(),
+                  stream: _chatService.getTodayMessages(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return _buildLoadingState(theme);
@@ -434,6 +646,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                       return _buildEmptyState(theme);
                     }
 
+                    // Mesajları TERS çevir - en yeni mesaj EN ALTTA olsun
+                    final reversedMessages = messages.reversed.toList();
+
                     return FadeTransition(
                       opacity: _fadeAnimation,
                       child: SlideTransition(
@@ -441,13 +656,18 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                         child: ListView.builder(
                           controller: _scrollController,
                           padding: const EdgeInsets.all(16),
-                          itemCount: messages.length + (_isTyping ? 1 : 0),
+                          reverse: true, // EN ALTTA başlat (WhatsApp gibi!)
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: reversedMessages.length + (_isTyping ? 1 : 0),
                           itemBuilder: (context, index) {
-                            if (index == messages.length && _isTyping) {
+                            // Typing indicator en ÜSTTE (reverse=true olduğu için)
+                            if (index == 0 && _isTyping) {
                               return _buildTypingIndicator(theme);
                             }
                             
-                            final message = messages[index];
+                            // Typing varsa index'i 1 azalt
+                            final messageIndex = _isTyping ? index - 1 : index;
+                            final message = reversedMessages[messageIndex];
                             return _buildMessageBubble(context, theme, message);
                           },
                         ),
@@ -463,6 +683,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           ),
         ),
       ),
+      ), // GestureDetector kapanışı
     );
   }
 
@@ -789,13 +1010,35 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    _formatTime(message.timestamp),
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: isMe 
-                        ? Colors.white.withOpacity(0.7)
-                        : theme.colorScheme.onSurface.withOpacity(0.5),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _formatTime(message.timestamp),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: isMe 
+                            ? Colors.white.withOpacity(0.7)
+                            : theme.colorScheme.onSurface.withOpacity(0.5),
+                        ),
+                      ),
+                      // AI mesajları için sesli okuma butonu
+                      if (!isMe && _isVoiceEnabled)
+                        GestureDetector(
+                          onTap: () => _voiceService.speak(message.text),
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              _voiceService.isSpeaking ? Icons.volume_up : Icons.volume_up_outlined,
+                              size: 16,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),
@@ -844,24 +1087,49 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
+              gradient: LinearGradient(
+                colors: [
+                  theme.colorScheme.surface,
+                  theme.colorScheme.surface.withOpacity(0.8),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
+                  color: theme.colorScheme.primary.withOpacity(0.1),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildTypingDot(0),
-                const SizedBox(width: 4),
-                _buildTypingDot(1),
-                const SizedBox(width: 4),
-                _buildTypingDot(2),
+                AnimatedBuilder(
+                  animation: _typingAnimation,
+                  builder: (context, child) {
+                    return Row(
+                      children: [
+                        _buildTypingDot(theme, 0),
+                        const SizedBox(width: 4),
+                        _buildTypingDot(theme, 1),
+                        const SizedBox(width: 4),
+                        _buildTypingDot(theme, 2),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'TanıAI düşünüyor...',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
           ),
@@ -870,24 +1138,18 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildTypingDot(int index) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: const Duration(milliseconds: 600),
-      builder: (context, value, child) {
-        final delay = index * 0.2;
-        final animationValue = (value - delay).clamp(0.0, 1.0);
-        final opacity = (animationValue * 2 - 1).abs();
-        
-        return Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: AppTheme.primaryGradient.colors[0].withOpacity(opacity),
-            borderRadius: BorderRadius.circular(4),
-          ),
-        );
-      },
+  Widget _buildTypingDot(ThemeData theme, int index) {
+    final delay = index * 0.2;
+    final animationValue = (_typingAnimation.value - delay).clamp(0.0, 1.0);
+    final opacity = (sin(animationValue * pi * 2) + 1) / 2;
+    
+    return Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withOpacity(opacity),
+        borderRadius: BorderRadius.circular(4),
+      ),
     );
   }
 
@@ -918,6 +1180,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 ),
                 child: TextField(
                   controller: _messageController,
+                  focusNode: _messageFocusNode, // Klavye kontrolü
+                  autofocus: false, // Otomatik focus KAPALI
                   decoration: InputDecoration(
                     hintText: 'Mesajınızı yazın...',
                     border: InputBorder.none,
@@ -936,7 +1200,57 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 8),
+            // Sesli giriş butonu
+            if (_isVoiceEnabled) ...[
+              AnimatedBuilder(
+                animation: _voiceAnimation,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _voiceService.isListening ? _voiceAnimation.value : 1.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: _voiceService.isListening 
+                            ? LinearGradient(
+                                colors: [Colors.red.shade400, Colors.red.shade600],
+                              )
+                            : LinearGradient(
+                                colors: [Colors.blue.shade400, Colors.blue.shade600],
+                              ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: (_voiceService.isListening ? Colors.red : Colors.blue)
+                                .withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: _toggleVoiceInput,
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            child: Icon(
+                              _voiceService.isListening 
+                                  ? Icons.mic_rounded 
+                                  : Icons.mic_none_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(width: 8),
+            ],
+            // Gönder butonu
             Container(
               decoration: BoxDecoration(
                 gradient: AppTheme.primaryGradient,
@@ -1025,11 +1339,14 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             child: const Text('İptal'),
           ),
           TextButton(
-            onPressed: () {
-              _chatService.clearChat();
+            onPressed: () async {
+              await _chatService.clearTodayChat();
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Bugünün sohbeti temizlendi')),
+              );
             },
-            child: const Text('Temizle'),
+            child: const Text('Bugünü Temizle'),
           ),
         ],
       ),

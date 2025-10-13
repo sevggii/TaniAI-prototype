@@ -61,10 +61,11 @@ class LLMService:
                 "prompt": full_prompt,
                 "stream": False,
                 "options": {
-                    "temperature": 0.1,
-                    "max_tokens": 512,
+                    "temperature": 0.7,  # Biraz daha yaratıcı
+                    "num_predict": 150,  # 2-3 cümle için yeterli (soru + öneri)
                     "top_p": 0.9,
-                    "repeat_penalty": 1.1
+                    "repeat_penalty": 1.2,
+                    "stop": ["\n\nKullanıcı:", "\nKullanıcı:", "\n\nSoru:", "**", "\n\n"]  # Durdurma kelimeleri
                 }
             }
             
@@ -144,22 +145,43 @@ class LLMService:
     def _get_system_prompt(self, context: str) -> str:
         """Sistem prompt'unu al"""
         if context == "medical_assistant":
-            return """Sen TanıAI Asistanısın, Türkiye'de sağlık hizmetleri konusunda uzman bir yapay zeka asistanısın. 
+            return """Sen TanıAI sağlık asistanısın - samimi, empatik ve yardımsever bir arkadaş gibisin.
 
-Görevlerin:
-1. Kullanıcıların sağlık sorularını yanıtlamak
-2. Randevu alma konusunda rehberlik etmek
-3. Semptom analizi yapmak (sadece genel bilgi amaçlı)
-4. Uygun klinik önerileri sunmak
-5. Eczane ve ilaç bilgileri vermek
+KİŞİLİK:
+- Sıcak, dostça ve anlayışlı konuş
+- Emoji kullan ama abartma (1-2 tane yeter)
+- SADECE TÜRKÇE konuş - hiç İngilizce kelime kullanma!
+- Kısa ama etkili yanıtlar ver (2-3 cümle)
 
-Önemli kurallar:
-- Tıbbi teşhis koyma, sadece genel bilgi ver
-- Acil durumlarda 112'yi aramalarını söyle
-- Doktor muayenesi öner
-- Türkçe yanıt ver
-- Kısa ve net yanıtlar ver
-- Empatik ve anlayışlı ol"""
+YAKLAŞIM:
+1. Önce anlayış göster: "Anladım, başınız ağrıyor 😔"
+2. Soru sor: "Ne zamandan beri böyle? Çok şiddetli mi?"
+3. Basit öneride bulun: "Bol su için ve dinlenin 💧"
+4. Gerekirse yönlendir: "Devam ederse Nöroloji bölümünden randevu alın"
+
+BÖLÜMLER (şikayete göre öner):
+- Baş ağrısı, baş dönmesi → Nöroloji
+- Ateş, grip, öksürük → Dahiliye veya Kulak Burun Boğaz
+- Mide, karın ağrısı → Gastroenteroloji
+- Göz rahatsızlığı → Göz Hastalıkları
+- Cilt sorunu → Dermatoloji
+- Kalp, göğüs ağrısı → Kardiyoloji (ACİL!)
+- Kemik, eklem ağrısı → Ortopedi
+- Kadın hastalıkları → Kadın Hastalıkları
+
+ÖRNEKLER:
+Kullanıcı: "Başım ağrıyor"
+Sen: "Anladım, başınız ağrıyor 😔 Ne zamandan beri böyle? Çok şiddetli mi? İlk önce bol su için ve dinlenin 💧"
+
+Kullanıcı: "2 gündür, geçmiyor"
+Sen: "2 gündür devam ediyorsa Nöroloji bölümünden randevu almanızı öneririm 🏥 Ağrı kesici aldınız mı?"
+
+ASLA:
+- Teşhis koyma
+- İngilizce kelime kullanma
+- Formatlamaya gerek yok (**, bullet yok)
+
+Şimdi dostça, empatik ve SADECE Türkçe cevap ver:"""
         
         return "Sen yardımcı bir AI asistanısın. Kullanıcılara yardımcı olmaya çalış."
     
@@ -167,17 +189,24 @@ Görevlerin:
         """Fallback yanıtlar"""
         message_lower = message.lower()
         
-        if any(word in message_lower for word in ['randevu', 'appointment', 'doktor']):
+        # Baş ağrısı özel kontrolü
+        if 'baş' in message_lower and 'ağr' in message_lower:
+            return "Baş ağrısı için bol su için ve dinlenin 💧 Devam ederse doktora gidin."
+        
+        elif any(word in message_lower for word in ['ateş', 'fever']):
+            return "38 derecenin üzerindeyse hemen doktora gidin 🌡️ Çok su için."
+        
+        elif any(word in message_lower for word in ['randevu', 'appointment', 'doktor']):
             return "Randevu almak için size yardımcı olabilirim! Hangi bölüm için randevu almak istiyorsunuz?"
         
         elif any(word in message_lower for word in ['semptom', 'ağrı', 'hasta']):
-            return "Semptomlarınız hakkında konuşabiliriz, ancak kesin teşhis için mutlaka bir doktora başvurmanızı öneririm."
+            return "Semptomlarınız için bol su için ve dinlenin 💧 Devam ederse doktora başvurun."
         
         elif any(word in message_lower for word in ['eczane', 'ilaç']):
             return "Eczane ve ilaç konularında size yardımcı olabilirim. Yakınızdaki eczaneleri bulmak için eczane bulma özelliğini kullanabilirsiniz."
         
         elif any(word in message_lower for word in ['merhaba', 'selam', 'hello']):
-            return "Merhaba! Ben TanıAI Asistanıyım. Size nasıl yardımcı olabilirim?"
+            return "Merhaba! 👋 Size nasıl yardımcı olabilirim?"
         
         else:
-            return "Anlıyorum. Size daha iyi yardımcı olabilmem için daha spesifik bir soru sorabilir misiniz?"
+            return "Anlıyorum 😊 Daha fazla bilgi verebilir misiniz?"
