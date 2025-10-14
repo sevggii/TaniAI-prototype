@@ -24,6 +24,10 @@ from .medication_service import (
     MedicationService, DrugInteractionService, 
     SideEffectService, MedicationReminderService, MedicationAlertService
 )
+from .medication_urgency_system import (
+    MedicationUrgencySystem, UrgencyAssessment, UrgencyLevel,
+    format_urgency_assessment
+)
 from ..auth import get_current_user
 from ..database import get_db
 
@@ -49,6 +53,10 @@ def get_reminder_service(db: Session = Depends(get_db)) -> MedicationReminderSer
 def get_alert_service(db: Session = Depends(get_db)) -> MedicationAlertService:
     """Alert service dependency"""
     return MedicationAlertService(db)
+
+def get_urgency_system(db: Session = Depends(get_db)) -> MedicationUrgencySystem:
+    """Urgency system dependency"""
+    return MedicationUrgencySystem(db)
 
 # İlaç CRUD Endpointleri
 @router.post("/", response_model=MedicationResponse, status_code=status.HTTP_201_CREATED)
@@ -689,3 +697,409 @@ async def skip_medication(
     except Exception as e:
         logger.error(f"İlaç atlama hatası: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="İlaç atlanamadı")
+
+
+# ============================================================================
+# ACİLİYET SİSTEMİ ENDPOİNTLERİ
+# ============================================================================
+
+@router.post("/urgency/assess/{medication_id}", tags=["Urgency System"])
+async def assess_medication_urgency(
+    medication_id: int,
+    context: Optional[dict] = None,
+    current_user = Depends(get_current_user),
+    medication_service: MedicationService = Depends(get_medication_service),
+    urgency_system: MedicationUrgencySystem = Depends(get_urgency_system),
+    db: Session = Depends(get_db)
+):
+    """
+    🚨 İlaç Aciliyet Değerlendirmesi
+    
+    Bir ilaç için kapsamlı aciliyet analizi yapar:
+    - Aciliyet skoru (1-10)
+    - Risk faktörleri
+    - Acil bulgular
+    - Doktora bildirim gerekliliği
+    - Öneriler
+    
+    **Aciliyet Seviyeleri:**
+    - CRITICAL (8-10): 15 dakika içinde müdahale
+    - HIGH (6-8): 30 dakika içinde müdahale
+    - MODERATE (4-6): 2 saat içinde müdahale
+    - LOW (1-4): 24 saat içinde değerlendirme
+    """
+    try:
+        # İlacı getir
+        medication = await medication_service.get_medication(
+            user_id=current_user.id,
+            medication_id=medication_id
+        )
+        
+        if not medication:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="İlaç bulunamadı"
+            )
+        
+        # İlaç verisini dict'e çevir
+        medication_data = {
+            'medication_name': medication.medication_name,
+            'dosage_amount': medication.dosage_amount,
+            'dosage_unit': medication.dosage_unit.value if hasattr(medication.dosage_unit, 'value') else medication.dosage_unit,
+            'frequency_type': medication.frequency_type.value if hasattr(medication.frequency_type, 'value') else medication.frequency_type,
+            'max_daily_dose': medication.dosage_amount * len(medication.reminder_times) if hasattr(medication, 'reminder_times') else None
+        }
+        
+        # Context ekle (varsa)
+        if not context:
+            # Otomatik context oluştur
+            context = await _build_medication_context(
+                db, current_user.id, medication_id, medication_service
+            )
+        
+        # Aciliyet değerlendirmesi
+        assessment = urgency_system.assess_medication_urgency(
+            user_id=current_user.id,
+            medication_data=medication_data,
+            context=context
+        )
+        
+        # Logger - kritik durumlar için
+        if assessment.requires_immediate_attention:
+            logger.warning(
+                f"🚨 İLAÇ ACİLİYET UYARISI - "
+                f"Kullanıcı: {current_user.id} - "
+                f"İlaç: {medication.medication_name} - "
+                f"Skor: {assessment.urgency_score}/10"
+            )
+        
+        return {
+            'medication_id': medication_id,
+            'medication_name': medication.medication_name,
+            'assessment': {
+                'urgency_score': assessment.urgency_score,
+                'urgency_level': assessment.urgency_level.value,
+                'requires_immediate_attention': assessment.requires_immediate_attention,
+                'response_time': assessment.response_time,
+                'risk_factors': assessment.risk_factors,
+                'findings': assessment.findings,
+                'recommendations': assessment.recommendations,
+                'timestamp': assessment.timestamp.isoformat()
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Aciliyet değerlendirme hatası: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Aciliyet değerlendirmesi yapılamadı: {str(e)}"
+        )
+
+
+@router.post("/urgency/notify-doctor/{medication_id}", tags=["Urgency System"])
+async def create_doctor_notification(
+    medication_id: int,
+    current_user = Depends(get_current_user),
+    medication_service: MedicationService = Depends(get_medication_service),
+    urgency_system: MedicationUrgencySystem = Depends(get_urgency_system),
+    db: Session = Depends(get_db)
+):
+    """
+    📞 Doktora Bildirim Oluştur
+    
+    İlaç aciliyeti için doktora otomatik bildirim gönderir.
+    Sadece orta ve üzeri aciliyet seviyelerinde çalışır.
+    """
+    try:
+        # İlacı getir
+        medication = await medication_service.get_medication(
+            user_id=current_user.id,
+            medication_id=medication_id
+        )
+        
+        if not medication:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="İlaç bulunamadı"
+            )
+        
+        # Context oluştur
+        context = await _build_medication_context(
+            db, current_user.id, medication_id, medication_service
+        )
+        
+        # Aciliyet değerlendirmesi
+        medication_data = {
+            'medication_name': medication.medication_name,
+            'dosage_amount': medication.dosage_amount,
+            'dosage_unit': medication.dosage_unit.value if hasattr(medication.dosage_unit, 'value') else medication.dosage_unit,
+            'frequency_type': medication.frequency_type.value if hasattr(medication.frequency_type, 'value') else medication.frequency_type,
+        }
+        
+        assessment = urgency_system.assess_medication_urgency(
+            user_id=current_user.id,
+            medication_data=medication_data,
+            context=context
+        )
+        
+        # Sadece orta ve üzeri aciliyet için bildirim gönder
+        if assessment.urgency_level == UrgencyLevel.LOW:
+            return {
+                'notification_sent': False,
+                'reason': 'Düşük aciliyet seviyesi - bildirim gerekmez',
+                'urgency_level': assessment.urgency_level.value
+            }
+        
+        # Hasta bilgileri
+        patient_info = {
+            'user_id': current_user.id,
+            'name': getattr(current_user, 'name', 'Unknown'),
+            'age': getattr(current_user, 'age', None),
+            'gender': getattr(current_user, 'gender', None)
+        }
+        
+        # Doktor bildirimi oluştur
+        notification = urgency_system.create_doctor_notification(
+            assessment=assessment,
+            patient_info=patient_info,
+            medication_data=medication_data
+        )
+        
+        # Logger
+        logger.warning(
+            f"📞 DOKTOR BİLDİRİMİ OLUŞTURULDU - "
+            f"Hasta: {current_user.id} - "
+            f"İlaç: {medication.medication_name} - "
+            f"Seviye: {assessment.urgency_level.value}"
+        )
+        
+        # TODO: Gerçek sistemde burada:
+        # - SMS/Email gönderimi
+        # - Hastane bilgi sistemine kayıt
+        # - Doktor dashboard'una push notification
+        
+        return {
+            'notification_sent': True,
+            'notification': notification,
+            'message': 'Doktora bildirim oluşturuldu. En kısa sürede dönüş yapılacaktır.'
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Doktor bildirim hatası: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Doktor bildirimi oluşturulamadı: {str(e)}"
+        )
+
+
+@router.get("/urgency/priority-list", tags=["Urgency System"])
+async def get_urgent_medications_list(
+    current_user = Depends(get_current_user),
+    medication_service: MedicationService = Depends(get_medication_service),
+    urgency_system: MedicationUrgencySystem = Depends(get_urgency_system),
+    db: Session = Depends(get_db)
+):
+    """
+    📋 Acil İlaçlar Listesi
+    
+    Kullanıcının tüm ilaçlarını aciliyet skoruna göre sıralı listeler.
+    Doktorlar için önceliklendirme yapar.
+    """
+    try:
+        # Tüm aktif ilaçları getir
+        from .schemas import MedicationSearch
+        search_params = MedicationSearch(status="active")
+        
+        medications = await medication_service.get_user_medications(
+            user_id=current_user.id,
+            search_params=search_params
+        )
+        
+        # Her ilaç için aciliyet değerlendirmesi
+        urgent_list = []
+        
+        for medication in medications:
+            medication_data = {
+                'medication_name': medication.medication_name,
+                'dosage_amount': medication.dosage_amount,
+                'dosage_unit': medication.dosage_unit.value if hasattr(medication.dosage_unit, 'value') else medication.dosage_unit,
+                'frequency_type': medication.frequency_type.value if hasattr(medication.frequency_type, 'value') else medication.frequency_type,
+            }
+            
+            context = await _build_medication_context(
+                db, current_user.id, medication.id, medication_service
+            )
+            
+            assessment = urgency_system.assess_medication_urgency(
+                user_id=current_user.id,
+                medication_data=medication_data,
+                context=context
+            )
+            
+            urgent_list.append({
+                'medication_id': medication.id,
+                'medication_name': medication.medication_name,
+                'urgency_score': assessment.urgency_score,
+                'urgency_level': assessment.urgency_level.value,
+                'requires_attention': assessment.requires_immediate_attention,
+                'response_time': assessment.response_time,
+                'critical_findings_count': sum(
+                    1 for f in assessment.findings if f['severity'] in ['CRITICAL', 'HIGH']
+                )
+            })
+        
+        # Aciliyet skoruna göre sırala
+        urgent_list.sort(key=lambda x: x['urgency_score'], reverse=True)
+        
+        # İstatistikler
+        critical_count = sum(1 for item in urgent_list if item['urgency_level'] == 'critical')
+        high_count = sum(1 for item in urgent_list if item['urgency_level'] == 'high')
+        
+        return {
+            'total_medications': len(urgent_list),
+            'critical_medications': critical_count,
+            'high_priority_medications': high_count,
+            'requires_immediate_attention': critical_count + high_count,
+            'medications': urgent_list,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Acil ilaç listesi hatası: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Acil ilaç listesi oluşturulamadı"
+        )
+
+
+@router.get("/urgency/stats", tags=["Urgency System"])
+async def get_urgency_statistics(
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    📊 Aciliyet İstatistikleri
+    
+    Sistemdeki ilaç aciliyet durumlarının genel istatistiklerini döndürür.
+    """
+    try:
+        # Basit istatistikler (production'da veritabanından gelecek)
+        stats = {
+            'system_status': 'operational',
+            'total_assessments_today': 0,  # DB'den gelecek
+            'critical_alerts_today': 0,     # DB'den gelecek
+            'doctor_notifications_sent': 0,  # DB'den gelecek
+            'urgency_levels': {
+                'critical': {
+                    'count': 0,
+                    'response_time': '15 dakika',
+                    'color': 'red'
+                },
+                'high': {
+                    'count': 0,
+                    'response_time': '30 dakika',
+                    'color': 'orange'
+                },
+                'moderate': {
+                    'count': 0,
+                    'response_time': '2 saat',
+                    'color': 'yellow'
+                },
+                'low': {
+                    'count': 0,
+                    'response_time': '24 saat',
+                    'color': 'green'
+                }
+            },
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        return stats
+        
+    except Exception as e:
+        logger.error(f"İstatistik hatası: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="İstatistikler alınamadı"
+        )
+
+
+# ============================================================================
+# YARDIMCI FONKSİYONLAR
+# ============================================================================
+
+async def _build_medication_context(
+    db: Session,
+    user_id: int,
+    medication_id: int,
+    medication_service: MedicationService
+) -> dict:
+    """İlaç için context bilgisi oluştur"""
+    context = {}
+    
+    try:
+        # Aktif ilaçları getir (etkileşim kontrolü için)
+        from .schemas import MedicationSearch
+        search_params = MedicationSearch(status="active")
+        active_meds = await medication_service.get_user_medications(user_id, search_params)
+        context['active_medications'] = [
+            {'medication_name': m.medication_name} for m in active_meds
+        ]
+        
+        # Kaçırılan dozlar (son 7 gün)
+        from .models import MedicationLog, MedicationStatus
+        missed_logs = db.query(MedicationLog).filter(
+            and_(
+                MedicationLog.medication_id == medication_id,
+                MedicationLog.status == MedicationStatus.MISSED,
+                MedicationLog.scheduled_time >= datetime.now() - timedelta(days=7)
+            )
+        ).count()
+        context['missed_doses'] = missed_logs
+        
+        # Yan etkiler (son 30 gün)
+        from .models import SideEffect
+        side_effects = db.query(SideEffect).filter(
+            and_(
+                SideEffect.medication_id == medication_id,
+                SideEffect.reported_at >= datetime.now() - timedelta(days=30)
+            )
+        ).all()
+        context['side_effects'] = [
+            {
+                'side_effect_name': se.side_effect_name,
+                'severity': se.severity.value if hasattr(se.severity, 'value') else se.severity
+            }
+            for se in side_effects
+        ]
+        
+        # Compliance rate (son 30 gün)
+        total_logs = db.query(MedicationLog).filter(
+            and_(
+                MedicationLog.medication_id == medication_id,
+                MedicationLog.scheduled_time >= datetime.now() - timedelta(days=30)
+            )
+        ).count()
+        
+        taken_logs = db.query(MedicationLog).filter(
+            and_(
+                MedicationLog.medication_id == medication_id,
+                MedicationLog.status == MedicationStatus.TAKEN,
+                MedicationLog.scheduled_time >= datetime.now() - timedelta(days=30)
+            )
+        ).count()
+        
+        context['compliance_rate'] = taken_logs / total_logs if total_logs > 0 else 1.0
+        
+        # Remaining doses (tahmini)
+        context['remaining_doses'] = 30  # Placeholder - gerçek sistemde hesaplanmalı
+        context['frequency_per_day'] = 2  # Placeholder
+        
+    except Exception as e:
+        logger.warning(f"Context oluşturma uyarısı: {e}")
+    
+    return context

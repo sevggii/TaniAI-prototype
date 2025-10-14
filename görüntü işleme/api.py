@@ -29,6 +29,7 @@ from real_data_training import RealDataTrainer, AdvancedMedicalCNN
 from fracture_dislocation_detector import FractureDislocationDetector
 from dicom_processor import DICOMProcessor
 from image_processor import ImageProcessor
+from respiratory_emergency_detector import RespiratoryEmergencyDetector
 
 # Schema import'ları
 from .schemas import (
@@ -65,6 +66,7 @@ medical_ai_trainer = RealDataTrainer()
 fracture_detector = FractureDislocationDetector()
 dicom_processor = DICOMProcessor()
 image_processor = ImageProcessor()
+respiratory_detector = RespiratoryEmergencyDetector()
 
 # Model yükleme durumu
 models_loaded = False
@@ -948,6 +950,192 @@ async def log_batch_result(result: BatchAnalysisResult):
     except Exception as e:
         logger.error(f"Toplu log hatası: {str(e)}")
 
+
+# ============================================================================
+# SOLUNUM YOLU ACİL VAKA ENDPOİNTLERİ
+# ============================================================================
+
+class RespiratoryEmergencyRequest(BaseModel):
+    """Solunum yolu acil vaka analiz isteği"""
+    image_data: str = Field(..., description="Base64 encoded X-ray görüntüsü")
+    patient_age: Optional[int] = Field(None, description="Hasta yaşı")
+    patient_gender: Optional[str] = Field(None, description="Hasta cinsiyeti")
+    symptoms: Optional[List[str]] = Field(None, description="Semptomlar")
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "image_data": "base64_encoded_xray_data_here...",
+                "patient_age": 45,
+                "patient_gender": "male",
+                "symptoms": ["dyspnea", "chest_pain", "cough"]
+            }
+        }
+
+
+class RespiratoryEmergencyResponse(BaseModel):
+    """Solunum yolu acil vaka analiz yanıtı"""
+    urgency_score: float = Field(..., description="Aciliyet skoru (1-10)")
+    urgency_level: str = Field(..., description="Aciliyet seviyesi (critical/high/moderate/low)")
+    requires_immediate_attention: bool = Field(..., description="Acil müdahale gereksinimi")
+    emergency_scores: Dict[str, float] = Field(..., description="Acil durum skorları")
+    findings: List[Dict[str, Any]] = Field(..., description="Tespit edilen bulgular")
+    recommendations: List[str] = Field(..., description="Öneriler")
+    features: Dict[str, float] = Field(..., description="Görüntü özellikleri")
+    visualization_base64: Optional[str] = Field(None, description="Görselleştirilmiş analiz")
+    timestamp: str = Field(..., description="Analiz zamanı")
+
+
+@app.post("/respiratory/emergency", 
+          response_model=RespiratoryEmergencyResponse,
+          tags=["Respiratory Emergency"])
+async def analyze_respiratory_emergency(
+    request: RespiratoryEmergencyRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """
+    🚨 Solunum Yolu Acil Vaka Analizi
+    
+    Göğüs X-ray görüntüsünden acil solunum yolu vakalarını tespit eder:
+    - Pnömotoraks (kritik acil!)
+    - Şiddetli pnömoni
+    - Pulmoner ödem
+    - Plevral efüzyon
+    
+    **Aciliyet Skorlama:**
+    - 8-10: 🚨 CRITICAL (15 dakika içinde müdahale)
+    - 6-8: ⚠️ HIGH (30 dakika içinde müdahale)
+    - 4-6: ⚡ MODERATE (2 saat içinde müdahale)
+    - 1-4: ✓ LOW (24 saat içinde değerlendirme)
+    """
+    try:
+        # API anahtarı doğrula
+        verify_api_key(credentials)
+        
+        # Analiz yap
+        result = respiratory_detector.analyze_emergency(
+            image_base64=request.image_data
+        )
+        
+        # Rate limiting güncelle
+        api_key = credentials.credentials
+        if api_key in rate_limits:
+            rate_limits[api_key]['count'] += 1
+        
+        # Logger - kritik vakaları kaydet
+        if result['urgency_level'] in ['critical', 'high']:
+            logger.warning(
+                f"🚨 ACİL VAKA TESPİT EDİLDİ - "
+                f"Seviye: {result['urgency_level']} - "
+                f"Skor: {result['urgency_score']:.1f}/10"
+            )
+        
+        return RespiratoryEmergencyResponse(**result)
+        
+    except Exception as e:
+        logger.error(f"Solunum yolu acil vaka analizi hatası: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/respiratory/emergency/batch", tags=["Respiratory Emergency"])
+async def batch_analyze_respiratory_emergency(
+    images: List[str] = Field(..., description="Base64 encoded X-ray görüntüleri listesi"),
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """
+    📊 Toplu Solunum Yolu Acil Vaka Analizi
+    
+    Birden fazla göğüs X-ray görüntüsünü aynı anda analiz eder ve
+    karşılaştırmalı rapor oluşturur.
+    """
+    try:
+        verify_api_key(credentials)
+        
+        results = []
+        for i, image_data in enumerate(images):
+            try:
+                result = respiratory_detector.analyze_emergency(
+                    image_base64=image_data
+                )
+                result['image_index'] = i
+                results.append(result)
+            except Exception as e:
+                logger.error(f"Görüntü {i} analiz hatası: {e}")
+                results.append({
+                    'image_index': i,
+                    'error': str(e),
+                    'urgency_score': 0
+                })
+        
+        # Karşılaştırma
+        comparison = respiratory_detector.compare_analyses(results)
+        
+        return {
+            'total_images': len(images),
+            'results': results,
+            'comparison': comparison,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Toplu analiz hatası: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/respiratory/emergency/stats", tags=["Respiratory Emergency"])
+async def get_emergency_stats(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """
+    📈 Acil Vaka İstatistikleri
+    
+    Sistem genelindeki acil vaka tespit istatistiklerini döndürür.
+    """
+    try:
+        verify_api_key(credentials)
+        
+        # Basit istatistikler (production'da veritabanından gelecek)
+        stats = {
+            'total_analyses': 0,
+            'critical_cases': 0,
+            'high_priority_cases': 0,
+            'average_response_time': 0,
+            'system_status': 'operational',
+            'detector_info': {
+                'model_loaded': respiratory_detector.model is not None,
+                'emergency_thresholds': respiratory_detector.emergency_thresholds,
+                'urgency_levels': {
+                    level: config['response_time'] 
+                    for level, config in respiratory_detector.urgency_levels.items()
+                }
+            }
+        }
+        
+        return stats
+        
+    except Exception as e:
+        logger.error(f"İstatistik hatası: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/respiratory/emergency/health", tags=["Respiratory Emergency"])
+async def respiratory_emergency_health():
+    """
+    ✓ Sağlık Kontrolü
+    
+    Solunum yolu acil vaka tespit sisteminin durumunu kontrol eder.
+    """
+    return {
+        'status': 'healthy',
+        'detector_ready': respiratory_detector is not None,
+        'model_loaded': respiratory_detector.model is not None,
+        'timestamp': datetime.now().isoformat()
+    }
+
+
+# ============================================================================
+# HATA İŞLEYİCİLERİ
+# ============================================================================
 
 # Hata işleyicileri
 @app.exception_handler(HTTPException)

@@ -1,0 +1,135 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Veritabanı
+  postgres:
+    image: postgres:15-alpine
+    container_name: taniai-db
+    environment:
+      POSTGRES_DB: taniai_db
+      POSTGRES_USER: taniai_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - taniai-network
+
+  # Redis (Caching & Session)
+  redis:
+    image: redis:7-alpine
+    container_name: taniai-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - taniai-network
+
+  # Görüntü İşleme API
+  image-analysis:
+    build:
+      context: ./görüntü işleme
+      dockerfile: Dockerfile
+    container_name: taniai-image-analysis
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_URL=postgresql://taniai_user:${DB_PASSWORD:-changeme}@postgres:5432/taniai_db
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - taniai-network
+    volumes:
+      - ./görüntü işleme:/app
+      - model_data:/app/models
+
+  # Tanı Sistemi API
+  diagnosis:
+    build:
+      context: ./Tanı-hastalıklar
+      dockerfile: Dockerfile
+    container_name: taniai-diagnosis
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql://taniai_user:${DB_PASSWORD:-changeme}@postgres:5432/taniai_db
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - taniai-network
+
+  # İlaç Takibi API
+  medication:
+    build:
+      context: ./ilaç takibi
+      dockerfile: Dockerfile
+    container_name: taniai-medication
+    ports:
+      - "8003:8000"
+    environment:
+      - DATABASE_URL=postgresql://taniai_user:${DB_PASSWORD:-changeme}@postgres:5432/taniai_db
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - taniai-network
+
+  # Randevu Sistemi API
+  appointment:
+    build:
+      context: ./RANDEVU/backend
+      dockerfile: Dockerfile
+    container_name: taniai-appointment
+    ports:
+      - "8004:8000"
+    environment:
+      - DATABASE_URL=postgresql://taniai_user:${DB_PASSWORD:-changeme}@postgres:5432/taniai_db
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - taniai-network
+
+  # Whisper ASR Servisi
+  whisper-asr:
+    build:
+      context: ./whisper_asr
+      dockerfile: Dockerfile
+    container_name: taniai-whisper
+    ports:
+      - "8005:8001"
+    networks:
+      - taniai-network
+
+  # API Gateway (Nginx)
+  nginx:
+    image: nginx:alpine
+    container_name: taniai-gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - image-analysis
+      - diagnosis
+      - medication
+      - appointment
+      - whisper-asr
+    networks:
+      - taniai-network
+
+volumes:
+  postgres_data:
+  model_data:
+
+networks:
+  taniai-network:
+    driver: bridge
+

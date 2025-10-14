@@ -18,6 +18,10 @@ from .services import (
     VitaminDiagnosisService, RiskAssessmentService, 
     NutritionRecommendationService, NotificationService
 )
+from .diagnosis_urgency_system import (
+    DiagnosisUrgencySystem, DiagnosisUrgencyAssessment,
+    DiagnosisUrgencyLevel, format_urgency_assessment
+)
 from .auth import create_access_token, verify_token, get_current_user
 
 # Logging yapılandırması
@@ -53,6 +57,7 @@ diagnosis_service = VitaminDiagnosisService()
 risk_service = RiskAssessmentService()
 nutrition_service = NutritionRecommendationService()
 notification_service = NotificationService()
+urgency_system = DiagnosisUrgencySystem()  # Yeni: Aciliyet sistemi
 
 @app.get("/")
 async def root():
@@ -382,6 +387,83 @@ async def schedule_urgent_notification(user_id: int, risk_level: str):
         )
     except Exception as e:
         logger.error(f"Failed to schedule urgent notification: {str(e)}")
+
+# ============================================================================
+# ACİLİYET SİSTEMİ ENDPOİNTLERİ
+# ============================================================================
+
+@app.post("/diagnosis/urgency/assess", tags=["Urgency System"])
+async def assess_diagnosis_urgency(
+    diagnosis_result: dict,
+    user_profile: Optional[dict] = None,
+    symptoms: Optional[List[dict]] = None,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🚨 Tanı Aciliyet Değerlendirmesi
+    
+    Vitamin/besin eksikliği tanısını aciliyet açısından değerlendirir.
+    """
+    try:
+        assessment = urgency_system.assess_diagnosis_urgency(
+            diagnosis_results=diagnosis_result,
+            user_profile=user_profile,
+            symptoms=symptoms
+        )
+        
+        if assessment.requires_immediate_attention:
+            logger.warning(
+                f"🚨 ACİL TANI - Kullanıcı: {current_user.id} - Skor: {assessment.urgency_score:.1f}/10"
+            )
+        
+        return {
+            'urgency_score': assessment.urgency_score,
+            'urgency_level': assessment.urgency_level.value,
+            'requires_immediate_attention': assessment.requires_immediate_attention,
+            'response_time': assessment.response_time,
+            'priority_deficiencies': assessment.priority_deficiencies,
+            'recommendations': assessment.recommendations
+        }
+    except Exception as e:
+        logger.error(f"Aciliyet hatası: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/diagnosis/urgency/notify-doctor", tags=["Urgency System"])
+async def notify_doctor(
+    diagnosis_result: dict,
+    user_profile: dict,
+    current_user = Depends(get_current_user)
+):
+    """📞 Doktora Acil Bildirim"""
+    try:
+        assessment = urgency_system.assess_diagnosis_urgency(
+            diagnosis_results=diagnosis_result,
+            user_profile=user_profile
+        )
+        
+        if assessment.urgency_level == DiagnosisUrgencyLevel.LOW:
+            return {'notification_sent': False, 'reason': 'Düşük aciliyet'}
+        
+        patient_info = {
+            'user_id': current_user.id,
+            'name': user_profile.get('name', 'Unknown'),
+            'age': user_profile.get('age')
+        }
+        
+        alert = urgency_system.create_doctor_alert(
+            assessment=assessment,
+            patient_info=patient_info,
+            diagnosis_results=diagnosis_result
+        )
+        
+        logger.warning(f"📞 DOKTOR UYARISI - Hasta: {current_user.id}")
+        
+        return {'notification_sent': True, 'alert': alert}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 if __name__ == "__main__":
     uvicorn.run(
