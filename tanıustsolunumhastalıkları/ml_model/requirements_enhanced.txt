@@ -1,0 +1,94 @@
+# Gelişmiş Hastalık Tanı Sistemi - Gereksinimler
+
+# Temel ML kütüphaneleri
+scikit-learn>=1.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+joblib>=1.3.0
+
+# Gelişmiş ML modelleri
+xgboost>=1.7.0
+lightgbm>=4.0.0
+
+# Veri görselleştirme
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# NLP ve metin işleme
+nltk>=3.8.0
+spacy>=3.6.0
+
+# Model değerlendirme
+imbalanced-learn>=0.11.0
+
+# Hiperparametre optimizasyonu
+optuna>=3.3.0
+
+# Veri augmentasyonu
+imgaug>=0.4.0
+
+# Web arayüzü (opsiyonel)
+streamlit>=1.25.0
+gradio>=3.40.0
+
+# API geliştirme (opsiyonel)
+fastapi>=0.100.0
+uvicorn>=0.23.0
+
+# Test kütüphaneleri
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Kod kalitesi
+black>=23.7.0
+flake8>=6.0.0
+isort>=5.12.0
+
+# Jupyter notebook desteği
+jupyter>=1.0.0
+ipykernel>=6.25.0
+
+# Performans optimizasyonu
+numba>=0.57.0
+
+# Güvenlik
+cryptography>=41.0.0
+
+# Loglama
+loguru>=0.7.0
+
+# Konfigürasyon yönetimi
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# Veri validasyonu
+pydantic>=2.0.0
+
+# Paralel işleme
+dask>=2023.7.0
+
+# Model monitoring
+mlflow>=2.5.0
+wandb>=0.15.0
+
+# Time series analysis (gelecek özellikler için)
+statsmodels>=0.14.0
+
+# Deep learning (gelecek özellikler için)
+torch>=2.0.0
+tensorflow>=2.13.0
+
+# Veri tabanı bağlantısı (opsiyonel)
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+
+# Cache yönetimi
+redis>=4.6.0
+
+# Email bildirimleri (opsiyonel)
+smtplib
+email
+
+# SMS bildirimleri (opsiyonel)
+twilio>=8.5.0

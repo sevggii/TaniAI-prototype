@@ -1,0 +1,121 @@
+2025-10-05 16:37:43,462 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:37:43,462 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum...'
+2025-10-05 16:37:49,286 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (79.2%) - Mild
+2025-10-05 16:37:49,286 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, hapþýrýyorum...'
+2025-10-05 16:37:49,842 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (100.0%) - Mild
+2025-10-05 16:37:49,882 - professional_medical_system - INFO - Processing patient symptom description: 'Nefes alamýyorum, koku alamýyorum...'
+2025-10-05 16:37:50,447 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:37:50,447 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor, titreme var...'
+2025-10-05 16:37:50,988 - professional_medical_system - INFO - Diagnosis completed: Grip (70.3%) - Mild
+2025-10-05 16:37:50,990 - professional_medical_system - INFO - Processing patient symptom description: 'Burnum akýyor, hapþýrýyorum...'
+2025-10-05 16:37:51,583 - professional_medical_system - INFO - Diagnosis completed: Soðuk Algýnlýðý (100.0%) - Mild
+2025-10-05 16:37:51,938 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:37:51,942 - professional_medical_system - INFO - Processing patient symptom description: 'Sadece baþ aðrým var...'
+2025-10-05 16:37:52,546 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (49.1%) - Mild
+2025-10-05 16:37:52,546 - professional_medical_system - INFO - Processing patient symptom description: 'Çok yorgunum, halsizim...'
+2025-10-05 16:37:53,162 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (51.7%) - Mild
+2025-10-05 16:37:53,162 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim yok ama öksürüyorum...'
+2025-10-05 16:37:53,752 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (49.1%) - Mild
+2025-10-05 16:37:53,755 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim sulanýyor ama hapþýrmýyorum...'
+2025-10-05 16:37:54,341 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (52.4%) - Mild
+2025-10-05 16:37:54,342 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor ama ateþim yok...'
+2025-10-05 16:37:55,004 - professional_medical_system - INFO - Diagnosis completed: Grip (70.3%) - Mild
+2025-10-05 16:37:55,404 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:37:55,404 - professional_medical_system - INFO - Processing patient symptom description: 'Koku alamýyorum, nefes alamýyorum...'
+2025-10-05 16:37:56,018 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:37:56,018 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var...'
+2025-10-05 16:37:56,588 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (50.3%) - Mild
+2025-10-05 16:37:56,590 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, hapþýrýyorum, ateþim yok...'
+2025-10-05 16:37:57,187 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (100.0%) - Mild
+2025-10-05 16:37:57,190 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor, titreme var, ateþim var...'
+2025-10-05 16:37:57,712 - professional_medical_system - INFO - Diagnosis completed: Grip (100.0%) - Severe
+2025-10-05 16:37:58,056 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:37:58,056 - professional_medical_system - INFO - Processing patient symptom description: 'Koku alamýyorum, nefes alamýyorum, ateþim var...'
+2025-10-05 16:37:58,658 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:37:58,658 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum çok aðrýyor, titreme var, ateþim var...'
+2025-10-05 16:37:59,191 - professional_medical_system - INFO - Diagnosis completed: Grip (100.0%) - Severe
+2025-10-05 16:37:59,192 - professional_medical_system - INFO - Processing patient symptom description: 'Burnum akýyor, hapþýrýyorum, ateþim yok...'
+2025-10-05 16:37:59,821 - professional_medical_system - INFO - Diagnosis completed: Soðuk Algýnlýðý (100.0%) - Mild
+2025-10-05 16:37:59,822 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, hapþýrýyorum, ateþim yok...'
+2025-10-05 16:38:00,400 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (100.0%) - Mild
+2025-10-05 16:40:40,678 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:40:40,680 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum...'
+2025-10-05 16:40:45,791 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (79.2%) - Mild
+2025-10-05 16:41:50,992 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:41:50,995 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum...'
+2025-10-05 16:41:56,244 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (79.2%) - Mild
+2025-10-05 16:41:56,247 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:41:56,782 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:41:56,785 - professional_medical_system - INFO - Processing patient symptom description: 'Burnum akýyor, hapþýrýyorum...'
+2025-10-05 16:41:57,347 - professional_medical_system - INFO - Diagnosis completed: Soðuk Algýnlýðý (100.0%) - Mild
+2025-10-05 16:41:57,349 - professional_medical_system - INFO - Processing patient symptom description: 'Baþ aðrým var, yorgunum...'
+2025-10-05 16:41:57,861 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (51.7%) - Mild
+2025-10-05 16:41:57,864 - professional_medical_system - INFO - Processing patient symptom description: 'Baþ aðrým var, yorgunum, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:41:58,426 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:41:58,428 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor...'
+2025-10-05 16:41:58,956 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (52.4%) - Mild
+2025-10-05 16:41:58,961 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:41:59,553 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (92.5%) - Critical
+2025-10-05 16:41:59,556 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor...'
+2025-10-05 16:42:00,104 - professional_medical_system - INFO - Diagnosis completed: Grip (70.3%) - Mild
+2025-10-05 16:42:00,108 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:42:00,742 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:43:11,348 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:43:11,348 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum...'
+2025-10-05 16:43:16,377 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (79.2%) - Mild
+2025-10-05 16:43:16,378 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, hapþýrýyorum...'
+2025-10-05 16:43:16,902 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (100.0%) - Mild
+2025-10-05 16:43:16,904 - professional_medical_system - INFO - Processing patient symptom description: 'Nefes alamýyorum, koku alamýyorum...'
+2025-10-05 16:43:17,489 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:43:17,490 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor, titreme var...'
+2025-10-05 16:43:18,102 - professional_medical_system - INFO - Diagnosis completed: Grip (70.3%) - Mild
+2025-10-05 16:43:18,102 - professional_medical_system - INFO - Processing patient symptom description: 'Burnum akýyor, hapþýrýyorum...'
+2025-10-05 16:43:18,750 - professional_medical_system - INFO - Diagnosis completed: Soðuk Algýnlýðý (100.0%) - Mild
+2025-10-05 16:43:19,115 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:43:19,115 - professional_medical_system - INFO - Processing patient symptom description: 'Sadece baþ aðrým var...'
+2025-10-05 16:43:19,722 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (49.1%) - Mild
+2025-10-05 16:43:19,723 - professional_medical_system - INFO - Processing patient symptom description: 'Çok yorgunum, halsizim...'
+2025-10-05 16:43:20,310 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (51.7%) - Mild
+2025-10-05 16:43:20,311 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim yok ama öksürüyorum...'
+2025-10-05 16:43:20,930 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (49.1%) - Mild
+2025-10-05 16:43:20,931 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim sulanýyor ama hapþýrmýyorum...'
+2025-10-05 16:43:21,456 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (52.4%) - Mild
+2025-10-05 16:43:21,458 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor ama ateþim yok...'
+2025-10-05 16:43:22,079 - professional_medical_system - INFO - Diagnosis completed: Grip (70.3%) - Mild
+2025-10-05 16:43:22,460 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:43:22,461 - professional_medical_system - INFO - Processing patient symptom description: 'Koku alamýyorum, nefes alamýyorum...'
+2025-10-05 16:43:23,032 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:43:23,033 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var...'
+2025-10-05 16:43:23,642 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (50.3%) - Mild
+2025-10-05 16:43:23,643 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, hapþýrýyorum, ateþim yok...'
+2025-10-05 16:43:24,170 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (100.0%) - Mild
+2025-10-05 16:43:24,173 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor, titreme var, ateþim var...'
+2025-10-05 16:43:24,759 - professional_medical_system - INFO - Diagnosis completed: Grip (100.0%) - Severe
+2025-10-05 16:43:25,084 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:43:25,085 - professional_medical_system - INFO - Processing patient symptom description: 'Koku alamýyorum, nefes alamýyorum, ateþim var...'
+2025-10-05 16:43:25,665 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:43:25,667 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum çok aðrýyor, titreme var, ateþim var...'
+2025-10-05 16:43:26,187 - professional_medical_system - INFO - Diagnosis completed: Grip (100.0%) - Severe
+2025-10-05 16:43:26,189 - professional_medical_system - INFO - Processing patient symptom description: 'Burnum akýyor, hapþýrýyorum, ateþim yok...'
+2025-10-05 16:43:26,759 - professional_medical_system - INFO - Diagnosis completed: Soðuk Algýnlýðý (100.0%) - Mild
+2025-10-05 16:43:26,760 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, hapþýrýyorum, ateþim yok...'
+2025-10-05 16:43:27,303 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (100.0%) - Mild
+2025-10-05 16:43:55,720 - professional_medical_system - INFO - Professional Medical System initialized
+2025-10-05 16:43:55,722 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum...'
+2025-10-05 16:44:00,827 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (79.2%) - Mild
+2025-10-05 16:44:00,830 - professional_medical_system - INFO - Processing patient symptom description: 'Ateþim var, öksürüyorum, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:44:01,342 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:44:01,346 - professional_medical_system - INFO - Processing patient symptom description: 'Burnum akýyor, hapþýrýyorum...'
+2025-10-05 16:44:01,915 - professional_medical_system - INFO - Diagnosis completed: Soðuk Algýnlýðý (100.0%) - Mild
+2025-10-05 16:44:01,917 - professional_medical_system - INFO - Processing patient symptom description: 'Baþ aðrým var, yorgunum...'
+2025-10-05 16:44:02,440 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (51.7%) - Mild
+2025-10-05 16:44:02,444 - professional_medical_system - INFO - Processing patient symptom description: 'Baþ aðrým var, yorgunum, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:44:03,020 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
+2025-10-05 16:44:03,024 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor...'
+2025-10-05 16:44:03,560 - professional_medical_system - INFO - Diagnosis completed: Mevsimsel Alerji (52.4%) - Mild
+2025-10-05 16:44:03,565 - professional_medical_system - INFO - Processing patient symptom description: 'Gözlerim kaþýnýyor, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:44:04,143 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (92.5%) - Critical
+2025-10-05 16:44:04,147 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor...'
+2025-10-05 16:44:04,660 - professional_medical_system - INFO - Diagnosis completed: Grip (70.3%) - Mild
+2025-10-05 16:44:04,664 - professional_medical_system - INFO - Processing patient symptom description: 'Vücudum aðrýyor, Koku veya Tat Kaybý, Nefes Darlýðý...'
+2025-10-05 16:44:05,238 - professional_medical_system - INFO - Diagnosis completed: COVID-19 (100.0%) - Critical
