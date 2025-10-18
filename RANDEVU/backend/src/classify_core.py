@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class ClinicClassifier:
     """Klinik sınıflandırıcı"""
     
-    def __init__(self, model_path: str = "../models/clinic_router_svm.joblib"):
+    def __init__(self, model_path: str = "models/clinic_router_svm.joblib"):
         self.model_path = model_path
         self.model_data = None
         self.vectorizer = None

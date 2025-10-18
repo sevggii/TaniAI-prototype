@@ -78,6 +78,7 @@ backend/
 │   ├── llm_client.py               # LiteLLM entegrasyonu
 │   ├── train_clinic_model.py       # Model eğitimi
 │   └── build_dataset.py            # Dataset oluşturucu
+├── simple_api.py                   # 🚀 Geçici Test API (Flutter bağlantısı için)
 ├── old/                            # 📦 Eski dosyalar (backup)
 │   ├── Deneme.py
 │   ├── legacy_klinik_dataset.jsonl
@@ -318,6 +319,142 @@ curl -X POST "http://localhost:8001/v1/chat/completions" \
     "messages": [{"role": "user", "content": "göğsümde sıkışma var"}]
   }'
 ```
+
+## 📁 Dosya Detayları
+
+### 🚀 **simple_api.py** - Geçici Test API
+**Konum:** `RANDEVU/backend/simple_api.py`  
+**Amaç:** Flutter uygulamasının backend ile bağlantısını test etmek için oluşturulan basit API
+
+**Özellikler:**
+- **FastAPI tabanlı** - Hızlı ve basit
+- **CORS desteği** - Flutter'dan erişim için
+- **2 Ana Endpoint:**
+  - `POST /chat` - Flutter chat mesajları için
+  - `POST /recommend-clinic` - Klinik önerisi için
+- **Kural tabanlı yanıtlar** - Basit if-else mantığı
+- **Geçici çözüm** - Asıl model hazır olana kadar
+
+**Kullanım:**
+```bash
+cd RANDEVU/backend
+python3 simple_api.py
+# http://localhost:8000 adresinde çalışır
+```
+
+**Test:**
+```bash
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "başım ağrıyor"}'
+```
+
+### 🧠 **classify_core.py** - Ana ML Modeli
+**Konum:** `RANDEVU/backend/src/classify_core.py`  
+**Amaç:** Eğitilmiş SVM modelini yükleyip klinik tahminleri yapan ana sınıf
+
+**Özellikler:**
+- **ClinicClassifier sınıfı** - Ana sınıflandırıcı
+- **Model yükleme** - `clinic_router_svm.joblib` dosyasından
+- **TF-IDF vektörizasyon** - Metinleri sayısal vektörlere çevirir
+- **SVM tahmini** - 41 klinik arasından seçim yapar
+- **Güven skoru** - Tahmin güvenilirliği
+- **Hata yönetimi** - Model yüklenemezse güvenli çıkış
+
+**Ana Metodlar:**
+- `load_model()` - Modeli diskten yükler
+- `predict(text)` - Tek metin için tahmin
+- `predict_batch(texts)` - Toplu tahmin
+- `get_confidence()` - Güven skoru
+
+**Kullanım:**
+```python
+from classify_core import ClinicClassifier
+
+classifier = ClinicClassifier()
+classifier.load_model()
+result = classifier.predict("başım ağrıyor")
+# Sonuç: {"clinic": "Nöroloji", "confidence": 0.95}
+```
+
+### 🏗️ **orchestrator_api.py** - Ana Production API
+**Konum:** `RANDEVU/backend/src/orchestrator_api.py`  
+**Amaç:** Tam özellikli, production-ready API (LLM + SVM entegrasyonu)
+
+**Özellikler:**
+- **OpenAI uyumlu API** - `/v1/chat/completions` endpoint
+- **LLM + SVM entegrasyonu** - Metin normalizasyon + ML tahmini
+- **Model yükleme** - Startup'ta otomatik model yükleme
+- **Hata yönetimi** - Model yüklenemezse uygulama başlamaz
+- **CORS desteği** - Flutter entegrasyonu için
+
+**Endpoints:**
+- `POST /v1/chat/completions` - OpenAI format
+- `POST /recommend-clinic` - Basit format
+- `GET /health` - Sistem durumu
+
+### 🎓 **train_clinic_model.py** - Model Eğitimi
+**Konum:** `RANDEVU/backend/src/train_clinic_model.py`  
+**Amaç:** 73,800 veri ile SVM modelini eğitir
+
+**Özellikler:**
+- **TF-IDF vektörizasyon** - N-gram (1,2), max_features=100,000
+- **LinearSVC** - Hızlı ve etkili sınıflandırma
+- **Stratified split** - %80 train, %20 test
+- **Model kaydetme** - `clinic_router_svm.joblib` formatında
+- **Performans raporu** - Accuracy, F1-score, classification report
+
+**Kullanım:**
+```bash
+cd RANDEVU/backend
+python3 src/train_clinic_model.py
+```
+
+### 📊 **build_dataset.py** - Veri Hazırlama
+**Konum:** `RANDEVU/backend/src/build_dataset.py`  
+**Amaç:** 41 klinik dosyasını tek dataset'e birleştirir
+
+**Özellikler:**
+- **41 klinik dosyası** - `data/clinics/*.jsonl`
+- **Veri birleştirme** - Tek `clinic_dataset.jsonl` dosyası
+- **Deduplikasyon** - Tekrarları kaldırır
+- **Etiket çıkarımı** - Klinik isimlerini `clinic_labels.txt`'ye kaydeder
+- **İstatistik raporu** - Toplam kayıt, klinik sayısı
+
+**Kullanım:**
+```bash
+cd RANDEVU/backend
+python3 src/build_dataset.py
+```
+
+### 🔄 **Dosya İlişkileri:**
+- **`simple_api.py`** → Flutter için hızlı test (geçici)
+- **`classify_core.py`** → Asıl ML modeli (SVM)
+- **`orchestrator_api.py`** → Tam özellikli API (LLM + SVM)
+- **`train_clinic_model.py`** → Model eğitimi
+- **`build_dataset.py`** → Veri hazırlama
+- **`llm_client.py`** → LLM entegrasyonu (Ollama)
+
+## 📱 Flutter Entegrasyonu
+
+### 🔗 **Bağlantı Detayları:**
+- **Backend URL:** `http://localhost:8000` (PC) / `http://10.0.2.2:8000` (Android Emulator)
+- **Flutter Service:** `lib/services/llm_service.dart`
+- **API Client:** `lib/features/randevu/data/triage_api_client.dart`
+- **UI Page:** `lib/features/randevu/presentation/voice_randevu_page.dart`
+
+### 🚀 **Test Durumu:**
+- ✅ **Backend çalışıyor** - `simple_api.py` port 8000'de
+- ✅ **Flutter bağlantısı** - CORS ayarları yapıldı
+- ✅ **API test edildi** - `curl` ile doğrulandı
+- ⚠️ **Model entegrasyonu** - `orchestrator_api.py` henüz çalışmıyor
+
+### 📋 **Sonraki Adımlar:**
+1. **Model dosyasını düzelt** - `clinic_router_svm.joblib` yolu
+2. **Ollama başlat** - LLM normalizasyon için
+3. **LiteLLM başlat** - Port 4000'de
+4. **Production API'yi test et** - `orchestrator_api.py`
+5. **Flutter'da test et** - Gerçek model ile
 
 ## 📝 Önemli Notlar
 
