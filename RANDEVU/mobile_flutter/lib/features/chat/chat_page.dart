@@ -6,12 +6,12 @@ import '../../core/theme/app_theme.dart';
 import '../../models/chat_message.dart';
 import '../../services/chat_service.dart';
 import '../../services/voice_service.dart';
-import '../../services/ai_personality_service.dart';
 
 class ChatPage extends StatefulWidget {
   final String? initialMessage;
+  final bool resetConversation;
   
-  const ChatPage({super.key, this.initialMessage});
+  const ChatPage({super.key, this.initialMessage, this.resetConversation = false});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -23,7 +23,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   final FocusNode _messageFocusNode = FocusNode(); // Klavye kontrolü için
   final ChatService _chatService = ChatService();
   final VoiceService _voiceService = VoiceService();
-  final AIPersonalityService _personalityService = AIPersonalityService();
   
   late AnimationController _animationController;
   late AnimationController _typingAnimationController;
@@ -37,6 +36,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   bool _isTyping = false;
   bool _isVoiceEnabled = false;
   List<String> _conversationHistory = [];
+  String? _currentSessionId;
 
   @override
   void initState() {
@@ -45,6 +45,22 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     _setupAnimations();
     _initializeVoiceService();
     _scrollToBottom();
+    
+    // Eğer resetConversation true ise, konuşma geçmişini temizle
+    if (widget.resetConversation) {
+      _conversationHistory.clear();
+      // ChatService'den de temizle ve yeni session ID al
+      _chatService.clearConversation().then((sessionId) {
+        _currentSessionId = sessionId;
+        // Temiz başlangıç için hoş geldin mesajı gönder
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _sendWelcomeMessage();
+        });
+      });
+    } else {
+      // Normal durumda mevcut session ID'yi al
+      _currentSessionId = _chatService.getCurrentSessionId();
+    }
     
     // Eğer initial message varsa, otomatik gönder
     if (widget.initialMessage != null && widget.initialMessage!.isNotEmpty) {
@@ -155,6 +171,21 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     });
   }
 
+  Future<void> _sendWelcomeMessage() async {
+    if (_currentUser == null || _currentSessionId == null) return;
+    
+    const welcomeMessage = "Merhaba! 👋 Ben TanıAI Asistanıyım. Size nasıl yardımcı olabilirim?";
+    
+    // AI hoş geldin mesajını gönder
+    await _chatService.sendMessage(
+      welcomeMessage,
+      'ai_assistant',
+      'TanıAI Asistanı',
+      isAI: true,
+      sessionId: _currentSessionId,
+    );
+  }
+
   Future<void> _sendMessage() async {
     if (_messageController.text.trim().isEmpty) return;
 
@@ -172,6 +203,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       message,
       _currentUser!.uid,
       _currentUser!.displayName ?? 'Kullanıcı',
+      sessionId: _currentSessionId,
     );
 
     // AI yanıtı için typing göstergesi
@@ -289,6 +321,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       'ai_assistant',
       'TanıAI Asistanı',
       isAI: true,
+      sessionId: _currentSessionId,
     );
   }
 
@@ -628,7 +661,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
               // Chat mesajları
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: _chatService.getTodayMessages(),
+                  stream: _currentSessionId != null 
+                    ? _chatService.getSessionMessages(_currentSessionId!)
+                    : _chatService.getTodayMessages(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return _buildLoadingState(theme);
@@ -646,8 +681,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                       return _buildEmptyState(theme);
                     }
 
-                    // Mesajları TERS çevir - en yeni mesaj EN ALTTA olsun
-                    final reversedMessages = messages.reversed.toList();
+                    // Mesajları timestamp'e göre sırala (en eski en üstte)
+                    messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
                     return FadeTransition(
                       opacity: _fadeAnimation,
@@ -656,18 +691,17 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                         child: ListView.builder(
                           controller: _scrollController,
                           padding: const EdgeInsets.all(16),
-                          reverse: true, // EN ALTTA başlat (WhatsApp gibi!)
+                          reverse: false, // Normal sıralama (en eski en üstte)
                           physics: const ClampingScrollPhysics(),
-                          itemCount: reversedMessages.length + (_isTyping ? 1 : 0),
+                          itemCount: messages.length + (_isTyping ? 1 : 0),
                           itemBuilder: (context, index) {
-                            // Typing indicator en ÜSTTE (reverse=true olduğu için)
-                            if (index == 0 && _isTyping) {
+                            // Typing indicator en ALTA
+                            if (index == messages.length && _isTyping) {
                               return _buildTypingIndicator(theme);
                             }
                             
-                            // Typing varsa index'i 1 azalt
-                            final messageIndex = _isTyping ? index - 1 : index;
-                            final message = reversedMessages[messageIndex];
+                            // Normal mesaj
+                            final message = messages[index];
                             return _buildMessageBubble(context, theme, message);
                           },
                         ),

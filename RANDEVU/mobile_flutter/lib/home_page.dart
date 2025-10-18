@@ -248,12 +248,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case 'Semptom sor':
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const ChatPage()),
+          MaterialPageRoute(builder: (_) => const ChatPage(resetConversation: true)),
         );
         break;
       case 'AI asistan':
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const ChatPage()),
+          MaterialPageRoute(builder: (_) => const ChatPage(resetConversation: true)),
         );
         break;
     }
@@ -777,7 +777,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const ChatPage()),
+                MaterialPageRoute(builder: (_) => const ChatPage(resetConversation: true)),
               );
             },
             child: Container(
@@ -1130,7 +1130,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Icons.chat_rounded,
           () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const ChatPage()),
+              MaterialPageRoute(builder: (_) => const ChatPage(resetConversation: true)),
             );
           },
         ),

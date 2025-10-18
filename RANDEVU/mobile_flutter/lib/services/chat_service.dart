@@ -16,6 +16,17 @@ class ChatService {
     return _currentSessionId!;
   }
 
+  // Konuşmayı temizle (yeni sohbet için)
+  Future<String> clearConversation() async {
+    // Yeni oturum başlat
+    final newSessionId = startNewSession();
+    
+    // Cache'i temizle
+    await _cacheService.clearCache();
+    
+    return newSessionId;
+  }
+
   // Mevcut oturum ID'sini al
   String getCurrentSessionId() {
     _currentSessionId ??= DateTime.now().millisecondsSinceEpoch.toString();
@@ -55,6 +66,14 @@ class ChatService {
         .snapshots();
   }
 
+  // Belirli session ID'ye göre mesajları getir (index olmadan)
+  Stream<QuerySnapshot> getSessionMessages(String sessionId) {
+    return _firestore
+        .collection(_collectionName)
+        .where('sessionId', isEqualTo: sessionId)
+        .snapshots();
+  }
+
   // Tüm mesajları getir
   Stream<QuerySnapshot> getMessages() {
     return _firestore
@@ -63,14 +82,6 @@ class ChatService {
         .snapshots();
   }
 
-  // Belirli bir oturumun mesajlarını getir
-  Stream<QuerySnapshot> getSessionMessages(String sessionId) {
-    return _firestore
-        .collection(_collectionName)
-        .where('sessionId', isEqualTo: sessionId)
-        .orderBy('timestamp', descending: false)
-        .snapshots();
-  }
 
   // Kullanıcının geçmiş konuşmalarını al (son 10 mesaj)
   Future<List<ChatMessage>> getUserHistory(String userId) async {
