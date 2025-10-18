@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------------
+# Belirti ağırlıkları: CDC/WHO + büyük klinik merkezlerin "COVID vs Flu vs Cold
+# vs Allergies" tablolarındaki kategorik (sık/orta/nadir/yok) bilgiler 0–3
+# ölçeğine sayısallaştırıldı. (sık=3, orta=2, nadir=1, yok=0)
+# Bu tablo MVP amaçlıdır; ileride etiketli veri ile ML modeliyle optimize edilebilir.
+# -----------------------------------------------------------------------------
+classes:
+  - COVID-19
+  - GRIP
+  - SOGUK_ALGINLIGI
+  - MEVSIMSEL_ALERJI
+
+symptom_weights:
+  ates: [3, 3, 1, 0]
+  titreme: [2, 3, 1, 0]
+  kuru_oksuruk: [3, 2, 1, 0]
+  balgamli_oksuruk: [1, 2, 2, 0]
+  bogaz_agrisi: [1, 2, 2, 1]
+  burun_akintisi: [0, 1, 2, 3]
+  burun_tikanikligi: [0, 1, 1, 3]
+  hapşirma: [0, 0, 1, 3]
+  kas_agrisi: [2, 3, 1, 0]
+  yorgunluk: [2, 2, 1, 1]
+  nefes_darligi: [3, 1, 1, 0]
+  koku_kaybi: [3, 1, 0, 1]
+  goz_kasintisi: [0, 0, 0, 3]
+  goz_sulanmasi: [0, 0, 1, 3]
+
+fusion:
+  w_symptoms: 0.6
+  w_vision:   0.4

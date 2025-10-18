@@ -1,0 +1,58 @@
+[
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760823791
+  },
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760823801
+  },
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760824571
+  },
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760825288
+  },
+  {
+    "id": "v1_20251019_0107",
+    "modality": "vision",
+    "task": "cxr_covid",
+    "dataset": "tawsifurrahman/covid19-radiography-database",
+    "path": "/Users/sevgi/TaniAI-prototype/TANI/UstSolunumYolu/modules/vision_cxr_covid/models/v1_20251019_0107",
+    "created_at": 1760825770
+  },
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760826023
+  },
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760826179
+  }
+]
