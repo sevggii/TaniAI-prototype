@@ -16,8 +16,7 @@ from datetime import datetime
 # LLM servislerini import et
 try:
     from llm_service import LLMService
-    from triage_service import TriageService
-    from clinic_service import ClinicService
+    from clinic_recommender_service import ClinicRecommenderService  # Yeni eğitilmiş model
 except ImportError:
     # Fallback için basit servisler
     class LLMService:
@@ -25,23 +24,16 @@ except ImportError:
         def get_chat_response(message: str) -> str:
             return "Merhaba! Ben TanıAI Asistanıyım. Size nasıl yardımcı olabilirim?"
     
-    class TriageService:
+    class ClinicRecommenderService:
         @staticmethod
-        def analyze_symptoms(symptoms: str) -> Dict[str, Any]:
+        def recommend_clinic(complaint: str) -> Dict[str, Any]:
             return {
+                "success": True,
+                "recommended_clinic": "Aile Hekimliği",
+                "confidence": 0.8,
+                "reasoning": "Fallback önerisi",
                 "urgency": "normal",
-                "recommended_clinic": "Genel Pratisyen",
-                "analysis": "Genel sağlık kontrolü önerilir.",
-                "recommendations": ["Bol su için", "Dinlenin"]
-            }
-    
-    class ClinicService:
-        @staticmethod
-        def recommend_clinic(symptoms: str) -> Dict[str, Any]:
-            return {
-                "recommended_clinic": "Genel Pratisyen",
-                "urgency": "normal",
-                "reasoning": "Genel sağlık kontrolü için uygun"
+                "alternatives": ["İç Hastalıkları"]
             }
 
 # FastAPI uygulaması
@@ -94,8 +86,7 @@ class ClinicRecommendationResponse(BaseModel):
 
 # Servisleri başlat
 llm_service = LLMService()
-triage_service = TriageService()
-clinic_service = ClinicService()
+clinic_recommender = ClinicRecommenderService()  # Eğitilmiş model
 
 @app.get("/")
 async def root():
@@ -155,17 +146,28 @@ async def triage(request: TriageRequest):
 
 @app.post("/recommend-clinic", response_model=ClinicRecommendationResponse)
 async def recommend_clinic(request: ClinicRecommendationRequest):
-    """Klinik önerisi al"""
+    """Klinik önerisi al - EĞİTİLMİŞ MODEL"""
     try:
-        result = clinic_service.recommend_clinic(request.symptoms)
+        # Eğitilmiş modeli kullan
+        result = clinic_recommender.recommend_clinic(request.symptoms)
         
-        return ClinicRecommendationResponse(
-            recommended_clinic=result.get("recommended_clinic", "Genel Pratisyen"),
-            urgency=result.get("urgency", "normal"),
-            reasoning=result.get("reasoning", "Genel sağlık kontrolü için uygun"),
-            alternatives=result.get("alternatives", ["İç Hastalıkları", "Aile Hekimi"]),
-            timestamp=datetime.now().isoformat()
-        )
+        if result.get("success", False):
+            return ClinicRecommendationResponse(
+                recommended_clinic=result.get("recommended_clinic", "Aile Hekimliği"),
+                urgency=result.get("urgency", "normal"),
+                reasoning=result.get("reasoning", "Eğitilmiş model önerisi"),
+                alternatives=result.get("alternatives", ["İç Hastalıkları", "Aile Hekimi"]),
+                timestamp=datetime.now().isoformat()
+            )
+        else:
+            # Fallback
+            return ClinicRecommendationResponse(
+                recommended_clinic="Aile Hekimliği",
+                urgency="normal",
+                reasoning="Fallback önerisi",
+                alternatives=["İç Hastalıkları"],
+                timestamp=datetime.now().isoformat()
+            )
     except Exception as e:
         logging.error(f"Clinic recommendation error: {e}")
         raise HTTPException(status_code=500, detail="Klinik önerisi servisi hatası")
