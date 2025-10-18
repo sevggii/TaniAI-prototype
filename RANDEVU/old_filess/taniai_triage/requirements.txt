@@ -1,7 +1,0 @@
-fastapi
-uvicorn[standard]
-litellm
-python-dotenv
-rapidfuzz
-pydantic
-pytest
