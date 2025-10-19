@@ -54,5 +54,13 @@
     "dataset": "test_dataset",
     "path": "/test/path",
     "created_at": 1760826179
+  },
+  {
+    "id": "test_model",
+    "modality": "test",
+    "task": "test_task",
+    "dataset": "test_dataset",
+    "path": "/test/path",
+    "created_at": 1760880708
   }
 ]

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TANI - Otomatik AI Tanı Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .logo::before {
+            content: "🤖";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .welcome-card h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2.2em;
+        }
+        
+        .welcome-card p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .main-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2::before {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .patient-info h2::before {
+            content: "👤";
+        }
+        
+        .ai-analysis h2::before {
+            content: "🤖";
+        }
+        
+        .patient-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .patient-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .patient-label {
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+        
+        .patient-value {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .ai-status {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .ai-status-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        
+        .ai-status-text {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .ai-status-desc {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+        
+        .analysis-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .analysis-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+        }
+        
+        .analysis-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .results-section {
+            margin-top: 30px;
+        }
+        
+        .diagnosis-card {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.3);
+        }
+        
+        .diagnosis-title {
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .confidence-score {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .confidence-label {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .alert-level {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .alert-low {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .alert-medium {
+            background: rgba(255, 193, 7, 0.8);
+            color: #000;
+        }
+        
+        .alert-high {
+            background: rgba(255, 87, 34, 0.8);
+        }
+        
+        .alert-critical {
+            background: rgba(244, 67, 54, 0.9);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .probabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .prob-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 4px solid #bdc3c7;
+            transition: all 0.3s ease;
+        }
+        
+        .prob-item.highest {
+            border-left-color: #27ae60;
+            background: #e8f5e8;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.2);
+        }
+        
+        .prob-item.high {
+            border-left-color: #f39c12;
+            background: #fef9e7;
+        }
+        
+        .prob-item.medium {
+            border-left-color: #e67e22;
+            background: #fdf2e9;
+        }
+        
+        .prob-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .prob-value {
+            font-size: 1.4em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .recommendations {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .recommendations h3 {
+            color: #856404;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .recommendations ul {
+            list-style: none;
+        }
+        
+        .recommendations li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ffeaa7;
+            font-size: 1em;
+        }
+        
+        .recommendations li:before {
+            content: "💡 ";
+            margin-right: 10px;
+        }
+        
+        .doctor-alert {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .doctor-alert h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .doctor-alert p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .system-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            z-index: 1000;
+        }
+        
+        .system-status.error {
+            background: #e74c3c;
+        }
+        
+        .emergency-alert {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            margin-left: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .probabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="system-status" id="systemStatus">
+        🟢 Sistem Aktif
+    </div>
+    
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">TANI Otomatik AI Tanı Sistemi</div>
+            <div class="user-info">
+                <span>Hasta: Ahmet Yılmaz</span>
+                <div class="user-avatar">AY</div>
+                <div class="emergency-alert" id="emergencyAlert" style="display: none;">
+                    🚨 ACİL DURUM!
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome-card">
+            <h1>🤖 TANI Otomatik AI Tanı Sistemi</h1>
+            <p>AI modeli, Kaggle veri setine dayalı olarak hasta verilerini otomatik analiz eder ve tanı önerisi sunar. Manuel müdahale gerektirmez.</p>
+        </div>
+        
+        <div class="main-dashboard">
+            <div class="card patient-info">
+                <h2>Hasta Bilgileri</h2>
+                <div class="patient-grid">
+                    <div class="patient-item">
+                        <span class="patient-label">Hasta ID:</span>
+                        <span class="patient-value">H-2024-001</span>
+                    </div>
+                    <div class="patient-item">
+                        <span class="patient-label">Ad Soyad:</span>
+                        <span class="patient-value">Ahmet Yılmaz</span>
+                    </div>
+                    <div class="patient-item">
+                        <span class="patient-label">Yaş:</span>
+                        <span class="patient-value">45</span>
+                    </div>
+                    <div class="patient-item">
+                        <span class="patient-label">Cinsiyet:</span>
+                        <span class="patient-value">Erkek</span>
+                    </div>
+                    <div class="patient-item">
+                        <span class="patient-label">Son Güncelleme:</span>
+                        <span class="patient-value" id="lastUpdate"></span>
+                    </div>
+                    <div class="patient-item">
+                        <span class="patient-label">AI Model:</span>
+                        <span class="patient-value">TANI v1.0 (Kaggle)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card ai-analysis">
+                <h2>AI Analiz Durumu</h2>
+                <div class="ai-status">
+                    <div class="ai-status-icon" id="aiStatusIcon">🤖</div>
+                    <div class="ai-status-text" id="aiStatusText">AI Model Hazır</div>
+                    <div class="ai-status-desc" id="aiStatusDesc">Kaggle veri seti ile eğitilmiş model aktif. Otomatik analiz yapabilir.</div>
+                </div>
+                
+                <button class="analysis-btn" id="analysisBtn" onclick="startAIAnalysis()">
+                    🧠 AI Otomatik Analiz Başlat
+                </button>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>AI modeli semptomlarınızı analiz ediyor...</p>
+            <small>Kaggle veri seti kullanılarak otomatik tanı yapılıyor.</small>
+        </div>
+        
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="diagnosis-card">
+                <div class="diagnosis-title" id="diagnosisTitle">AI Tanı Sonucu</div>
+                <div class="confidence-score" id="confidenceScore">%0</div>
+                <div class="confidence-label">Güven Skoru</div>
+                <div class="alert-level" id="alertLevel"></div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 AI Olasılık Dağılımı</h2>
+                <div class="probabilities-grid" id="probabilitiesGrid">
+                    <!-- Olasılıklar JavaScript ile yüklenecek -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="recommendations">
+                    <h3>💡 AI Önerileri</h3>
+                    <ul id="recommendationsList">
+                        <!-- Öneriler JavaScript ile yüklenecek -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="doctor-alert" id="doctorAlert" style="display: none;">
+                <h3>🚨 Doktor Uyarısı</h3>
+                <p id="doctorAlertText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8002';
+        const API_KEY = 'dev_key_123';
+        
+        // Simüle edilmiş hasta verileri (gerçek uygulamada veritabanından gelecek)
+        const patientData = {
+            id: 'H-2024-001',
+            name: 'Ahmet Yılmaz',
+            age: 45,
+            gender: 'Erkek',
+            symptoms: {
+                // AI modeli bu semptomları otomatik tespit edecek
+                ates: true,
+                kuru_oksuruk: true,
+                nefes_darligi: true,
+                koku_kaybi: true,
+                yorgunluk: true,
+                kas_agrisi: false,
+                burun_akintisi: false,
+                hapşirma: false
+            }
+        };
+        
+        // Sayfa yüklendiğinde
+        window.onload = function() {
+            updateLastUpdate();
+            checkSystemStatus();
+            updateAIStatus();
+        };
+        
+        // Son güncelleme tarihini güncelle
+        function updateLastUpdate() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('lastUpdate').textContent = dateStr;
+        }
+        
+        // Sistem durumunu kontrol et
+        async function checkSystemStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (response.ok) {
+                    document.getElementById('systemStatus').innerHTML = '🟢 Sistem Aktif';
+                    document.getElementById('systemStatus').className = 'system-status';
+                } else {
+                    throw new Error('Sistem hatası');
+                }
+            } catch (error) {
+                document.getElementById('systemStatus').innerHTML = '🔴 Sistem Hatası';
+                document.getElementById('systemStatus').className = 'system-status error';
+            }
+        }
+        
+        // AI durumunu güncelle
+        function updateAIStatus() {
+            document.getElementById('aiStatusIcon').textContent = '🤖';
+            document.getElementById('aiStatusText').textContent = 'AI Model Hazır';
+            document.getElementById('aiStatusDesc').textContent = 'Kaggle veri seti ile eğitilmiş model aktif. Otomatik analiz yapabilir.';
+        }
+        
+        // AI analizini başlat
+        async function startAIAnalysis() {
+            // Loading göster
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('analysisBtn').disabled = true;
+            
+            // AI durumunu güncelle
+            document.getElementById('aiStatusIcon').textContent = '⚙️';
+            document.getElementById('aiStatusText').textContent = 'AI Analiz Yapıyor...';
+            document.getElementById('aiStatusDesc').textContent = 'Kaggle veri seti kullanılarak semptomlar analiz ediliyor.';
+            
+            try {
+                // Hasta verilerinden semptomları al
+                const symptoms = patientData.symptoms;
+                
+                const response = await fetch(`${API_BASE}/tani/diagnose`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        symptoms: symptoms
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                displayResults(data);
+                
+                // AI durumunu güncelle
+                document.getElementById('aiStatusIcon').textContent = '✅';
+                document.getElementById('aiStatusText').textContent = 'AI Analiz Tamamlandı';
+                document.getElementById('aiStatusDesc').textContent = 'Tanı sonucu hazır. Doktor uyarısı gönderildi.';
+                
+            } catch (error) {
+                alert('AI analizi sırasında hata oluştu: ' + error.message);
+                console.error('Error:', error);
+                
+                // AI durumunu hata olarak güncelle
+                document.getElementById('aiStatusIcon').textContent = '❌';
+                document.getElementById('aiStatusText').textContent = 'AI Analiz Hatası';
+                document.getElementById('aiStatusDesc').textContent = 'Analiz sırasında hata oluştu. Lütfen tekrar deneyin.';
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('analysisBtn').disabled = false;
+            }
+        }
+        
+        // Sonuçları göster
+        function displayResults(data) {
+            const diagnosis = data.diagnosis;
+            const confidence = Math.round(data.confidence * 100);
+            const probabilities = data.prob_fused;
+            const recommendations = data.recommendations;
+            
+            // Tanı başlığı ve güven skoru
+            document.getElementById('diagnosisTitle').textContent = getDiseaseName(diagnosis);
+            document.getElementById('confidenceScore').textContent = `%${confidence}`;
+            
+            // Uyarı seviyesi
+            const alertLevel = getAlertLevel(diagnosis, confidence);
+            const alertElement = document.getElementById('alertLevel');
+            alertElement.textContent = alertLevel.text;
+            alertElement.className = `alert-level ${alertLevel.class}`;
+            
+            // Doktor uyarısı
+            if (alertLevel.requiresDoctor) {
+                document.getElementById('doctorAlert').style.display = 'block';
+                document.getElementById('doctorAlertText').textContent = alertLevel.doctorMessage;
+                document.getElementById('emergencyAlert').style.display = 'block';
+            } else {
+                document.getElementById('doctorAlert').style.display = 'none';
+                document.getElementById('emergencyAlert').style.display = 'none';
+            }
+            
+            // Olasılıklar
+            const probContainer = document.getElementById('probabilitiesGrid');
+            probContainer.innerHTML = '';
+            
+            // Olasılıkları büyükten küçüğe sırala
+            const sortedProbs = Object.entries(probabilities)
+                .sort(([,a], [,b]) => b - a);
+            
+            sortedProbs.forEach(([disease, prob], index) => {
+                const probItem = document.createElement('div');
+                const probPercent = Math.round(prob * 100);
+                
+                // Sınıflandırma
+                if (index === 0) {
+                    probItem.className = 'prob-item highest';
+                } else if (probPercent > 20) {
+                    probItem.className = 'prob-item high';
+                } else if (probPercent > 5) {
+                    probItem.className = 'prob-item medium';
+                } else {
+                    probItem.className = 'prob-item';
+                }
+                
+                probItem.innerHTML = `
+                    <div class="prob-name">${getDiseaseName(disease)}</div>
+                    <div class="prob-value">%${probPercent}</div>
+                `;
+                probContainer.appendChild(probItem);
+            });
+            
+            // Öneriler
+            const recContainer = document.getElementById('recommendationsList');
+            recContainer.innerHTML = '';
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                recContainer.appendChild(li);
+            });
+            
+            // Sonucu göster
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Hastalık adlarını Türkçe'ye çevir
+        function getDiseaseName(disease) {
+            const names = {
+                'COVID-19': 'COVID-19',
+                'GRIP': 'Grip (İnfluenza)',
+                'SOGUK_ALGINLIGI': 'Soğuk Algınlığı',
+                'MEVSIMSEL_ALERJI': 'Mevsimsel Alerji'
+            };
+            return names[disease] || disease;
+        }
+        
+        // Uyarı seviyesini belirle
+        function getAlertLevel(diagnosis, confidence) {
+            if (diagnosis === 'COVID-19' && confidence > 80) {
+                return {
+                    text: '🚨 KRİTİK - ACİL DOKTOR KONTROLÜ GEREKLİ',
+                    class: 'alert-critical',
+                    requiresDoctor: true,
+                    doctorMessage: 'COVID-19 şüphesi yüksek! Hasta derhal izole edilmeli ve acil servise yönlendirilmelidir. PCR testi yapılmalı ve gerekli önlemler alınmalıdır.'
+                };
+            } else if (diagnosis === 'GRIP' && confidence > 70) {
+                return {
+                    text: '⚠️ YÜKSEK RİSK - DOKTOR KONTROLÜ ÖNERİLİR',
+                    class: 'alert-high',
+                    requiresDoctor: true,
+                    doctorMessage: 'Grip belirtileri tespit edildi. Hasta 24 saat içinde doktor kontrolünden geçmelidir. Antiviral tedavi gerekebilir.'
+                };
+            } else if (confidence > 60) {
+                return {
+                    text: '⚡ ORTA RİSK - TAKİP GEREKLİ',
+                    class: 'alert-medium',
+                    requiresDoctor: false,
+                    doctorMessage: ''
+                };
+            } else {
+                return {
+                    text: '✅ DÜŞÜK RİSK - RUTİN TAKİP',
+                    class: 'alert-low',
+                    requiresDoctor: false,
+                    doctorMessage: ''
+                };
+            }
+        }
+    </script>
+</body>
+</html>

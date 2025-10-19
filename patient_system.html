@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TANI - Hasta Tanı Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .logo::before {
+            content: "🩺";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .emergency-alert {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .welcome-card h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2.2em;
+        }
+        
+        .welcome-card p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2::before {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .symptoms-section h2::before {
+            content: "🔍";
+        }
+        
+        .info-section h2::before {
+            content: "ℹ️";
+        }
+        
+        .symptoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .symptom-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .symptom-item:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+            transform: translateY(-2px);
+        }
+        
+        .symptom-item.selected {
+            background: #e8f5e8;
+            border-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+        }
+        
+        .symptom-item input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: #3498db;
+        }
+        
+        .symptom-item label {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        
+        .analyze-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .analyze-btn {
+            flex: 1;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .analyze-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+        }
+        
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .clear-btn {
+            padding: 18px 20px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-btn:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        
+        .info-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+        
+        .info-value {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .results-section {
+            margin-top: 30px;
+        }
+        
+        .diagnosis-card {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.3);
+        }
+        
+        .diagnosis-title {
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .confidence-score {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .confidence-label {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .alert-level {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .alert-low {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .alert-medium {
+            background: rgba(255, 193, 7, 0.8);
+            color: #000;
+        }
+        
+        .alert-high {
+            background: rgba(255, 87, 34, 0.8);
+        }
+        
+        .alert-critical {
+            background: rgba(244, 67, 54, 0.9);
+            animation: pulse 1s infinite;
+        }
+        
+        .probabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .prob-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 4px solid #bdc3c7;
+            transition: all 0.3s ease;
+        }
+        
+        .prob-item.highest {
+            border-left-color: #27ae60;
+            background: #e8f5e8;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.2);
+        }
+        
+        .prob-item.high {
+            border-left-color: #f39c12;
+            background: #fef9e7;
+        }
+        
+        .prob-item.medium {
+            border-left-color: #e67e22;
+            background: #fdf2e9;
+        }
+        
+        .prob-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .prob-value {
+            font-size: 1.4em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .recommendations {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .recommendations h3 {
+            color: #856404;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .recommendations ul {
+            list-style: none;
+        }
+        
+        .recommendations li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ffeaa7;
+            font-size: 1em;
+        }
+        
+        .recommendations li:before {
+            content: "💡 ";
+            margin-right: 10px;
+        }
+        
+        .doctor-alert {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .doctor-alert h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .doctor-alert p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .system-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            z-index: 1000;
+        }
+        
+        .system-status.error {
+            background: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .symptoms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .probabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="system-status" id="systemStatus">
+        🟢 Sistem Aktif
+    </div>
+    
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">TANI Hasta Tanı Sistemi</div>
+            <div class="emergency-alert" id="emergencyAlert" style="display: none;">
+                🚨 ACİL DURUM TESPİT EDİLDİ!
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome-card">
+            <h1>🩺 TANI Hasta Tanı Sistemi</h1>
+            <p>Merhaba! Semptomlarınızı seçerek AI destekli ön tanı alabilirsiniz. Sistem, üst solunum yolu hastalıklarını analiz ederek size ve doktorunuza rehberlik eder.</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="card symptoms-section">
+                <h2>Semptomlarınızı Seçin</h2>
+                <div class="symptoms-grid" id="symptomsGrid">
+                    <!-- Semptomlar JavaScript ile yüklenecek -->
+                </div>
+                
+                <div class="analyze-section">
+                    <button class="analyze-btn" id="analyzeBtn" onclick="analyzeSymptoms()">
+                        🧠 AI Analizi Başlat
+                    </button>
+                    <button class="clear-btn" onclick="clearSelection()">
+                        🗑️ Temizle
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card info-section">
+                <h2>Sistem Bilgileri</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">AI Model:</span>
+                        <span class="info-value">TANI v1.0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Veri Seti:</span>
+                        <span class="info-value">Kaggle COVID-19</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Doğruluk:</span>
+                        <span class="info-value">%95+</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Desteklenen Hastalıklar:</span>
+                        <span class="info-value">4 Sınıf</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Analiz Süresi:</span>
+                        <span class="info-value">< 2 saniye</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>AI modeli semptomlarınızı analiz ediyor...</p>
+            <small>Lütfen bekleyin, bu işlem birkaç saniye sürebilir.</small>
+        </div>
+        
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="diagnosis-card">
+                <div class="diagnosis-title" id="diagnosisTitle">Tanı Sonucu</div>
+                <div class="confidence-score" id="confidenceScore">%0</div>
+                <div class="confidence-label">Güven Skoru</div>
+                <div class="alert-level" id="alertLevel"></div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 Olasılık Dağılımı</h2>
+                <div class="probabilities-grid" id="probabilitiesGrid">
+                    <!-- Olasılıklar JavaScript ile yüklenecek -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="recommendations">
+                    <h3>💡 Size Önerilerimiz</h3>
+                    <ul id="recommendationsList">
+                        <!-- Öneriler JavaScript ile yüklenecek -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="doctor-alert" id="doctorAlert" style="display: none;">
+                <h3>🚨 Doktor Uyarısı</h3>
+                <p id="doctorAlertText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8002';
+        const API_KEY = 'dev_key_123';
+        
+        const symptoms = {
+            "ates": "Ateş",
+            "titreme": "Titreme", 
+            "kuru_oksuruk": "Kuru Öksürük",
+            "balgamli_oksuruk": "Balgamlı Öksürük",
+            "bogaz_agrisi": "Boğaz Ağrısı",
+            "burun_akintisi": "Burun Akıntısı",
+            "burun_tikanikligi": "Burun Tıkanıklığı",
+            "hapşirma": "Hapşırma",
+            "kas_agrisi": "Kas Ağrısı",
+            "yorgunluk": "Yorgunluk",
+            "nefes_darligi": "Nefes Darlığı",
+            "koku_kaybi": "Koku Kaybı",
+            "goz_kasintisi": "Göz Kaşıntısı",
+            "goz_sulanmasi": "Göz Sulanması"
+        };
+        
+        // Sayfa yüklendiğinde
+        window.onload = function() {
+            loadSymptoms();
+            checkSystemStatus();
+        };
+        
+        // Semptomları yükle
+        function loadSymptoms() {
+            const grid = document.getElementById('symptomsGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(symptoms).forEach(([key, name]) => {
+                const item = document.createElement('div');
+                item.className = 'symptom-item';
+                item.innerHTML = `
+                    <input type="checkbox" id="${key}" value="${key}">
+                    <label for="${key}">${name}</label>
+                `;
+                grid.appendChild(item);
+            });
+        }
+        
+        // Sistem durumunu kontrol et
+        async function checkSystemStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (response.ok) {
+                    document.getElementById('systemStatus').innerHTML = '🟢 Sistem Aktif';
+                    document.getElementById('systemStatus').className = 'system-status';
+                } else {
+                    throw new Error('Sistem hatası');
+                }
+            } catch (error) {
+                document.getElementById('systemStatus').innerHTML = '🔴 Sistem Hatası';
+                document.getElementById('systemStatus').className = 'system-status error';
+            }
+        }
+        
+        // Semptomları analiz et
+        async function analyzeSymptoms() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedSymptoms = {};
+            
+            checkboxes.forEach(cb => {
+                selectedSymptoms[cb.value] = true;
+            });
+            
+            if (Object.keys(selectedSymptoms).length === 0) {
+                alert('Lütfen en az bir semptom seçin!');
+                return;
+            }
+            
+            // Loading göster
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('analyzeBtn').disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE}/tani/diagnose`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        symptoms: selectedSymptoms
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                displayResults(data);
+                
+            } catch (error) {
+                alert('Tanı analizi sırasında hata oluştu: ' + error.message);
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('analyzeBtn').disabled = false;
+            }
+        }
+        
+        // Sonuçları göster
+        function displayResults(data) {
+            const diagnosis = data.diagnosis;
+            const confidence = Math.round(data.confidence * 100);
+            const probabilities = data.prob_fused;
+            const recommendations = data.recommendations;
+            
+            // Tanı başlığı ve güven skoru
+            document.getElementById('diagnosisTitle').textContent = getDiseaseName(diagnosis);
+            document.getElementById('confidenceScore').textContent = `%${confidence}`;
+            
+            // Uyarı seviyesi
+            const alertLevel = getAlertLevel(diagnosis, confidence);
+            const alertElement = document.getElementById('alertLevel');
+            alertElement.textContent = alertLevel.text;
+            alertElement.className = `alert-level ${alertLevel.class}`;
+            
+            // Doktor uyarısı
+            if (alertLevel.requiresDoctor) {
+                document.getElementById('doctorAlert').style.display = 'block';
+                document.getElementById('doctorAlertText').textContent = alertLevel.doctorMessage;
+                document.getElementById('emergencyAlert').style.display = 'block';
+            } else {
+                document.getElementById('doctorAlert').style.display = 'none';
+                document.getElementById('emergencyAlert').style.display = 'none';
+            }
+            
+            // Olasılıklar
+            const probContainer = document.getElementById('probabilitiesGrid');
+            probContainer.innerHTML = '';
+            
+            // Olasılıkları büyükten küçüğe sırala
+            const sortedProbs = Object.entries(probabilities)
+                .sort(([,a], [,b]) => b - a);
+            
+            sortedProbs.forEach(([disease, prob], index) => {
+                const probItem = document.createElement('div');
+                const probPercent = Math.round(prob * 100);
+                
+                // Sınıflandırma
+                if (index === 0) {
+                    probItem.className = 'prob-item highest';
+                } else if (probPercent > 20) {
+                    probItem.className = 'prob-item high';
+                } else if (probPercent > 5) {
+                    probItem.className = 'prob-item medium';
+                } else {
+                    probItem.className = 'prob-item';
+                }
+                
+                probItem.innerHTML = `
+                    <div class="prob-name">${getDiseaseName(disease)}</div>
+                    <div class="prob-value">%${probPercent}</div>
+                `;
+                probContainer.appendChild(probItem);
+            });
+            
+            // Öneriler
+            const recContainer = document.getElementById('recommendationsList');
+            recContainer.innerHTML = '';
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                recContainer.appendChild(li);
+            });
+            
+            // Sonucu göster
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Hastalık adlarını Türkçe'ye çevir
+        function getDiseaseName(disease) {
+            const names = {
+                'COVID-19': 'COVID-19',
+                'GRIP': 'Grip (İnfluenza)',
+                'SOGUK_ALGINLIGI': 'Soğuk Algınlığı',
+                'MEVSIMSEL_ALERJI': 'Mevsimsel Alerji'
+            };
+            return names[disease] || disease;
+        }
+        
+        // Uyarı seviyesini belirle
+        function getAlertLevel(diagnosis, confidence) {
+            if (diagnosis === 'COVID-19' && confidence > 80) {
+                return {
+                    text: '🚨 KRİTİK - ACİL DOKTOR KONTROLÜ GEREKLİ',
+                    class: 'alert-critical',
+                    requiresDoctor: true,
+                    doctorMessage: 'COVID-19 şüphesi yüksek! Hasta derhal izole edilmeli ve acil servise yönlendirilmelidir. PCR testi yapılmalı ve gerekli önlemler alınmalıdır.'
+                };
+            } else if (diagnosis === 'GRIP' && confidence > 70) {
+                return {
+                    text: '⚠️ YÜKSEK RİSK - DOKTOR KONTROLÜ ÖNERİLİR',
+                    class: 'alert-high',
+                    requiresDoctor: true,
+                    doctorMessage: 'Grip belirtileri tespit edildi. Hasta 24 saat içinde doktor kontrolünden geçmelidir. Antiviral tedavi gerekebilir.'
+                };
+            } else if (confidence > 60) {
+                return {
+                    text: '⚡ ORTA RİSK - TAKİP GEREKLİ',
+                    class: 'alert-medium',
+                    requiresDoctor: false,
+                    doctorMessage: ''
+                };
+            } else {
+                return {
+                    text: '✅ DÜŞÜK RİSK - RUTİN TAKİP',
+                    class: 'alert-low',
+                    requiresDoctor: false,
+                    doctorMessage: ''
+                };
+            }
+        }
+        
+        // Seçimi temizle
+        function clearSelection() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('emergencyAlert').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+

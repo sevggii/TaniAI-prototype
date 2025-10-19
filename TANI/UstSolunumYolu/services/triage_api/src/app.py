@@ -13,6 +13,7 @@ import numpy as np
 import json
 from PIL import Image
 import io
+import os
 
 APP=FastAPI()
 
