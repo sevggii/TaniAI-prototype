@@ -16,9 +16,9 @@ if __name__ == "__main__":
     # Railway will set PORT environment variable
     port = int(os.environ.get("PORT", 8000))
     
-    # Import the main FastAPI app from görüntü işleme module
+    # Import the main FastAPI app from goruntu_isleme module
     try:
-        from görüntü_işleme.api import app
+        from goruntu_isleme.api import app
         
         import uvicorn
         uvicorn.run(
