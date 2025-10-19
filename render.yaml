@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: taniai-main
+    env: docker
+    dockerfilePath: ./Dockerfile.production
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: taniai-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: taniai-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8000
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+      - key: CORS_ORIGINS
+        value: https://taniai.onrender.com
+
+  - type: pserv
+    name: taniai-db
+    plan: free
+    dockerfilePath: ./Dockerfile.production
+
+  - type: redis
+    name: taniai-redis
+    plan: free
