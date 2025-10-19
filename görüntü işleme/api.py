@@ -73,9 +73,9 @@ models_loaded = False
 
 # API anahtarları (production'da veritabanından gelecek)
 VALID_API_KEYS = {
-    "dev_key_123": {"role": "developer", "rate_limit": 1000},
-    "hospital_key_456": {"role": "hospital", "rate_limit": 5000},
-    "research_key_789": {"role": "research", "rate_limit": 10000}
+    os.getenv("API_KEY_DEV", "dev_key_123"): {"role": "developer", "rate_limit": int(os.getenv("API_RATE_LIMIT_DEV", "1000"))},
+    os.getenv("API_KEY_HOSPITAL", "hospital_key_456"): {"role": "hospital", "rate_limit": int(os.getenv("API_RATE_LIMIT_HOSPITAL", "5000"))},
+    os.getenv("API_KEY_RESEARCH", "research_key_789"): {"role": "research", "rate_limit": int(os.getenv("API_RATE_LIMIT_RESEARCH", "10000"))}
 }
 
 # Rate limiting
@@ -1183,8 +1183,8 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
         "api:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info"
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=int(os.getenv("PORT", "8000")),
+        reload=os.getenv("RELOAD", "true").lower() == "true",
+        log_level=os.getenv("LOG_LEVEL", "info")
     )

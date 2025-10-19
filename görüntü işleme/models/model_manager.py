@@ -25,8 +25,8 @@ logger = logging.getLogger(__name__)
 class ModelManager:
     """Model yönetim sınıfı"""
     
-    def __init__(self, models_dir: str = "models"):
-        self.models_dir = Path(models_dir)
+    def __init__(self, models_dir: str = None):
+        self.models_dir = Path(models_dir or os.getenv("MODELS_DIR", "models"))
         self.models_dir.mkdir(exist_ok=True)
         
         # Model registry

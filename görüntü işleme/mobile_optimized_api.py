@@ -628,8 +628,8 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
         "mobile_optimized_api:app",
-        host="0.0.0.0",
-        port=8001,  # Mobil API için farklı port
-        reload=True,
-        log_level="info"
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=int(os.getenv("PORT", "8001")),  # Mobil API için farklı port
+        reload=os.getenv("RELOAD", "true").lower() == "true",
+        log_level=os.getenv("LOG_LEVEL", "info")
     )

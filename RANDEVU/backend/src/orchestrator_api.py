@@ -234,4 +234,9 @@ async def get_model_info():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    import os
+    uvicorn.run(
+        app, 
+        host=os.getenv("HOST", "0.0.0.0"), 
+        port=int(os.getenv("PORT", "8001"))
+    )

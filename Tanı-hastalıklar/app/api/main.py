@@ -37,9 +37,9 @@ app.add_middleware(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:8000"],
+    allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:8000,http://127.0.0.1:8000").split(","),
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=os.getenv("CORS_METHODS", "GET,POST").split(","),
     allow_headers=["*"],
 )
 
@@ -371,4 +371,8 @@ async def detailed_health_check():
         raise HTTPException(status_code=500, detail="Sistem sağlık durumu alınamadı")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        app, 
+        host=os.getenv("HOST", "0.0.0.0"), 
+        port=int(os.getenv("PORT", "8000"))
+    )

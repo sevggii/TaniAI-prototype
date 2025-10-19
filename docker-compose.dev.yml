@@ -1,10 +1,14 @@
+# ===========================================
+# TanıAI Development Docker Compose
+# ===========================================
+
 version: '3.8'
 
 services:
   # PostgreSQL Veritabanı
   postgres:
     image: postgres:15-alpine
-    container_name: taniai-db
+    container_name: taniai-db-dev
     environment:
       POSTGRES_DB: ${DB_NAME:-taniai_db}
       POSTGRES_USER: ${DB_USER:-taniai_user}
@@ -12,7 +16,8 @@ services:
     ports:
       - "${DB_PORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_dev:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - taniai-network
     healthcheck:
@@ -24,7 +29,7 @@ services:
   # Redis (Caching & Session)
   redis:
     image: redis:7-alpine
-    container_name: taniai-redis
+    container_name: taniai-redis-dev
     ports:
       - "${REDIS_PORT:-6379}:6379"
     networks:
@@ -35,12 +40,12 @@ services:
       timeout: 10s
       retries: 3
 
-  # Görüntü İşleme API
+  # Görüntü İşleme API (Development)
   image-analysis:
     build:
       context: ./görüntü işleme
       dockerfile: Dockerfile
-    container_name: taniai-image-analysis
+    container_name: taniai-image-analysis-dev
     ports:
       - "${IMAGE_API_PORT:-8001}:8000"
     environment:
@@ -50,6 +55,9 @@ services:
       - PORT=8000
       - MODELS_DIR=/app/models
       - DATA_DIR=/app/data
+      - DEBUG=true
+      - RELOAD=true
+      - LOG_LEVEL=debug
     depends_on:
       postgres:
         condition: service_healthy
@@ -58,16 +66,18 @@ services:
     networks:
       - taniai-network
     volumes:
-      - model_data:/app/models
-      - data_volume:/app/data
+      - ./görüntü işleme:/app
+      - model_data_dev:/app/models
+      - data_volume_dev:/app/data
     restart: unless-stopped
+    command: ["python", "-m", "uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
-  # Tanı Sistemi API
+  # Tanı Sistemi API (Development)
   diagnosis:
     build:
       context: ./Tanı-hastalıklar
       dockerfile: Dockerfile
-    container_name: taniai-diagnosis
+    container_name: taniai-diagnosis-dev
     ports:
       - "${DIAGNOSIS_API_PORT:-8002}:8000"
     environment:
@@ -75,6 +85,9 @@ services:
       - REDIS_URL=redis://redis:6379
       - HOST=0.0.0.0
       - PORT=8000
+      - DEBUG=true
+      - RELOAD=true
+      - LOG_LEVEL=debug
     depends_on:
       postgres:
         condition: service_healthy
@@ -82,14 +95,17 @@ services:
         condition: service_healthy
     networks:
       - taniai-network
+    volumes:
+      - ./Tanı-hastalıklar:/app
     restart: unless-stopped
+    command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
-  # İlaç Takibi API
+  # İlaç Takibi API (Development)
   medication:
     build:
       context: ./ilaç takibi
       dockerfile: Dockerfile
-    container_name: taniai-medication
+    container_name: taniai-medication-dev
     ports:
       - "${MEDICATION_API_PORT:-8003}:8000"
     environment:
@@ -97,6 +113,9 @@ services:
       - REDIS_URL=redis://redis:6379
       - HOST=0.0.0.0
       - PORT=8000
+      - DEBUG=true
+      - RELOAD=true
+      - LOG_LEVEL=debug
     depends_on:
       postgres:
         condition: service_healthy
@@ -104,14 +123,17 @@ services:
         condition: service_healthy
     networks:
       - taniai-network
+    volumes:
+      - ./ilaç takibi:/app
     restart: unless-stopped
+    command: ["python", "-m", "uvicorn", "simple_medication_api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
-  # Randevu Sistemi API
+  # Randevu Sistemi API (Development)
   appointment:
     build:
       context: ./RANDEVU/backend
       dockerfile: Dockerfile
-    container_name: taniai-appointment
+    container_name: taniai-appointment-dev
     ports:
       - "${APPOINTMENT_API_PORT:-8004}:8000"
     environment:
@@ -120,6 +142,9 @@ services:
       - HOST=0.0.0.0
       - PORT=8000
       - OLLAMA_HOST=http://ollama:11434
+      - DEBUG=true
+      - RELOAD=true
+      - LOG_LEVEL=debug
     depends_on:
       postgres:
         condition: service_healthy
@@ -127,29 +152,37 @@ services:
         condition: service_healthy
     networks:
       - taniai-network
+    volumes:
+      - ./RANDEVU/backend:/app
     restart: unless-stopped
+    command: ["python", "-m", "uvicorn", "simple_api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
-  # Whisper ASR Servisi
+  # Whisper ASR Servisi (Development)
   whisper-asr:
     build:
       context: ./whisper_asr
       dockerfile: Dockerfile
-    container_name: taniai-whisper
+    container_name: taniai-whisper-dev
     ports:
       - "${WHISPER_API_PORT:-8005}:8001"
     environment:
       - HOST=0.0.0.0
       - PORT=8001
+      - DEBUG=true
+      - LOG_LEVEL=debug
     networks:
       - taniai-network
+    volumes:
+      - ./whisper_asr:/app
     restart: unless-stopped
+    command: ["python", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8001", "--reload"]
 
-  # TANI Triage API
+  # TANI Triage API (Development)
   triage:
     build:
       context: ./TANI/UstSolunumYolu/services/triage_api
       dockerfile: Dockerfile
-    container_name: taniai-triage
+    container_name: taniai-triage-dev
     ports:
       - "${TRIAGE_API_PORT:-8006}:8000"
     environment:
@@ -158,34 +191,20 @@ services:
       - TANI_ROOT=/app/TANI
       - VISION_MODEL_PATH=/app/TANI/UstSolunumYolu/modules/vision_cxr_covid/models/v1_20251019_0107/best.keras
       - VISION_LABELS_PATH=/app/TANI/UstSolunumYolu/modules/vision_cxr_covid/models/v1_20251019_0107/labelmap.json
+      - DEBUG=true
+      - LOG_LEVEL=debug
     networks:
       - taniai-network
-    restart: unless-stopped
-
-  # API Gateway (Nginx)
-  nginx:
-    image: nginx:alpine
-    container_name: taniai-gateway
-    ports:
-      - "80:80"
-      - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - image-analysis
-      - diagnosis
-      - medication
-      - appointment
-      - whisper-asr
-    networks:
-      - taniai-network
+      - ./TANI:/app/TANI
+    restart: unless-stopped
+    command: ["python", "-m", "uvicorn", "src.app:APP", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
 volumes:
-  postgres_data:
-  model_data:
-  data_volume:
+  postgres_data_dev:
+  model_data_dev:
+  data_volume_dev:
 
 networks:
   taniai-network:
     driver: bridge
-

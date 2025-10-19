@@ -41,8 +41,8 @@ logger = logging.getLogger(__name__)
 class MedicalDatasetManager:
     """Tıbbi veri seti yöneticisi"""
     
-    def __init__(self, data_dir: str = "data"):
-        self.data_dir = Path(data_dir)
+    def __init__(self, data_dir: str = None):
+        self.data_dir = Path(data_dir or os.getenv("DATA_DIR", "data"))
         self.data_dir.mkdir(exist_ok=True)
         
         # Bilinen tıbbi veri setleri

@@ -446,4 +446,9 @@ async def dismiss_alert(alert_id: int):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    import os
+    uvicorn.run(
+        app, 
+        host=os.getenv("HOST", "0.0.0.0"), 
+        port=int(os.getenv("PORT", "8002"))
+    )

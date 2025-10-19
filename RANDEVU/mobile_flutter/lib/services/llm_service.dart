@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class LLMService {
   // Android emulator için 10.0.2.2 kullan (localhost yerine)
-  static const String _baseUrl = 'http://10.0.2.2:8000'; 
+  static const String _baseUrl = String.fromEnvironment('LLM_API_URL', defaultValue: 'http://10.0.2.2:8000'); 
   static const Duration _timeout = Duration(seconds: 10); // 10 saniye - Ollama için yeterli
 
   /// LLM ile chat yanıtı al

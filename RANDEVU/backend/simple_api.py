@@ -5,15 +5,16 @@ Basit Test API - Flutter için
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import os
 
 app = FastAPI(title="TanıAI Test API")
 
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=os.getenv("CORS_ORIGINS", "*").split(","),
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=os.getenv("CORS_METHODS", "*").split(","),
     allow_headers=["*"],
 )
 
@@ -118,4 +119,8 @@ async def triage(data: dict):
 if __name__ == "__main__":
     print("🚀 Basit Test API başlatılıyor...")
     print("📱 Flutter bağlantısı: http://localhost:8000")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        app, 
+        host=os.getenv("HOST", "0.0.0.0"), 
+        port=int(os.getenv("PORT", "8000"))
+    )
